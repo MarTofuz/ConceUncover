@@ -7,15 +7,6 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/landing.css') }}">
     <title>Conce Uncover</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <style>
-        #map-container {
-            position: fixed;
-            top: 12%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 </head>
 
 <body>

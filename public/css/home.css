@@ -180,3 +180,43 @@ header{
 .login-register p a:hover{
     text-decoration: underline;
 }
+/* menu desplegable navbar */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top:45px;
+    left: 0;
+    background-color: black;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: 205px;
+    height: 145px;
+}
+
+.dropdown-content a {
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    color: white;
+}
+.dropdown-content a:nth-child(2) {
+    margin-bottom: 10px; /* Agrega margen en la segunda opción (Nosotros) */
+}
+
+.dropdown-content a:hover {
+    background-color: black;
+}
+/* mapa */
+#map-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* 100% de la altura de la ventana */
+}
+
