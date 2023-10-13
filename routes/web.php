@@ -30,10 +30,20 @@ Route::group(['prefix' => '/register'], function(){
     Route::get('/', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/', [AuthController::class, 'storeAccount'])->name('register.store');
 });
+Route::group(['prefix' => '/restpass'], function(){
+    Route::get('/', [AuthController::class, 'restpass'])->name('restpass');
+    Route::post('/', 'AuthController@restablecerContrasena')->name('restpass.attempt');
+});
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/landing', [AuthController::class, 'landing'])->name('landing');
+
+Route::get('/restcode', [AuthController::class, 'restcode'])->name('restcode');
+
+Route::get('/newpass', [AuthController::class, 'newpass'])->name('newpass');
+
+
 

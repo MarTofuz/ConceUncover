@@ -26,6 +26,11 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['error' => 'Correo o Contraseña incorrectas']);
         }
     }
+    public function restablecerContrasena(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+    }
 
     public function showRegister(){
         return View('auth.register');
@@ -42,6 +47,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        
+
         Auth::login($user);
         return redirect()->route('home');
     }
@@ -53,5 +60,14 @@ class AuthController extends Controller
     public function logout(){
         Auth::logout();
         return redirect()->route('login');
+    }
+    public function restpass(){
+        return View('auth.restpass');
+    }
+    public function restcode(){
+        return View('auth.restcode');
+    }
+    public function newpass(){
+        return View('auth.newpass');
     }
 }

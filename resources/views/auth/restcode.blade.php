@@ -16,23 +16,18 @@
     <div class="container">
         <div class="wrapper">
             <div class="form-box login">
-                <h2>Login</h2>
-                <form action="{{ route('login.attempt') }}" method="POST">
+                <h2>Restablecer Contraseña</h2>
+                <form action="{{ route('newpass') }}" method="GET">
                     @csrf
-                    <div class="input-box">
-                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                        <input class="form-control" id="email" type="text" name="email" required/>
-                        <label for="email">Correo</label>
-                    </div>
+                    <br>
+                    <h5>Por favor ingrese clave unica, esta clave fue enviada a su correo electronico.</h5>
+                    
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input class="form-control" id="inputPassword" type="password" name="password" required/>
-                        <label for="inputPassword">Contraseña</label>
+                        <input class="form-control" id="code" type="text" name="code" required/>
+                        <label for="code">Codigo</label>
                     </div>
-                    <div class="remember-forgot">
-                        <label><input type="checkbox">Recordar Contraseña</label>
-                        <a href="{{ route('restpass') }}"> ¿Olvido su contraseña?</a>
-                    </div>
+                    
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -43,10 +38,7 @@
                         </div>
                     @endif
                     <div class="d-grid gap-2">
-                        <button class="btn btn-dark px-4" type="submit">Acceder</button>
-                    </div>
-                    <div class="login-register">
-                        <p>¿No tienes cuenta? <a href="register"class="register-link">Crear Cuenta</a></p>
+                        <button class="btn btn-dark px-4" type="submit">Enviar</button>
                     </div>
                 </form>
             </div>
