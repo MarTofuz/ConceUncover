@@ -17,7 +17,7 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Restablecer Contraseña</h2>
-                <form action="{{ route('login') }}" method="GET">
+                <form action="{{ route('password.reset.post') }}" method="post">
                     @csrf
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
@@ -29,7 +29,7 @@
                         <input class="form-control" required id="password" type="password" name="password_confirmation" />
                         <label for="password_confirmation">Repetir contraseña</label>
                     </div>
-                    
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>

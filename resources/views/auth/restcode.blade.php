@@ -17,17 +17,17 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Restablecer Contraseña</h2>
-                <form action="{{ route('newpass') }}" method="GET">
+                <form action="{{ route('password.verify.post') }}" method="post">
                     @csrf
                     <br>
                     <h5>Por favor ingrese clave unica, esta clave fue enviada a su correo electronico.</h5>
-                    
+
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
                         <input class="form-control" id="code" type="text" name="code" required/>
                         <label for="code">Codigo</label>
                     </div>
-                    
+
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>

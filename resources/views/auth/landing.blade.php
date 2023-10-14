@@ -13,17 +13,24 @@
     <header>
         <h2 class="logo">Conce Uncover</h2>
         <nav class="navigation">
-        <a href="{{ route('register') }}" class="no-css-styles">
-            <button class="btnlogin-popup">Registrarse</button>
+            <a href="{{ route('register') }}" class="no-css-styles">
+                <button class="btnlogin-popup">Registrarse</button>
             </a>
             <a href="{{ route('login') }}" class="no-css-styles">
-            <button class="btnlogin-popup">Iniciar Sesión</button>
+                <button class="btnlogin-popup">Iniciar Sesión</button>
             </a>
         </nav>
     </header>
     <div class="container">
         <div id="map-container"></div>
+        <div class="wrapper">
+            <div class="form-box login">
+                <h2>Login</h2>
+
+            </div>
+        </div>
     </div>
+
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

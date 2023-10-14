@@ -42,6 +42,7 @@
                             </ul>
                         </div>
                     @endif
+                    <br>
                     <div class="d-grid gap-2">
                         <button class="btn btn-dark px-4" type="submit">Acceder</button>
                     </div>
