@@ -61,13 +61,4 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
-    public function restpass(){
-        return View('auth.restpass');
-    }
-    public function restcode(){
-        return View('auth.restcode');
-    }
-    public function newpass(){
-        return View('auth.newpass');
-    }
 }

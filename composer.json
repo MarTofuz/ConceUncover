@@ -7,6 +7,9 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
+        "laravel-lang/attributes": "^2.4",
+        "laravel-lang/lang": "^13.2",
+        "laravel-lang/publisher": "^14.7",
         "laravel/framework": "^10.10",
         "laravel/jetstream": "^4.0",
         "laravel/sanctum": "^3.2",
