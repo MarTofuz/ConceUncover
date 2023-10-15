@@ -30,23 +30,20 @@ Route::group(['prefix' => '/register'], function(){
     Route::post('/', [AuthController::class, 'storeAccount'])->name('register.store');
 });
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::group(['prefix' => '/restpass'], function(){
+    Route::get('/', [AuthController::class, 'restpass'])->name('restpass');
+    Route::post('/', 'AuthController@restablecerContrasena')->name('restpass.attempt');
+});
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/landing', [AuthController::class, 'landing'])->name('landing');
 
-
-Route::group(['prefix' => '/restpass'], function(){
-    Route::get('/', [AuthController::class, 'restpass'])->name('restpass');
-    Route::post('/', [AuthController::class, 'sendPasswordResetLink'])->name('password.email'); // Ruta para enviar correo de restablecimiento
-});
-
 Route::get('/restcode', [AuthController::class, 'restcode'])->name('restcode');
-Route::post('/restcode', [AuthController::class, 'verifyPasswordResetCode'])->name('password.verify.post');
 
 Route::get('/newpass', [AuthController::class, 'newpass'])->name('newpass');
-Route::post('/newpass', [AuthController::class, 'resetPassword'])->name('password.reset.post');
 
 //user normal
 

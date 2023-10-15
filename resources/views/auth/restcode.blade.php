@@ -17,7 +17,7 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Restablecer Contraseña</h2>
-                <form action="{{ route('password.verify.post') }}" method="post">
+                <form action="{{ route('newpass') }}" method="GET">
                     @csrf
                     <br>
                     <h5>Por favor ingrese clave unica, esta clave fue enviada a su correo electronico.</h5>

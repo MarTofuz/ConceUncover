@@ -17,7 +17,7 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Restablecer Contraseña</h2>
-                <form action="{{ route('password.reset.post') }}" method="post">
+                <form action="{{ route('login') }}" method="GET">
                     @csrf
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>

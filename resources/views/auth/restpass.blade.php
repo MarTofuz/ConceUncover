@@ -17,7 +17,7 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Restablecer Contraseña</h2>
-                <form action="{{ route('password.email') }}" method="post">
+                <form action="{{ route('restcode') }}" method="GET">
                     @csrf
                     <br>
                     <h5>Introduce tu correo electronico y te enviaremos una clave unica para restablecer tu contraseña</h5>

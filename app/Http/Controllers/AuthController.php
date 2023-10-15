@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -29,6 +26,11 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['error' => 'Correo o Contraseña incorrectas']);
         }
     }
+    public function restablecerContrasena(Request $request){
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+    }
 
     public function showRegister(){
         return View('auth.register');
@@ -45,72 +47,27 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        
+
         Auth::login($user);
         return redirect()->route('home');
     }
 
-    // Cerrar session
+    public function landing(){
+        return View('auth.landing');
+    }
+
     public function logout(){
         Auth::logout();
         return redirect()->route('login');
     }
-    ///////////////////////////
-
-
-    // Recuperar Contraseña
     public function restpass(){
-        return view('auth.restpass');
+        return View('auth.restpass');
     }
-
-    public function sendPasswordResetLink(Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-        ]);
-
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
+    public function restcode(){
+        return View('auth.restcode');
     }
-
-    public function restcode() {
-        return view('auth.restcode');
+    public function newpass(){
+        return View('auth.newpass');
     }
-
-    public function verifyPasswordResetCode(Request $request) {
-        return view('auth.verifycode');
-    }
-
-    public function resetPassword(Request $request) {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|confirmed|min:6',
-            'token' => 'required',
-        ]);
-
-        $response = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => bcrypt($password),
-                ])->save();
-                $user->setRememberToken(Str::random(60));
-                Auth::login($user);
-            }
-        );
-
-        return $response == Password::PASSWORD_RESET
-            ? redirect()->route('home')->with('status', __($response))
-            : back()->withInput($request->only('email'))->withErrors(['email' => [__($response)]]);
-    }
-    ////////////////////////
-
-    // El home (NO DEL USER)
-    public function landing(){
-        return View('auth.landing');
-    }
-    ////////////////////////////
 }
