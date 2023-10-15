@@ -17,37 +17,37 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Login</h2>
-                <form action="{{ route('login.attempt') }}" method="POST">
+                <form method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="input-box">
                         <span class="icon"><ion-icon name="mail"></ion-icon></span>
-                        <input class="form-control" id="email" type="text" name="email" required/>
-                        <label for="email">Correo</label>
+                        <x-input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                        <label for="email">{{ __('Correo') }}</label>
                     </div>
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input class="form-control" id="inputPassword" type="password" name="password" required/>
-                        <label for="inputPassword">Contraseña</label>
+                        <x-input id="inputPassword" class="form-control" type="password" name="password" required autocomplete="current-password" />
+                        <label for="inputPassword">{{ __('Contraseña') }}</label>
                     </div>
                     <div class="remember-forgot">
-                        <label><input type="checkbox">Recordar Contraseña</label>
-                        <a href="{{ route('restpass') }}"> ¿Olvido su contraseña?</a>
+                        <label><x-checkbox id="remember_me" name="remember" /> {{ __('Recordar Contraseña') }}</label>
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}"> ¿{{ __('Olvido su contraseña?') }}</a>
+                        @endif
                     </div>
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
+                    <div class="alert alert-danger">
+                        @if (session('status'))
                             <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
+                                <li>{{ session('status') }}</li>
                             </ul>
-                        </div>
-                    @endif
+                        @endif
+                    </div>
                     <br>
                     <div class="d-grid gap-2">
-                        <button class="btn btn-dark px-4" type="submit">Acceder</button>
+                        <x-button class="btn btn-dark px-4" type="submit">{{ __('Acceder') }}</x-button>
                     </div>
                     <div class="login-register">
-                        <p>¿No tienes cuenta? <a href="register"class="register-link">Crear Cuenta</a></p>
+                        <p>{{ __('¿No tienes cuenta?') }} <a href="{{ route('register') }}" class="register-link">{{ __('Crear Cuenta') }}</a></p>
                     </div>
                 </form>
             </div>

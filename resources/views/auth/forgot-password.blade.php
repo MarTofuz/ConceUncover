@@ -17,15 +17,23 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Restablecer Contraseña</h2>
-                <form action="{{ route('newpass') }}" method="GET">
+                <div class="mb-4 text-sm text-gray-600">
+                    {{ __('¿Olvidaste tu contraseña? Introduce tu correo electronico y te enviaremos un link de restablecimiento de contraseña.') }}
+                </div>
+
+                @if (session('status'))
+                    <div class="mb-4 font-medium text-sm text-green-600">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('password.email') }}">
                     @csrf
-                    <br>
-                    <h5>Por favor ingrese clave unica, esta clave fue enviada a su correo electronico.</h5>
 
                     <div class="input-box">
-                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input class="form-control" id="code" type="text" name="code" required/>
-                        <label for="code">Codigo</label>
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <x-input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                        <label for="email">{{ __('Correo') }}</label>
                     </div>
 
                     @if ($errors->any())
@@ -37,8 +45,9 @@
                             </ul>
                         </div>
                     @endif
+                    <br>
                     <div class="d-grid gap-2">
-                        <button class="btn btn-dark px-4" type="submit">Enviar</button>
+                        <x-button class="btn btn-dark px-4" type="submit">{{ __('Enviar') }}</x-button>
                     </div>
                 </form>
             </div>

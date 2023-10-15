@@ -17,16 +17,26 @@
         <div class="wrapper">
             <div class="form-box login">
                 <h2>Restablecer Contraseña</h2>
-                <form action="{{ route('login') }}" method="GET">
+                <form method="POST" action="{{ route('password.update') }}">
                     @csrf
+
+                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <x-input id="email" class="form-control" type="email" name="email" :value="$request->email" required autofocus autocomplete="username" readonly />
+                        <label for="email">Correo</label>
+                    </div>
+
+
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input class="form-control" required id="password" type="password" name="password" />
+                        <x-input id="password" class="form-control" type="password" name="password" required autocomplete="new-password" />
                         <label for="password">Nueva contraseña</label>
                     </div>
                     <div class="input-box">
                         <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-                        <input class="form-control" required id="password" type="password" name="password_confirmation" />
+                        <x-input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" />
                         <label for="password_confirmation">Repetir contraseña</label>
                     </div>
 
@@ -39,6 +49,7 @@
                             </ul>
                         </div>
                     @endif
+                    <br>
                     <div class="d-grid gap-2">
                         <button class="btn btn-dark px-4" type="submit">Enviar</button>
                     </div>

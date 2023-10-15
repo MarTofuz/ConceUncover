@@ -41,12 +41,18 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/landing', [AuthController::class, 'landing'])->name('landing');
 
-Route::get('/restcode', [AuthController::class, 'restcode'])->name('restcode');
-
-Route::get('/newpass', [AuthController::class, 'newpass'])->name('newpass');
-
 //user normal
 
 Route::get('/profile', [AdminController::class, 'profile'])->name('profile')->middleware('auth');
 
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
