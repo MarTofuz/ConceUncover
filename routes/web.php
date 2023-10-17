@@ -37,7 +37,12 @@ Route::get('/landing', [AuthController::class, 'landing'])->name('landing');
 
 //user normal
 
-Route::get('/profile', [AdminController::class, 'profile'])->name('profile')->middleware('auth');
+Route::group(['prefix' => '/profile'], function(){
+    Route::get('/', [AdminController::class, 'profile'])->name('profile')->middleware('auth');
+    Route::post('/', [AdminController::class, 'update'])->name('update')->middleware('auth');
+});
+
+Route::get('/profile/edit', [AdminController::class, 'edit'])->name('edit');
 
 
 

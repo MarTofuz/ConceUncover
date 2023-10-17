@@ -16,7 +16,7 @@
                 <a href="#" id="userDropdown">{{ $user->name }}</a>
                 <div class="dropdown-content" id="userDropdownContent">
                     <!-- Aquí coloca las opciones del menú -->
-                    <a href="{{ route('profile') }}">Perfil</a>
+                    <a href="{{ __('profile') }}">Perfil</a>
                     <a href="#">Favoritos</a>
                     <a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a>
                 </div>
