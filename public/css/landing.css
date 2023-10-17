@@ -8,8 +8,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-size: cover;
+    
 }
 
 header{
@@ -24,6 +23,11 @@ header{
     align-items: center;
     z-index: 99;
 
+}
+.mapbox{
+    width: 100%;
+    height: 100%;    
+    padding-top: 90px;
 }
 
 .logo{

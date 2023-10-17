@@ -5,8 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/landing.css') }}">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
     <title>Conce Uncover</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        /* Establece el tamaño del mapa al 100% del ancho y alto del cuerpo */
+        body,
+        html {
+            height: 100%;
+            padding-top: 45px;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,26 +29,8 @@
             </a>
         </nav>
     </header>
-    <div class="container">
-        <div id="map-container"></div>
-        <div class="wrapper">
-            <div class="form-box login">
-                <h2>Login</h2>
-
-            </div>
-        </div>
-    </div>
-
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script>
-        let map = L.map('map-container').setView([-36.827081, -73.050327], 16)
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
-
-        L.marker([-36.827081, -73.050327]).addTo(map).bindPopup('Perfil de locales');
-    </script>
+    
+    <iframe width='100%' height='100%' src="https://api.mapbox.com/styles/v1/martofu/clnt5b40600du01qm82djglho.html?title=false&access_token=pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ&zoomwheel=true#16.66/-36.827783/-73.060636/332.8" title="Streets" style="border:none;"></iframe>
 </body>
 
 </html>
