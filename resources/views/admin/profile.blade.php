@@ -45,10 +45,29 @@
                 <p>Correo: {{ $user->email }}</p>
                 <br>
                 <br>
+                <h1>Locales disponibles</h1>
+                <hr>
                 <br>
+
+                @if ($tiendas && $tiendas->count() > 0)
+                @foreach ($tiendas as $unaTienda)
+                <div class="tienda">
+                    @if ($unaTienda->name)
+                    <p>Nombre de la tienda: {{ $unaTienda->name }}</p>
+                    @endif
+                </div>
                 <br>
+                @endforeach
+                @else
+                <p>No tienes locales disponibles</p>
+                @endif
+
                 <form action="{{ route('edit') }}">
                     <button class="btn btn-dark px-4">Editar</button>
+                </form>
+                <br>
+                <form action="{{ route('viewSaveShop') }}">
+                    <button class="btn btn-dark px-4">Nuevo Local</button>
                 </form>
             </div>
         </div>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TiendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,10 @@ Route::group(['prefix' => '/profile'], function(){
 Route::get('/profile/edit', [AdminController::class, 'edit'])->name('edit');
 
 
+Route::group(['prefix' => '/editShop'], function(){
+    Route::get('/', [TiendaController::class, 'viewSaveShop'])->name('viewSaveShop')->middleware('auth');
+    Route::post('/', [TiendaController::class, 'saveShop'])->name('saveShop')->middleware('auth');
+});
 
 Route::middleware([
     'auth:sanctum',

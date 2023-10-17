@@ -11,14 +11,22 @@ class AdminController extends Controller
 {
     public function profile()
     {
+
         $authenticated_user = Auth::user();
-        return View('admin.profile')->with(['user' => $authenticated_user]);
+        $tiendas = $authenticated_user->tiendas;
+
+        return View('admin.profile')->with([
+            'user' => $authenticated_user,
+            'tiendas' => $tiendas
+        ]);
+
     }
 
     public function edit()
     {
         $user = Auth::user();
-        return view('admin.edit', compact('user'));
+        $tiendas = $user->tiendas;
+        return view('admin.edit', compact('user', 'tiendas'));
     }
 
     public function update(Request $request)
