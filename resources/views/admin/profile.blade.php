@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <title>Conce Uncover</title>
 </head>
-
 <body>
     <header>
         <h2 class="logo">Conce Uncover</h2>
@@ -25,55 +23,59 @@
         </nav>
     </header>
     <div class="container">
-        <div class="wrapper">
-            <div class="form-box login">
-                <h1 id="user">{{ $user->name }}</h1>
-                <hr>
-                <br>
-                @if($user->phone)
-                <p>Teléfono: {{ $user->phone }}</p>
-                @else
-                <p>Teléfono: No hay datos</p>
-                @endif
-                <br>
-                @if($user->address)
-                <p>Dirección: {{ $user->address }}</p>
-                @else
-                <p>Dirección: No hay datos</p>
-                @endif
-                <br>
-                <p>Correo: {{ $user->email }}</p>
-                <br>
-                <br>
-                <h1>Locales disponibles</h1>
-                <hr>
-                <br>
-
-                @if ($tiendas && $tiendas->count() > 0)
-                @foreach ($tiendas as $unaTienda)
-                <div class="tienda">
-                    @if ($unaTienda->name)
-                    <p>Nombre de la tienda: {{ $unaTienda->name }}</p>
-                    @endif
-                </div>
-                <br>
-                @endforeach
-                @else
-                <p>No tienes locales disponibles</p>
-                @endif
-
-                <form action="{{ route('edit') }}">
-                    <button class="btn btn-dark px-4">Editar</button>
-                </form>
-                <br>
-                <form action="{{ route('viewSaveShop') }}">
-                    <button class="btn btn-dark px-4">Nuevo Local</button>
-                </form>
+        <div class="form-box">
+            <h1>Perfil</h1>
+            <div class="text-center">
+                <img src="{{ asset('css/usuario.png') }}" class="rounded" alt="...">
             </div>
-        </div>
-    </div>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</body>
+            <p>Usuario: {{ $user->name ?? 'No hay datos' }}</p>
+            <p>Teléfono: {{ $user->phone ?? 'No hay datos' }}</p>
+            <p>Dirección: {{ $user->address ?? 'No hay datos' }}</p>
+            <p>Correo: {{ $user->email }}</p>
+            <br>
+            <br>
+            <br>
 
+            <h1>Locales disponibles</h1>
+
+            @if ($tiendas && $tiendas->count() > 0)
+                @foreach ($tiendas as $unaTienda)
+                    <div class="tienda">
+                        @if ($unaTienda->name)
+                            <p>Nombre de la tienda: {{ $unaTienda->name }}</p>
+                        @endif
+                    </div>
+                @endforeach
+            @else
+                <p>No tienes locales disponibles</p>
+            @endif
+
+            <form action="{{ route('edit') }}">
+                <button class="left-button">Editar</button>
+            </form>
+            <form action="{{ route('viewSaveShop') }}">
+                <button class="right-button">Nuevo Local</button>
+            </form>
+        </div>
+    <script>
+    const username = document.getElementById('userDropdown');
+    const dropdownMenu = document.getElementById('userDropdownContent');
+    username.addEventListener('click', function(event) {
+        event.stopPropagation(); // Evita que el evento de clic se propague y se ejecute el documento.click
+        if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+        } else {
+            dropdownMenu.style.display = 'block';
+        }
+    });
+    document.addEventListener('click', function(event) {
+        if (event.target !== username) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+        </script>
+
+        
+    </div>
+</body>
 </html>

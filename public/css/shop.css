@@ -127,93 +127,64 @@ body {
     background-color: #fff;
     border-radius: 10px; /* Mayor valor de borde para un aspecto más redondeado */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombreado */
-    margin-top: 50px;
-    max-width: 550px;
-    max-height: 700px;
+    margin-top: 80px;
+    max-width: 560px;
+    max-height: 900px;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 20px; /* Espacio interno */
+    padding: 40px; /* Espacio interno */
 }
-img {
-    width: 100px; /* Ancho deseado en píxeles o porcentaje */
-    height: 100px; /* Altura automática para mantener la proporción original */
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Ajusta el espacio entre cada par de elementos */
+
 }
 
-/* Estilos del contenido dentro del contenedor */
-.form-box {
-    text-align: center;
-    padding: 70px;
-    flex: 1; /* El contenido ocupa todo el espacio disponible */
-    flex-direction: column;
-}
-
-.form-box h1 {
-    font-size: 24px;
+.form-group p {
+    flex: 1; /* El texto ocupa el espacio disponible en la columna izquierda */
     margin: 0;
-    margin-bottom: 20px; /* Espacio entre el título y los párrafos */
 }
 
-.form-box p {
-    font-size: 16px;
-    margin: 10px 0;
-    line-height: 1.5;
-}
-
-.form-box p:nth-child(odd) {
-    background-color: #f7f7f7;
+.form-group input,
+.form-group textarea {
+    flex: 2;
     padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px; /* Espacio entre los elementos */
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    margin: 5px 0;
 }
-
-.form-box button {
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+button {
     background-color: #000;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 15px 20px; /* Ajusta el espaciado del botón según tus preferencias */
     border-radius: 5px;
     cursor: pointer;
-    display: block;
-    margin-top: 10px; /* Espacio entre los botones */
+    font-size: 18px;
+    margin-left: 300px;
 }
 
-.form-box button:hover {
+/* Estilo para el botón al pasar el cursor sobre él */
+button:hover {
     background-color: #333;
 }
-
-.btn {
-    width: 100%;
-    height: 45px;
-    background-color: black;
-    border: none;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    color: #fff;
-    font-weight: 500;
-}
-.left-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    float: left; /* Alinear a la izquierda */
-    margin-right: 10px; /* Agregar un margen a la derecha para separar del botón "Nuevo Local" */
+form h1 {
+    text-align: center; /* Centra el título */
+    font-size: 32px; /* Tamaño de fuente según tus preferencias */
+    margin-bottom: 18px; /* Espacio entre el título y los campos de entrada */
 }
 
-/* Estilo para el botón "Nuevo Local" a la derecha */
-.right-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    float: right; /* Alinear a la derecha */
-}

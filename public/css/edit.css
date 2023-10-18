@@ -128,26 +128,29 @@ body {
     border-radius: 10px; /* Mayor valor de borde para un aspecto más redondeado */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombreado */
     margin-top: 50px;
-    max-width: 550px;
-    max-height: 700px;
+    max-width: 560px;
+    max-height: 900px;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 20px; /* Espacio interno */
+    padding: 10px; /* Espacio interno */
 }
+
 img {
     width: 100px; /* Ancho deseado en píxeles o porcentaje */
     height: 100px; /* Altura automática para mantener la proporción original */
 }
-
 /* Estilos del contenido dentro del contenedor */
 .form-box {
     text-align: center;
-    padding: 70px;
+    padding: 8px;
     flex: 1; /* El contenido ocupa todo el espacio disponible */
     flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: 80px;
 }
 
 .form-box h1 {
@@ -196,24 +199,32 @@ img {
     color: #fff;
     font-weight: 500;
 }
-.left-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    float: left; /* Alinear a la izquierda */
-    margin-right: 10px; /* Agregar un margen a la derecha para separar del botón "Nuevo Local" */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc; /* Borde del campo de entrada */
+    border-radius: 5px; /* Borde redondeado */
+    outline: none;
 }
 
-/* Estilo para el botón "Nuevo Local" a la derecha */
-.right-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    float: right; /* Alinear a la derecha */
+/* Estilo para los campos de entrada cuando se enfocan (focus) */
+input:focus {
+    border-color: #007BFF; /* Cambiar color del borde al enfocar el campo */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efecto sombra al enfocar */
+}
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    flex: 1;
+    margin-right: 10px; /* Espacio entre los campos */
+}
+
+/* Estilo para el párrafo dentro de .form-group */
+.form-group p {
+    margin: 0; /* Elimina el margen superior e inferior del párrafo */
 }
