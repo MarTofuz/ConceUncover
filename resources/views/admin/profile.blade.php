@@ -38,17 +38,18 @@
 
             <h1>Locales disponibles</h1>
 
-            @if ($tiendas && $tiendas->count() > 0)
-                @foreach ($tiendas as $unaTienda)
-                    <div class="tienda">
-                        @if ($unaTienda->name)
-                            <p>Nombre de la tienda: {{ $unaTienda->name }}</p>
-                        @endif
-                    </div>
+            @if ($tienda && $tienda->count() > 0)
+                @foreach ($tienda as $unaTienda)
+                <div>
+                    @if ($unaTienda->name)
+                    <p>Nombre de la tienda: {{ $unaTienda->name }}</p>
+                    @endif
+                </div>
+                <br>
                 @endforeach
-            @else
+                @else
                 <p>No tienes locales disponibles</p>
-            @endif
+                @endif
 
             <form action="{{ route('edit') }}">
                 <button class="left-button">Editar</button>
@@ -75,7 +76,7 @@
     });
         </script>
 
-        
+
     </div>
 </body>
 </html>

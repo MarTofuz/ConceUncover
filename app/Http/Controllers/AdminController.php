@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tienda;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -11,16 +12,11 @@ class AdminController extends Controller
 {
     public function profile()
     {
-
         $authenticated_user = Auth::user();
-        $tiendas = $authenticated_user->tiendas;
-
-        return View('admin.profile')->with([
-            'user' => $authenticated_user,
-            'tiendas' => $tiendas
-        ]);
-
+        $tienda = $authenticated_user->tiendas; // Obtener las tiendas del usuario
+        return View('admin.profile')->with(['user' => $authenticated_user, 'tienda' => $tienda]);
     }
+
 
     public function edit()
     {
@@ -39,6 +35,8 @@ class AdminController extends Controller
         $user->email = $request->input('email');
         $user->save();
 
-        return view('admin.profile', compact('user'));
+        $tienda = $user->tiendas;
+
+        return view('admin.profile', compact('user', 'tienda'));
     }
 }
