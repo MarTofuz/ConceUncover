@@ -26,17 +26,36 @@ class AdminController extends Controller
     }
 
     public function update(Request $request)
-    {
-        /** @var \App\Models\User $user **/
-        $user = Auth::user();
+{
+    $user = Auth::user();
+
+    if ($user) {
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
         $user->email = $request->input('email');
+        /** @var \App\Models\User $user **/
         $user->save();
-
-        $tienda = $user->tiendas;
-
-        return view('admin.profile', compact('user', 'tienda'));
+    } else {
+        // Manejar el caso en el que el usuario no esté autenticado
+        return redirect('/login')->with('error', 'Debes estar autenticado para editar tu perfil.');
     }
+
+    // Resto del código para actualizar la tienda si es necesario
+    // Asegúrate de que el usuario tenga una relación de tiendas antes de acceder a ella
+    if ($user->tiendas) {
+        foreach ($user->tiendas as $tienda) {
+            $tienda->description = $request->input('description');
+            $tienda->assistant = $request->input('assistant');
+            $tienda->schedule = $request->input('schedule');
+            $tienda->location = $request->input('location');
+            $tienda->save();
+        }
+    }
+
+    // Redireccionar o mostrar una vista de confirmación
+    $tienda = $user->tiendas;
+    return view('admin.profile', compact('user', 'tienda'));
+}
+
 }

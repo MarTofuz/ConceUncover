@@ -29,7 +29,7 @@
             <div class="form-box login">
             <form action="{{ route('saveShop') }}" method="POST">
     @csrf
-    <h1> Editar Tienda</h1>
+    <h1> Agregar Tienda</h1>
     <br>
 
     <div class="form-group">
