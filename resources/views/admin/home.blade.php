@@ -34,7 +34,10 @@
     </header>
         
     <iframe width='100%' height='100%' src="https://api.mapbox.com/styles/v1/martofu/clnt5b40600du01qm82djglho.html?title=false&access_token=pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ&zoomwheel=true#16.66/-36.827783/-73.060636/332.8" title="Streets" style="border:none;"></iframe>     
-    
+   @role('admin')
+        <h2>Soy administrador</h2>
+
+    @endrole
 </body>
 <script>
     const username = document.getElementById('userDropdown');
