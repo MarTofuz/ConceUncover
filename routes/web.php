@@ -60,3 +60,4 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+Route::get('/adminPanel', [AdminController::class, 'adminPanel'])->name('adminPanel');

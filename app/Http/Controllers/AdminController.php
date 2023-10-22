@@ -58,4 +58,8 @@ class AdminController extends Controller
     return view('admin.profile', compact('user', 'tienda'));
 }
 
+public function adminPanel(){
+    return View('admin.adminPanel');
+}
+
 }

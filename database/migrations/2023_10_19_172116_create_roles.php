@@ -15,7 +15,7 @@ return new class extends Migration
     {
         // Intentar encontrar el usuario con ID 1
         $user = User::find(1);
-
+ 
         if ($user) {
             // El usuario se encontró, asignar el rol
             $role1 = Role::where('name', 'admin')->first();
