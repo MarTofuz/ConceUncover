@@ -60,4 +60,8 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-Route::get('/adminPanel', [AdminController::class, 'adminPanel'])->name('adminPanel');
+Route::get('/adminPanel', [AdminController::class, 'adminPanel'])->name('adminPanel')->middleware('auth');
+
+Route::get('/adminAccount', [AdminController::class, 'adminAccount'])->name('adminAccount')->middleware('auth');
+
+Route::get('/adminStore', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth');

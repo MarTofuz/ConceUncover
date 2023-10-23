@@ -62,4 +62,12 @@ public function adminPanel(){
     return View('admin.adminPanel');
 }
 
+public function adminAccount(){
+    return View('admin.adminAccount');
+}
+
+public function adminStore(){
+    return View('admin.adminStore');
+}
+
 }

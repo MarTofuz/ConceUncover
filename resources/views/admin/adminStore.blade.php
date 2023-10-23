@@ -3,11 +3,11 @@
 @section('title', 'ConceUncover')
 
 @section('content_header')
-    <h1>Gestión de Notificaciones</h1>
+    <h1>Gestión de Tiendas</h1>
 @stop
 
 @section('content')
-    <p>Control de Acceso a Tiendas.</p>
+    <p>Control de Acceso a tiendas.</p>
 @stop
 
 @section('css')
