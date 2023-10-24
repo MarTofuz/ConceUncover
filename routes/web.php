@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\SucursalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,28 @@ Route::group(['prefix' => '/editShop'], function(){
     Route::post('/', [TiendaController::class, 'saveShop'])->name('saveShop')->middleware('auth');
 });
 
+Route::group(['prefix' => '/editLocal'], function(){
+    Route::get('/', [TiendaController::class, 'viewupdateshop'])->name('viewupdateshop')->middleware('auth');
+    Route::post('/', [TiendaController::class, 'updateShop'])->name('updateShop')->middleware('auth');
+});
+
+Route::get('/profileShop', [TiendaController::class, 'viewProfileShop'])->name('viewProfileShop')->middleware('auth');
+
+Route::group(['prefix' => '/saveSucursal/{id}'], function(){
+    Route::get('/', [SucursalController::class, 'viewSaveSucursal'])->name('viewSaveSucursal')->middleware('auth');
+    Route::post('/', [SucursalController::class, 'saveSucursal'])->name('saveSucursal')->middleware('auth');
+});
+
+Route::get('/profileShop/{id}', [SucursalController::class, 'deletedSucursal'])->name('deletedSucursal')->middleware('auth');
+
+Route::group(['prefix' => '/editSucursal/{id}'], function(){
+    Route::get('/', [SucursalController::class, 'viewUpdateSucursal'])->name('viewUpdateSucursal')->middleware('auth');
+    Route::post('/', [SucursalController::class, 'updateSucursal'])->name('updateSucursal')->middleware('auth');
+});
+
+
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -60,6 +83,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
 Route::get('/adminPanel', [AdminController::class, 'adminPanel'])->name('adminPanel')->middleware('auth');
 
 Route::get('/adminAccount', [AdminController::class, 'adminAccount'])->name('adminAccount')->middleware('auth');

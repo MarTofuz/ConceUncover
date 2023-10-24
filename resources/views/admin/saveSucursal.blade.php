@@ -42,14 +42,14 @@
     <div class="container">
         <div class="wrapper">
             <div class="form-box login">
-                <form action="{{ route('saveShop') }}" method="POST">
+                <form action="{{ route('saveSucursal', $tienda->id) }}" method="POST">
                     @csrf
-                    <h1> Agregar Tienda</h1>
+                    <h1> Agregar Sucursal</h1>
                     <br>
 
                     <div class="form-group">
                         <p>Nombre:</p>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" require>
+                        <input type="text" id="name" name="name" value="{{ old('name') }}" required>
                     </div>
 
                     <div class="form-group">
@@ -76,6 +76,7 @@
                         <p>Ubicación:</p>
                         <input type="text" id="location" name="location" value="{{ old('location') }}" readonly required>
                     </div>
+                    <input type="hidden" name="tienda_id" value="{{ $tienda->id }}">
                     <!-- pruebas -->
                     <div class="form-group" style="display: flex; flex-direction: column;">
                         <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
@@ -83,7 +84,6 @@
                         <button class="btn btn-dark px-4" type="submit" style="margin: 0 auto;">Agregar Tienda</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

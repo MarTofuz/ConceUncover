@@ -27,35 +27,35 @@
     <div class="container">
         <div class="wrapper">
             <div class="form-box login">
-                <form action="{{ route('updateShop') }}" method="POST">
+                <form action="{{ route('updateSucursal', $sucursal->id) }}" method="POST">
                     @csrf
-                    <h1>Editar Tienda</h1>
+                    <h1>Editar Sucursal</h1>
                     <div class="form-group">
                         <p>Nombre:</p>
-                        <input type="text" id="name" name="name" value="{{ $tienda->name }}" required>
+                        <input type="text" id="name" name="name" value="{{ $sucursal->name }}" required>
                     </div>
                     <div class="form-group">
                         <p>Dirección:</p>
-                        <input type="text" id="address" name="address" value="{{ $tienda->address }}" required>
+                        <input type="text" id="address" name="address" value="{{ $sucursal->address }}" required>
                     </div>
                     <div class="form-group">
                         <p>Descripción:</p>
-                        <input id="description" name="description" value="{{ $tienda->description }}" required></input>
+                        <input id="description" name="description" value="{{ $sucursal->description }}" required></input>
                     </div>
                     <div class="form-group">
                         <p>Asistente:</p>
-                        <input id="assistant" name="assistant" value="{{ $tienda->assistant }}" required></input>
+                        <input id="assistant" name="assistant" value="{{ $sucursal->assistant }}" required></input>
                     </div>
                     <div class="form-group">
                         <p>Horario:</p>
-                        <input id="schedule" name="schedule" value="{{ $tienda->schedule }}" required></input>
+                        <input id="schedule" name="schedule" value="{{ $sucursal->schedule }}" required></input>
                     </div>
                     <div class="form-group">
                         <p>Ubicacion:</p>
-                        <input id="location" name="location" value="{{ $tienda->location }}" readonly required></input>
+                        <input id="location" name="location" value="{{ $sucursal->location }}" readonly required></input>
                     </div>
                     <!-- Agrega un campo oculto para mantener el ID de la tienda -->
-                    <input type="hidden" name="tienda_id" value="{{ $tienda->id }}">
+                    <input type="hidden" name="sucursal_id" value="{{ $sucursal->id }}">
 
                     <button class="btn btn-dark px-4" type="submit">Editar</button>
                 </form>

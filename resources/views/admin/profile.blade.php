@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <title>Conce Uncover</title>
 </head>
+
 <body>
     <header>
         <h2 class="logo">Conce Uncover</h2>
@@ -33,50 +35,52 @@
             <p>Dirección: {{ $user->address ?? 'No hay datos' }}</p>
             <p>Correo: {{ $user->email }}</p>
             <br>
-            <br>
-            <br>
-
-            <h1>Locales disponibles</h1>
-
-            @if ($tienda && $tienda->count() > 0)
-                @foreach ($tienda as $unaTienda)
-                <div>
-                    @if ($unaTienda->name)
-                    <p>Nombre de la tienda: {{ $unaTienda->name }}</p>
-                    @endif
-                </div>
-                <br>
-                @endforeach
-                @else
-                <p>No tienes locales disponibles</p>
-                @endif
-
             <form action="{{ route('edit') }}">
-                <button class="left-button">Editar</button>
+                <button class="right-button">Editar</button>
             </form>
+            <br>
+            <br>
+            <br>
+            <br>
+            <hr>
+            <br>
+
+            <h1>Tienda</h1>
+
+            @if ($tienda)
+            <p>Nombre: {{ $tienda->name }}</p>
+            <form action="{{ route('viewProfileShop') }}">
+                <button class="right-button">Ver Tienda</button>
+            </form>
+            <br>
+            @else
+            <p>No hay tienda asociada</p>
             <form action="{{ route('viewSaveShop') }}">
                 <button class="right-button">Nuevo Local</button>
             </form>
+            @endif
+
         </div>
-    <script>
-    const username = document.getElementById('userDropdown');
-    const dropdownMenu = document.getElementById('userDropdownContent');
-    username.addEventListener('click', function(event) {
-        event.stopPropagation(); // Evita que el evento de clic se propague y se ejecute el documento.click
-        if (dropdownMenu.style.display === 'block') {
-            dropdownMenu.style.display = 'none';
-        } else {
-            dropdownMenu.style.display = 'block';
-        }
-    });
-    document.addEventListener('click', function(event) {
-        if (event.target !== username) {
-            dropdownMenu.style.display = 'none';
-        }
-    });
+        <script>
+            const username = document.getElementById('userDropdown');
+            const dropdownMenu = document.getElementById('userDropdownContent');
+            username.addEventListener('click', function(event) {
+                event.stopPropagation(); // Evita que el evento de clic se propague y se ejecute el documento.click
+                if (dropdownMenu.style.display === 'block') {
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+            document.addEventListener('click', function(event) {
+                if (event.target !== username) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
         </script>
 
 
     </div>
 </body>
+
 </html>
