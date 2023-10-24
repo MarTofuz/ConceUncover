@@ -60,8 +60,12 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-Route::get('/adminPanel', [AdminController::class, 'adminPanel'])->name('adminPanel')->middleware('auth');
+Route::get('/adminPanel', [AdminController::class, 'adminPanel'])->name('adminPanel')->middleware(['auth','CheckIsAdmin']);
 
-Route::get('/adminAccount', [AdminController::class, 'adminAccount'])->name('adminAccount')->middleware('auth');
+Route::get('/adminAccount', [AdminController::class, 'adminAccount'])->name('adminAccount')->middleware('auth','CheckIsAdmin');
 
-Route::get('/adminStore', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth');
+Route::get('/adminStore', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth','CheckIsAdmin');
+
+Route::get('delay-page', function () {
+    return view('delay-page');
+})->name('showDelayPage');
