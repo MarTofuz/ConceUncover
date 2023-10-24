@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -63,7 +64,26 @@ public function adminPanel(){
 }
 
 public function adminAccount(){
-    return View('admin.adminAccount');
+
+    $users = DB::table('users')->get();
+    return View('admin.adminAccount',compact('users'));
+    
+}
+public function eliminarUsuario($id)
+{
+    $users = User::find($id);
+
+    if ($id == 1) {
+        return redirect()->route('adminAccount')->with('error', 'No puedes eliminar al administrador.');
+    }
+
+    if (!$users) {
+        return redirect()->route('adminAccount')->with('error', 'Usuario no encontrado.');
+    }
+
+    $users->delete();
+
+    return redirect()->route('adminAccount')->with('success', 'Usuario eliminado correctamente.');
 }
 
 public function adminStore(){
