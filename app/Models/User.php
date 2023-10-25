@@ -36,7 +36,7 @@ class User extends Authenticatable
 
     public function tiendas()
     {
-        return $this->hasMany(Tienda::class);
+        return $this->hasOne(Tienda::class, 'user_id');
     }
 
     /**

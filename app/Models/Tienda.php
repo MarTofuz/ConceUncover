@@ -11,10 +11,15 @@ class Tienda extends Model
 
     protected $table = 'tiendas';
 
-    protected $fillable = ['name', 'address', 'description', 'assistant', 'schedule', 'location'];
+    protected $fillable = ['name', 'address', 'description', 'assistant', 'schedule', 'location', 'user_id'];
 
     public function propietario()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function sucursales()
+    {
+        return $this->hasMany(Sucursal::class, 'tienda_id');
     }
 }
