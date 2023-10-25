@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/edit.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/shop.css') }}">
     <title>Conce Uncover</title>
     <style>
         .mapboxgl-ctrl-attrib-button {
@@ -67,16 +67,16 @@
                     </div>
                     <div class="form-group">
                         <p>Ubicacion:</p>
-                        <input id="location" name="location" value="{{ $tienda->location }}" readonly required></input>
+                        <input id="location" required name="location" value="{{ $tienda->location }}" readonly></input>
                     </div>
                     <!-- Agrega un campo oculto para mantener el ID de la tienda -->
                     <input type="hidden" name="tienda_id" value="{{ $tienda->id }}">
 
                     <div class="form-group" style="display: flex; flex-direction: column;">
-                        <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
+                        <div id="map" style="width: 500px; height: 300px; margin: 20px auto; cursor: pointer;"></div>
                         <br>
                     </div>
-                    <button class="btn btn-dark px-4" type="submit">Editar</button>
+                    <button class="btn btn-dark px-4" type="submit">Actualizar</button>
 
                 </form>
             </div>
@@ -106,17 +106,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ';
 
-            var initialLat = -36.827783;
-            var initialLng = -73.060636;
-            var zoomLevel = 16.66;
-            var thirdValue = -27.2;
-
-            var initialLngLat = [zoomLevel, initialLng, initialLat, thirdValue];
-            var storedLngLat = JSON.parse(localStorage.getItem('markerLocation'));
-
-            if (!storedLngLat || storedLngLat.length !== 2) {
-                storedLngLat = initialLngLat;
-            }
+            var initialLngLat = [-73.060636, -36.827783];
+            var storedLngLat = JSON.parse(localStorage.getItem('markerLocation')) || initialLngLat;
 
             var map = new mapboxgl.Map({
                 container: 'map', // El ID del contenedor en tu formulario
@@ -125,22 +116,17 @@
                 zoom: 16.66, // Establece el nivel de zoom inicial
                 showTileBoundaries: false, // Oculta los vínculos en el mapa
                 showNavigationControl: false, // Oculta los controles de navegación
-                scrollZoom: false // Deshabilita el zoom al hacer scroll
             });
 
             // Agrega código para permitir a los usuarios interactuar con el mapa y seleccionar la ubicación, por ejemplo, un marcador:
-            var marker = new mapboxgl.Marker({
-                    draggable: true
-                })
-                .setLngLat(storedLngLat) // Establece la ubicación del marcador en la última ubicación almacenada
-                .addTo(map);
+            map.on('click', function(e) {
+                var lngLat = e.lngLat;
 
-            marker.on('dragend', function() {
-                var lngLat = marker.getLngLat();
+                // Muestra las coordenadas en el campo de ubicación
                 document.getElementById('location').value = lngLat.lng + ', ' + lngLat.lat;
 
-                // Almacena las coordenadas del marcador en el almacenamiento local (localStorage)
-                localStorage.setItem('markerLocation', JSON.stringify([lngLat.lng, lngLat.lat]));
+                // Almacena las coordenadas en el almacenamiento local (localStorage)
+                localStorage.setItem('markerLocation', JSON.stringify(lngLat));
             });
         });
     </script>

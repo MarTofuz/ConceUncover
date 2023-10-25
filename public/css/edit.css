@@ -31,6 +31,9 @@ body {
 #user {
     text-align: center;
 }
+.mapboxgl-ctrl-attrib-button {
+    display: none;
+}
 
 .logo {
     font-size: 2em;
@@ -227,4 +230,8 @@ input:focus {
 /* Estilo para el párrafo dentro de .form-group */
 .form-group p {
     margin: 0; /* Elimina el margen superior e inferior del párrafo */
+}
+
+.mapboxgl-ctrl-attrib-button {
+    display: none;
 }

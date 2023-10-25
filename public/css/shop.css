@@ -167,16 +167,7 @@ body {
     border-color: #007BFF;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 15px 20px; /* Ajusta el espaciado del botón según tus preferencias */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    margin-left: 300px;
-}
+
 
 /* Estilo para el botón al pasar el cursor sobre él */
 button:hover {
@@ -188,3 +179,19 @@ form h1 {
     margin-bottom: 18px; /* Espacio entre el título y los campos de entrada */
 }
 
+.mapboxgl-ctrl-attrib-button {
+    display: none;
+}
+
+.btn {
+    width: 100%;
+    height: 45px;
+    background-color: black;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+}

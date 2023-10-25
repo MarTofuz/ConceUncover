@@ -56,7 +56,7 @@
             @else
             <p>No hay tienda asociada</p>
             <form action="{{ route('viewSaveShop') }}">
-                <button class="right-button">Nuevo Local</button>
+                <button class="right-button">Nueva Tienda</button>
             </form>
             @endif
 
