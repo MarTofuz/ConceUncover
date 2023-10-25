@@ -44,7 +44,7 @@
             <div class="form-box login">
                 <form action="{{ route('updateShop') }}" method="POST">
                     @csrf
-                    <h1>Editaar Tienda</h1>
+                    <h1>Editar Tienda</h1>
                     <div class="form-group">
                         <p>Nombre:</p>
                         <input type="text" id="name" name="name" value="{{ $tienda->name }}" required>
@@ -75,8 +75,9 @@
                     <div class="form-group" style="display: flex; flex-direction: column;">
                         <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
                         <br>
-                        <button class="btn btn-dark px-4" type="submit">Editar</button>
                     </div>
+                    <button class="btn btn-dark px-4" type="submit">Editar</button>
+
                 </form>
             </div>
         </div>
@@ -105,8 +106,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ';
 
-            var initialLngLat = [-73.060636, -36.827783];
-            var storedLngLat = JSON.parse(localStorage.getItem('markerLocation')) || initialLngLat;
+            var initialLat = -36.827783;
+            var initialLng = -73.060636;
+            var zoomLevel = 16.66;
+            var thirdValue = -27.2;
+
+            var initialLngLat = [zoomLevel, initialLng, initialLat, thirdValue];
+            var storedLngLat = JSON.parse(localStorage.getItem('markerLocation'));
+
+            if (!storedLngLat || storedLngLat.length !== 2) {
+                storedLngLat = initialLngLat;
+            }
 
             var map = new mapboxgl.Map({
                 container: 'map', // El ID del contenedor en tu formulario
@@ -130,7 +140,7 @@
                 document.getElementById('location').value = lngLat.lng + ', ' + lngLat.lat;
 
                 // Almacena las coordenadas del marcador en el almacenamiento local (localStorage)
-                localStorage.setItem('markerLocation', JSON.stringify(lngLat));
+                localStorage.setItem('markerLocation', JSON.stringify([lngLat.lng, lngLat.lat]));
             });
         });
     </script>
