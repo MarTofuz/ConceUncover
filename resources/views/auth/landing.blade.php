@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/landing.css') }}">
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
     <title>Conce Uncover</title>
     <style>
         /* Establece el tamaño del mapa al 100% del ancho y alto del cuerpo */
@@ -13,6 +14,10 @@
         html {
             height: 100%;
             padding-top: 45px;
+        }
+        .map {
+            height: 100%;
+            width: 100%;
         }
     </style>
 </head>
@@ -28,9 +33,36 @@
                 <button class="btnlogin-popup">Iniciar Sesión</button>
             </a>
         </nav>
-    </header>
-    
-    <iframe width='100%' height='100%' src="https://api.mapbox.com/styles/v1/martofu/clnt5b40600du01qm82djglho.html?title=false&access_token=pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ&zoomwheel=true#16.66/-36.827783/-73.060636/332.8" title="Streets" style="border:none;"></iframe>
+    </header>    
+    <div class="map" id='map'></div>
 </body>
+<script>   
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50M2JldGswMDN3MmxxamhpdHlvYWM1In0.Ig_IGmqviFJg-_P99a8EYw';
+    const map = new mapboxgl.Map({
+        container: 'map', // Reemplaza 'map' con el ID de tu contenedor de mapa
+        style: 'mapbox://styles/martofu/clnt5b40600du01qm82djglho',
+        center: [-73.060636, -36.827783], // Cambia a la ubicación inicial que desees
+        zoom: 16.66,
+        showTileBoundaries: false,
+        showNavigationControl: false
+    });
+</script>
+<script>        
+    var tiendas;
+    
+    //var tiendas = @json($tiendas);
+    if (Array.isArray(tiendas)) {
+        if (tiendas.length > 0) {
+            tiendas.forEach(function(tienda) {
+                if (tienda.location) {
+                    var lngLat = tienda.location.split(',').map(Number);
+                    new mapboxgl.Marker()
+                        .setLngLat(lngLat)
+                        .addTo(map);
+                }
+            });
+        }
 
+    }
+</script>
 </html>

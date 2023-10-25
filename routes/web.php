@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TiendaController;
+use App\Http\Controllers\LandingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,7 @@ use App\Http\Controllers\TiendaController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.landing');
-})->name('/');
+Route::get('/',[LandingController::class, 'index'], function () {return view('auth.landing');})->name('/');
 
 Route::group(['prefix' => '/login'], function(){
     Route::get('/', [AuthController::class, 'showLogin'])->name('login');
@@ -34,7 +33,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware(
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/landing', [AuthController::class, 'landing'])->name('landing');
+
 
 //user normal
 
