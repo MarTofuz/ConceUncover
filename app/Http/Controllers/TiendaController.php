@@ -13,7 +13,7 @@ class TiendaController extends Controller
     public function viewSaveShop()
     {
         $user = Auth::user();
-        $tiendas = $user->tiendas;
+        $tiendas = Tienda::where('user_id', $user->id)->get(['location']);        
         return view('admin.editShop', compact('user', 'tiendas'));
     }
 

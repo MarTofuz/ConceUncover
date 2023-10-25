@@ -7,11 +7,19 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/home.css') }}">
     <title>Conce Uncover</title>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             padding-top: 38px;
             overflow-y: hidden;
+        }
+
+        .map {
+            height: 100%;
+            width: 100%;
         }
     </style>
 </head>
@@ -20,9 +28,9 @@
     <header>
         <h2 class="logo">Conce Uncover</h2>
         <nav class="navigation">
-        @role('admin')
+            @role('admin')
             <a href="{{ route('adminPanel') }}" id="admin_panel">Panel Administrador</a>
-        @endrole
+            @endrole
             <a href="{{ route('home') }}">Inicio</a>
             <div class="dropdown">
                 <a href="#" id="userDropdown">{{ $user->name }}</a>
@@ -35,8 +43,8 @@
             </div>
         </nav>
     </header>
+    <div class="map" id='map'></div>
 
-    <iframe width='100%' height='100%' src="https://api.mapbox.com/styles/v1/martofu/clnt5b40600du01qm82djglho.html?title=false&access_token=pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ&zoomwheel=true#16.66/-36.827783/-73.060636/332.8" style="border:none;"></iframe>
 </body>
 <script>
     const username = document.getElementById('userDropdown');
@@ -56,32 +64,34 @@
     });
 </script>
 
-<script>
-
-    /////////////SE SUPONE QUE CON ESTO FUNCIONARIA COLOCAR LAS TIENDAS
-    /////////////PERO CREO QUE NO ME TOMA LA COLUMNA DE LOCATION EN EL IF
-
-    // Asegurémonos de que la variable 'map' esté definida antes de utilizarla
-    var map = new mapboxgl.Map({
-        container: 'map', // Reemplaza 'map' con el ID de tu contenedor de mapa
+<script>   
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50M2JldGswMDN3MmxxamhpdHlvYWM1In0.Ig_IGmqviFJg-_P99a8EYw';
+    const map = new mapboxgl.Map({
+        container: 'map', 
         style: 'mapbox://styles/martofu/clnt5b40600du01qm82djglho',
-        center: [-73.060636, -36.827783], // Cambia a la ubicación inicial que desees
+        center: [-73.060636, -36.827783], 
         zoom: 16.66,
         showTileBoundaries: false,
         showNavigationControl: false
     });
+</script>
+<script>        
+    var tiendas;    
+    //var tiendas = @json($tiendas);
+    if (Array.isArray(tiendas)) {
+        if (tiendas.length > 0) {
+            tiendas.forEach(function(tienda) {
+                if (tienda.location) {
+                    var lngLat = tienda.location.split(',').map(Number);
+                    new mapboxgl.Marker()
+                        .setLngLat(lngLat)
+                        .addTo(map);
+                }
+            });
+        }
 
-    // Supongamos que 'tiendas' es una matriz de objetos con información de tiendas
-    if (Array.isArray(tiendas) && tiendas.length > 0) {
-        tiendas.forEach(function(tienda) {
-            if (tienda.location) {
-                var lngLat = tienda.location.split(',').map(Number);
-                new mapboxgl.Marker()
-                    .setLngLat(lngLat)
-                    .addTo(map);
-            }
-        });
     }
 </script>
+
 
 </html>

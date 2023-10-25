@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Tienda;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -53,9 +54,7 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
-    public function landing(){
-        return View('auth.landing');
-    }
+   
 
     public function logout(){
         Auth::logout();
