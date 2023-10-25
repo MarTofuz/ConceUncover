@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Sucursal;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -75,8 +76,36 @@ class AdminController extends Controller
         return redirect()->route('adminAccount')->with('success', 'Usuario eliminado correctamente.');
     }
 
+    public function eliminarTienda($id)
+    {
+        $tiendas = Tienda::find($id);
+
+        if (!$tiendas) {
+            return redirect()->route('adminStore')->with('error', 'Tienda no encontrada.');
+        }
+
+        $tiendas->delete();
+        $tiendas->sucursales()->delete();
+
+        return redirect()->route('adminStore')->with('success', 'Tienda eliminada correctamente.');
+    }
+    public function eliminarSucursal($id)
+    {
+        $sucursales = Sucursal::find($id);
+
+        if (!$sucursales) {
+            return redirect()->route('adminStore')->with('error', 'Sucursal no encontrado.');
+        }
+
+        $sucursales->delete();
+
+        return redirect()->route('adminStore')->with('success', 'Sucursal eliminada correctamente.');
+    }
+
     public function adminStore()
     {
-        return View('admin.adminStore');
+        $tiendas = Tienda::all();
+        $sucursales = Tienda::with('sucursales')->get();
+        return view('admin.adminStore', compact('sucursales', 'tiendas'));
     }
 }

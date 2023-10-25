@@ -85,7 +85,10 @@ Route::get('/adminPanel', [AdminController::class, 'adminPanel'])->name('adminPa
 Route::get('/adminAccount', [AdminController::class, 'adminAccount'])->name('adminAccount')->middleware('auth','CheckIsAdmin');
 Route::get('/eliminar-usuario/{id}', [AdminController::class, 'eliminarUsuario'])->name('eliminar-usuario')->middleware('auth', 'CheckIsAdmin');
 
+
 Route::get('/adminStore', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth','CheckIsAdmin');
+Route::get('/eliminar-sucursal/{id}', [AdminController::class, 'eliminarSucursal'])->name('eliminar-sucursal')->middleware('auth', 'CheckIsAdmin');
+Route::get('/eliminar-tienda/{id}', [AdminController::class, 'eliminarTienda'])->name('eliminar-tienda')->middleware('auth', 'CheckIsAdmin');
 
 Route::get('delay-page', function () {
     return view('delay-page');
