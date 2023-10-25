@@ -4,6 +4,7 @@
 
 @section('content_header')
     <h1>Gestión de Cuentas</h1>
+    <h1>Cualquier cosa</h1>
 @stop
 
 @section('content')
