@@ -115,13 +115,14 @@
         var storedLngLat = JSON.parse(localStorage.getItem('markerLocation')) || initialLngLat;
 
         var map = new mapboxgl.Map({
-            container: 'map', // El ID del contenedor en tu formulario
-            style: 'mapbox://styles/martofu/clnt5b40600du01qm82djglho', // Establece tu estilo de mapa
-            center: storedLngLat, // Centra el mapa en las coordenadas iniciales o en la última ubicación del marcador
-            zoom: 16.66, // Establece el nivel de zoom inicial
-            showTileBoundaries: false, // Oculta los vínculos en el mapa
-            showNavigationControl: false // Oculta los controles de navegación
-        });
+                container: 'map', // El ID del contenedor en tu formulario
+                style: 'mapbox://styles/martofu/clnt5b40600du01qm82djglho', // Establece tu estilo de mapa
+                center: storedLngLat, // Centra el mapa en las coordenadas iniciales o en la última ubicación del marcador
+                zoom: 16.66, // Establece el nivel de zoom inicial
+                showTileBoundaries: false, // Oculta los vínculos en el mapa
+                showNavigationControl: false, // Oculta los controles de navegación
+                scrollZoom: false // Deshabilita el zoom al hacer scroll
+            });
 
         // Agrega código para permitir a los usuarios interactuar con el mapa y seleccionar la ubicación, por ejemplo, un marcador:
         var marker = new mapboxgl.Marker({

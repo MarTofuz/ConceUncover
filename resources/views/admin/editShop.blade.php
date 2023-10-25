@@ -83,7 +83,6 @@
                         <button class="btn btn-dark px-4" type="submit" style="margin: 0 auto;">Agregar Tienda</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -108,37 +107,38 @@
     </script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ';
+        document.addEventListener('DOMContentLoaded', function() {
+            mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ';
 
-        var initialLngLat = [-73.060636, -36.827783];
-        var storedLngLat = JSON.parse(localStorage.getItem('markerLocation')) || initialLngLat;
+            var initialLngLat = [-73.060636, -36.827783];
+            var storedLngLat = JSON.parse(localStorage.getItem('markerLocation')) || initialLngLat;
+            var map = new mapboxgl.Map({
+                container: 'map', // El ID del contenedor en tu formulario
+                style: 'mapbox://styles/martofu/clnt5b40600du01qm82djglho', // Establece tu estilo de mapa
+                center: storedLngLat, // Centra el mapa en las coordenadas iniciales o en la última ubicación del marcador
+                zoom: 16.66, // Establece el nivel de zoom inicial
+                showTileBoundaries: false, // Oculta los vínculos en el mapa
+                showNavigationControl: false, // Oculta los controles de navegación
+                scrollZoom: false // Deshabilita el zoom al hacer scroll
+            });
 
-        var map = new mapboxgl.Map({
-            container: 'map', // El ID del contenedor en tu formulario
-            style: 'mapbox://styles/martofu/clnt5b40600du01qm82djglho', // Establece tu estilo de mapa
-            center: storedLngLat, // Centra el mapa en las coordenadas iniciales o en la última ubicación del marcador
-            zoom: 16.66, // Establece el nivel de zoom inicial
-            showTileBoundaries: false, // Oculta los vínculos en el mapa
-            showNavigationControl: false // Oculta los controles de navegación
+            // Agrega código para permitir a los usuarios interactuar con el mapa y seleccionar la ubicación, por ejemplo, un marcador:
+            var marker = new mapboxgl.Marker({
+                    draggable: true
+                })
+                .setLngLat(storedLngLat) // Establece la ubicación del marcador en la última ubicación almacenada
+                .addTo(map);
+
+            marker.on('dragend', function() {
+                var lngLat = marker.getLngLat();
+                document.getElementById('location').value = lngLat.lng + ', ' + lngLat.lat;
+
+                // Almacena las coordenadas del marcador en el almacenamiento local (localStorage)
+                localStorage.setItem('markerLocation', JSON.stringify(lngLat));
+            });
         });
-
-        // Agrega código para permitir a los usuarios interactuar con el mapa y seleccionar la ubicación, por ejemplo, un marcador:
-        var marker = new mapboxgl.Marker({
-            draggable: true
-        })
-        .setLngLat(storedLngLat) // Establece la ubicación del marcador en la última ubicación almacenada
-        .addTo(map);
-
-        marker.on('dragend', function() {
-            var lngLat = marker.getLngLat();
-            document.getElementById('location').value = lngLat.lng + ', ' + lngLat.lat;
-
-            // Almacena las coordenadas del marcador en el almacenamiento local (localStorage)
-            localStorage.setItem('markerLocation', JSON.stringify(lngLat));
-        });
-    });
-</script>
+    </script>
 
 </body>
+
 </html>
