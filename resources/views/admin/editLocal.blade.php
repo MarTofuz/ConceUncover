@@ -75,8 +75,9 @@
                     <div class="form-group" style="display: flex; flex-direction: column;">
                         <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
                         <br>
-                        <button class="btn btn-dark px-4" type="submit">Editar</button>
                     </div>
+                    <button class="btn btn-dark px-4" type="submit">Editar</button>
+
                 </form>
             </div>
         </div>
@@ -105,7 +106,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ';
 
-            var initialLngLat = [-73.060636, -36.827783];
+            var initialLat = -36.827783;
+            var initialLng = -73.060636;
+            var zoomLevel = 16.66;
+            var thirdValue = -27.2;
+
+            var initialLngLat = [zoomLevel, initialLng, initialLat, thirdValue];
             var storedLngLat = JSON.parse(localStorage.getItem('markerLocation'));
 
             if (!storedLngLat || storedLngLat.length !== 2) {
