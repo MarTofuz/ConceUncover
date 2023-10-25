@@ -15,6 +15,7 @@
             height: 100%;
             padding-top: 45px;
         }
+
         .map {
             height: 100%;
             width: 100%;
@@ -33,10 +34,10 @@
                 <button class="btnlogin-popup">Iniciar Sesión</button>
             </a>
         </nav>
-    </header>    
+    </header>
     <div class="map" id='map'></div>
 </body>
-<script>   
+<script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50M2JldGswMDN3MmxxamhpdHlvYWM1In0.Ig_IGmqviFJg-_P99a8EYw';
     const map = new mapboxgl.Map({
         container: 'map', // Reemplaza 'map' con el ID de tu contenedor de mapa
@@ -47,9 +48,7 @@
         showNavigationControl: false
     });
 </script>
-<script>        
-    var tiendas;
-    
+<script>
     //var tiendas = @json($tiendas);
     if (Array.isArray(tiendas)) {
         if (tiendas.length > 0) {
@@ -62,7 +61,20 @@
                 }
             });
         }
-
+    }
+    //var sucursales = @json($sucursales);
+    if (Array.isArray(sucursales)) {
+        if (sucursales.length > 0) {
+            sucursales.forEach(function(sucursales) {
+                if (sucursales.location) {
+                    var lngLat = sucursales.location.split(',').map(Number);
+                    new mapboxgl.Marker()
+                        .setLngLat(lngLat)
+                        .addTo(map);
+                }
+            });
+        }
     }
 </script>
+
 </html>
