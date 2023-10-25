@@ -64,19 +64,18 @@
     });
 </script>
 
-<script>   
+<script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50M2JldGswMDN3MmxxamhpdHlvYWM1In0.Ig_IGmqviFJg-_P99a8EYw';
     const map = new mapboxgl.Map({
-        container: 'map', 
+        container: 'map',
         style: 'mapbox://styles/martofu/clnt5b40600du01qm82djglho',
-        center: [-73.060636, -36.827783], 
+        center: [-73.060636, -36.827783],
         zoom: 16.66,
         showTileBoundaries: false,
         showNavigationControl: false
     });
 </script>
-<script>        
-    var tiendas;    
+<script>
     //var tiendas = @json($tiendas);
     if (Array.isArray(tiendas)) {
         if (tiendas.length > 0) {
@@ -89,7 +88,19 @@
                 }
             });
         }
-
+    }
+    //var sucursales = @json($sucursales);
+    if (Array.isArray(sucursales)) {
+        if (sucursales.length > 0) {
+            sucursales.forEach(function(sucursales) {
+                if (sucursales.location) {
+                    var lngLat = sucursales.location.split(',').map(Number);
+                    new mapboxgl.Marker()
+                        .setLngLat(lngLat)
+                        .addTo(map);
+                }
+            });
+        }
     }
 </script>
 

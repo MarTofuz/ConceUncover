@@ -128,7 +128,7 @@ body {
     border-radius: 10px; /* Mayor valor de borde para un aspecto más redondeado */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombreado */
     margin-top: 50px;
-    max-width: 560px;
+    max-width: 650px;
     max-height: 900px;
     width: 100%;
     display: flex;

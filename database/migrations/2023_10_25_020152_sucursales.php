@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tiendas', function (Blueprint $table) {
+        Schema::create('sucursales', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('address');
@@ -19,9 +19,8 @@ return new class extends Migration
             $table->string('assistant');
             $table->string('schedule');
             $table->string('location');
-            $table->unsignedBigInteger('user_id'); // Campo para la relación con el usuario
+            $table->unsignedBigInteger('tienda_id'); // Clave foránea para la relación con la tienda
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tiendas');
+        Schema::dropIfExists('sucursales');
     }
 };
