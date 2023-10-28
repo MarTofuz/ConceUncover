@@ -20,6 +20,15 @@
             height: 100%;
             width: 100%;
         }
+
+        .popup {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 
@@ -55,21 +64,44 @@
             tiendas.forEach(function(tienda) {
                 if (tienda.location) {
                     var lngLat = tienda.location.split(',').map(Number);
+
+                    var popupContent =
+                        '<h1>' + tienda.name + '</h1>' +
+                        '<br>' +
+                        '<p>Dirección: ' + tienda.address + '</p>' +
+                        '<p>Horario: ' + tienda.schedule + '</p>';
+
+                    var popup = new mapboxgl.Popup()
+                        .setHTML(popupContent);
+
                     new mapboxgl.Marker()
                         .setLngLat(lngLat)
+                        .setPopup(popup)
                         .addTo(map);
                 }
             });
         }
     }
+
     //var sucursales = @json($sucursales);
     if (Array.isArray(sucursales)) {
         if (sucursales.length > 0) {
-            sucursales.forEach(function(sucursales) {
-                if (sucursales.location) {
-                    var lngLat = sucursales.location.split(',').map(Number);
+            sucursales.forEach(function(sucursal) {
+                if (sucursal.location) {
+                    var lngLat = sucursal.location.split(',').map(Number);
+
+                    var popupContent =
+                        '<h1>' + sucursal.name + '</h1>' +
+                        '<br>' +
+                        '<p>Dirección: ' + sucursal.address + '</p>' +
+                        '<p>Horario: ' + sucursal.schedule + '</p>';
+
+                    var popup = new mapboxgl.Popup()
+                        .setHTML(popupContent);
+
                     new mapboxgl.Marker()
                         .setLngLat(lngLat)
+                        .setPopup(popup)
                         .addTo(map);
                 }
             });
