@@ -108,4 +108,36 @@ class AdminController extends Controller
         $sucursales = Tienda::with('sucursales')->get();
         return view('admin.adminStore', compact('sucursales', 'tiendas'));
     }
+
+
+    public function buscarUsuario(){
+        $users = User::orderBy('created_at', 'ASC');
+        
+        if(request()->has('search')){
+            $searchTerm = '%' . request()->get('search', '') . '%';
+            $users = $users->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm)
+                      ->orWhere('email', 'like', $searchTerm);
+            });
+        }
+        
+        $users = $users->get(); // Ejecutar la consulta y obtener los resultados
+        
+        return view('admin.adminAccount', compact('users'));
+    }
+    public function buscarTienda(){
+        $tiendas = Tienda::orderBy('created_at', 'ASC');
+        
+        if(request()->has('search')){
+            $searchTerm = '%' . request()->get('search', '') . '%';
+            $tiendas = $tiendas->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'like', $searchTerm)
+                      ->orWhere('address', 'like', $searchTerm);
+            });
+        }
+        
+        $tiendas = $tiendas->get(); // Ejecutar la consulta y obtener los resultados
+        
+        return view('admin.adminStore', compact('tiendas'));
+    }
 }
