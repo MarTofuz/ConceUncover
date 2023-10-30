@@ -93,3 +93,13 @@ Route::get('/eliminar-tienda/{id}', [AdminController::class, 'eliminarTienda'])-
 Route::get('delay-page', function () {
     return view('delay-page');
 })->name('showDelayPage');
+
+Route::group(['prefix' => '/adminAccount'], function(){
+    Route::get('/', [AdminController::class, 'adminAccount'])->name('adminAccount')->middleware('auth','CheckIsAdmin');
+    Route::get('/', [AdminController::class, 'buscarUsuario'])->name('buscarUsuario');
+    });
+
+    Route::group(['prefix' => '/adminStore'], function(){
+        Route::get('/', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth','CheckIsAdmin');
+        Route::get('/', [AdminController::class, 'buscarTienda'])->name('buscarTiendas');
+        });

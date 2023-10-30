@@ -8,6 +8,18 @@
 
 @section('content')
     <p>Control de Acceso a cuentas.</p>
+    <div class="card searchCard">
+        <div class="card-body">
+            <form action="{{ route('buscarUsuario') }}" method="GET">
+                <input name="search" placeholder="buscar" type="text">
+                <button class="btn btn-dark mt-2">Buscar</button>
+            </form>
+        </div>
+    </div>
+<br>
+
+
+
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -23,7 +35,7 @@
 
     <div class="row">
     @foreach ($users as $user)
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card custom-card" style="width: 18rem;">
                 <h5 class="card-title text-center">{{ $user->name }}</h5>
                 <img class="card-img-top" src="{{ asset('img/avatar.jpg') }}" alt="Card image cap" height="170">
@@ -54,6 +66,11 @@
     .custom-card {
         width: 250px; /* Ancho personalizado */
         height: 400px; /* Alto personalizado */
+    }
+    .searchCard{
+        width: 340px;
+        height: 100px; 
+        margin-left: 1200px;
     }
 </style>
 @stop

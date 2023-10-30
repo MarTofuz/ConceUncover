@@ -9,6 +9,16 @@
 @section('content')
     <p>Control de Acceso a tiendas.</p>
 
+    <div class="card searchCard">
+        <div class="card-body">
+            <form action="{{ route('buscarTiendas') }}" method="GET">
+                <input name="search" placeholder="buscar" type="text">
+                <button class="btn btn-dark mt-2">Buscar</button>
+            </form>
+        </div>
+    </div>
+<br>
+
     @if (session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -68,4 +78,11 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
+    .searchCard{
+    width: 340px; /* Ancho personalizado */
+        height: 100px; /* Alto personalizado */
+        margin-left: 1200px;
+}
 </style>
+
