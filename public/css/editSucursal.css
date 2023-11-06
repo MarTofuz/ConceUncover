@@ -1,4 +1,3 @@
-/* Estilo para el contenedor del formulario */
 .containerProfile {
   display: flex;
   justify-content: center;
@@ -6,64 +5,45 @@
   min-height: 100vh;
 }
 
-/* Estilo para el contenedor del formulario */
 .wrapper {
   text-align: center;
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; /* Cambia el color de fondo según tus preferencias */
   padding: 20px;
   border-radius: 10px;
   width: 600px;
+  display: flex; /* Agregar display flex */
+  justify-content: center; /* Centrar elementos horizontalmente */
+  align-items: center; /* Centrar elementos verticalmente */
 }
 
-/* Estilo para el título del formulario */
-form h1 {
+.form-box {
+  margin: 20px;
+  display: flex; /* Agregar display flex */
+  justify-content: space-between; /* Espacio entre elementos */
+  align-items: center; /* Centrar elementos verticalmente */
+}
+
+/* Estilos adicionales según tus preferencias */
+h1 {
   font-size: 24px;
-  color: #333;
 }
 
-/* Estilo para las etiquetas de los campos de entrada */
-.form-group p {
+.label {
   font-weight: bold;
-  display: inline-block;
-  width: 120px; /* Ancho de las etiquetas */
+
 }
 
-/* Estilo para los grupos de formulario */
 .form-group {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
+  margin-bottom: 30px;
 }
 
-/* Estilo para los campos de entrada */
-.form-group input {
-  flex: 1;
+.form-control {
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
-  color: #333;
-  outline: none;
 }
 
-/* Estilo para el botón de enviar */
-.btn-dark {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-/* Estilo para el mapa, puedes ajustar según tus necesidades */
-#map {
-  width: 100%; /* Utiliza el 100% del ancho disponible en el contenedor */
-  height: 300px;
-  margin: 20px auto;
-  cursor: pointer;
-}
 .btn {
   background-color: #333;
   color: #fff;
@@ -71,5 +51,12 @@ form h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
+}
+
+/* Estilos para el mapa, puedes ajustar según tus necesidades */
+#map {
+  width: 500px;
+  height: 300px;
+  margin: 20px auto;
+  cursor: pointer;
 }
