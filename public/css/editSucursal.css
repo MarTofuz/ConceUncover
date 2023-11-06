@@ -1,0 +1,75 @@
+/* Estilo para el contenedor del formulario */
+.containerProfile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Estilo para el contenedor del formulario */
+.wrapper {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  width: 600px;
+}
+
+/* Estilo para el título del formulario */
+form h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Estilo para las etiquetas de los campos de entrada */
+.form-group p {
+  font-weight: bold;
+  display: inline-block;
+  width: 120px; /* Ancho de las etiquetas */
+}
+
+/* Estilo para los grupos de formulario */
+.form-group {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* Estilo para los campos de entrada */
+.form-group input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+}
+
+/* Estilo para el botón de enviar */
+.btn-dark {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* Estilo para el mapa, puedes ajustar según tus necesidades */
+#map {
+  width: 100%; /* Utiliza el 100% del ancho disponible en el contenedor */
+  height: 300px;
+  margin: 20px auto;
+  cursor: pointer;
+}
+.btn {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}

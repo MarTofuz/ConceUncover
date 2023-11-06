@@ -70,7 +70,7 @@
     .searchCard{
         width: 340px;
         height: 100px; 
-        margin-left: 1200px;
+        margin-left: 900px;
     }
 </style>
 @stop

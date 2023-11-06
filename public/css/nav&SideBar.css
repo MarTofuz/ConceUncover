@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+/* Estilos del encabezado */
+#user {
+    text-align: center;
+}
+
+.logo {
+    font-size: 2em;
+    color: #fff;
+    user-select: none;
+    margin-left: -1000px;
+}
+
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.navigation a:hover::after {
+    transform: scaleX(1);
+}
+
+.navigation .btnlogin-popup {
+    width: 130px;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation .btnlogin-popup:hover {
+    background-color: #fff;
+    color: #162938;
+}
+
+/* Menú desplegable de la barra de navegación */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 45px;
+    left: 0;
+    background-color: black;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 205px;
+    height: 145px;
+}
+
+.dropdown-content a {
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    color: white;
+}
+
+.dropdown-content a:nth-child(2) {
+    margin-bottom: 10px; /* Agrega margen en la segunda opción (Nosotros) */
+}
+
+.dropdown-content a:hover {
+    background-color: black;
+}
+
+.columna-izquierda {
+    float: left;
+    width: 16%;
+    padding-top: 74px;
+
+}
+
+.columna-derecha {
+    float: left;
+    width: 84%;
+    padding: 10px;
+    padding-top: 100px;
+}
+
+/* Estilos del sidebar */
+.sidebarleft{
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background: black;
+}
+.usuario{
+    font-size: 22px;
+    color:white;
+    text-align: center;
+    line-height: 70px;
+    background: #0C0D0D;
+    user-select: none;
+}
+.sidebarleft ul a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 20px;
+    color: white;
+    padding-left: 40px;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255,255,255,.1);
+    border-bottom: 1px solid black;
+    text-decoration: none;
+    transition: .4s;
+}
+
+ul li:hover a {
+    padding-left: 50px;
+    background: #0C0D0D;
+}
+.sidebarleft ul a i{
+    margin-right: 16px;
+}
+#check{
+    display: none;
+}
+label #bars {
+    position:absolute;
+    cursor: pointer;
+    border-radius: 3px;
+}
+label #bars{
+    left: 40px;
+    top: 25px;
+    font-size: 35px;
+    color: white;
+}
+.columna-izquierda {
+    display: none;
+    transition: all 0.3s;
+}
+
+#check:checked + .columna-izquierda {
+    display: none;
+}
+
+/* Ajusta el estilo de la columna derecha cuando la columna izquierda está oculta */
+#check:checked + .columna-izquierda + .columna-derecha {
+    flex: 1;
+}
+/* Ajusta el estilo de la columna izquierda cuando está desactivada */
+.columna-izquierda.desactivada {
+    display: none;
+}
+
+/* Agrega este estilo para ocultar la columna izquierda cuando se marca el input */
+#check:checked + .columna-izquierda {
+    display: none;
+}
+
+/* Ajusta el estilo de la columna derecha cuando la columna izquierda está oculta */
+#check:checked + .columna-izquierda + .columna-derecha {
+    flex: 1;
+}
+.usuario {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px; /* Tamaño deseado */
+    height: 40px; /* Tamaño deseado */
+    border-radius: 50%; /* Esto hace que la imagen sea redonda, ajusta según tus preferencias */
+    margin-right: 10px; /* Espacio entre la imagen y el nombre */
+    margin-left: 42px;
+}
+
+.usertitle {
+    font-size: 28px; /* Ajusta el tamaño de fuente según tus preferencias */
+}
+  
+  
