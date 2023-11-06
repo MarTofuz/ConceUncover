@@ -96,10 +96,10 @@ Route::get('delay-page', function () {
 
 Route::group(['prefix' => '/adminAccount'], function(){
     Route::get('/', [AdminController::class, 'adminAccount'])->name('adminAccount')->middleware('auth','CheckIsAdmin');
-    Route::get('/', [AdminController::class, 'buscarUsuario'])->name('buscarUsuario');
-    });
+    Route::get('/buscar-usuario', [AdminController::class, 'buscarUsuario'])->name('buscarUsuario');
+});
 
-    Route::group(['prefix' => '/adminStore'], function(){
-        Route::get('/', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth','CheckIsAdmin');
-        Route::get('/', [AdminController::class, 'buscarTienda'])->name('buscarTiendas');
-        });
+Route::group(['prefix' => '/adminStore'], function(){
+    Route::get('/', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth','CheckIsAdmin');
+    Route::get('/buscar-tienda', [AdminController::class, 'buscarTienda'])->name('buscarTiendas');
+});

@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/nav&SideBar.css') }}">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Conce Uncover</title>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
@@ -13,55 +15,76 @@
         body,
         html {
             height: 100%;
-            padding-top: 38px;
             overflow-y: hidden;
         }
 
         .map {
             height: 100%;
-            width: 100%;
+            width: auto;
         }
     </style>
 </head>
 
 <body>
     <header>
-        
+        <input type="checkbox" id="check" style="display: none;">
+        <label for="check">
+            <i class="fas fa-bars" id="bars"></i>
+        </label>
         <h2 class="logo">Conce Uncover</h2>
         <nav class="navigation">
-            @role('admin')
-            <a href="{{ route('adminPanel') }}" id="admin_panel">Panel Administrador</a>
-            @endrole
             <a href="{{ route('home') }}">Inicio</a>
-            <div class="dropdown">
-                <a href="#" id="userDropdown">{{ $user->name }}</a>
-                <div class="dropdown-content" id="userDropdownContent">
-                    <!-- Aquí coloca las opciones del menú -->
-                    <a href="{{ route('profile') }}">Perfil</a>
-                    <a href="#">Favoritos</a>
-                    <a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a>
-                </div>
-            </div>
         </nav>
     </header>
+
+    <div class="columna-izquierda">
+        <!-- Sidebar -->
+        <div class="sidebarleft">
+            <div class="usuario">
+                <img src="{{ asset('img/avatar.jpg') }}" alt="Imagen de usuario" class="user-avatar">
+                <h3 class="usertitle">{{ $user->name }}</h3>
+            </div>
+            <ul>
+                <li> <a href="{{ route('profile') }}"><i class='fas fa-portrait'></i> Perfil</a></li>
+                @role('admin')
+                <li><a href="{{ route('adminPanel') }}" id="admin_panel"><i class='far fa-clipboard'></i>Administrador</a></li>
+                @endrole
+                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
+                <li><a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a></li>
+                <a></a>
+
+            </ul>
+        </div>
+    </div>
+
+
     <div class="map" id='map'></div>
+
 
 </body>
 <script>
-    const username = document.getElementById('userDropdown');
-    const dropdownMenu = document.getElementById('userDropdownContent');
-    username.addEventListener('click', function(event) {
-        event.stopPropagation(); // Evita que el evento de clic se propague y se ejecute el documento.click
-        if (dropdownMenu.style.display === 'block') {
-            dropdownMenu.style.display = 'none';
-        } else {
-            dropdownMenu.style.display = 'block';
-        }
-    });
-    document.addEventListener('click', function(event) {
-        if (event.target !== username) {
-            dropdownMenu.style.display = 'none';
-        }
+    document.addEventListener('DOMContentLoaded', function() {
+        const check = document.getElementById("check");
+        const columnaIzquierda = document.querySelector(".columna-izquierda");
+        const columnaDerecha = document.querySelector(".columna-derecha");
+
+        // Oculta la columna izquierda al cargar la página
+        columnaIzquierda.style.display = "none";
+
+        // Agrega un evento al input para cambiar el diseño al hacer clic en el botón
+        check.addEventListener("change", function() {
+            if (this.checked) {
+                columnaIzquierda.style.display = "block";
+                columnaDerecha.style.flex = "1";
+            } else {
+                columnaIzquierda.style.display = "none";
+                columnaDerecha.style.flex = "2";
+            }
+        });
     });
 </script>
 

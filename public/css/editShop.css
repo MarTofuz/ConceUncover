@@ -1,0 +1,63 @@
+.containerProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .wrapper {
+    text-align: center;
+    background-color: #f0f0f0; /* Cambia el color de fondo según tus preferencias */
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    display: flex; /* Agregar display flex */
+    justify-content: center; /* Centrar elementos horizontalmente */
+    align-items: center; /* Centrar elementos verticalmente */
+  }
+  
+  .form-box {
+    margin: 20px;
+    display: flex; /* Agregar display flex */
+    justify-content: space-between; /* Espacio entre elementos */
+    align-items: center; /* Centrar elementos verticalmente */
+  }
+  
+  /* Estilos adicionales según tus preferencias */
+  h1 {
+    font-size: 24px;
+  }
+  
+  .label {
+    font-weight: bold;
+
+  }
+  
+  .form-group {
+    margin-bottom: 30px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .btn {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el mapa, puedes ajustar según tus necesidades */
+  #map {
+    width: 500px;
+    height: 300px;
+    margin: 20px auto;
+    cursor: pointer;
+  }
+  
