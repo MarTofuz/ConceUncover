@@ -1,220 +1,99 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'poppins', sans-serif;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 100px;
-    background-color: black;
+.containerProfile {
+    width: 600px;
+    height: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #000; /* Grosor del borde de 2px */
+    text-align: center; /* Centrar horizontalmente el contenido */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 99;
+    flex-direction: column;
+    justify-content: center; /* Centrar verticalmente el contenido */
+    background-color: #f8f8f8; /* Color de fondo opcional para resaltar el contenedor */
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: url('background.png') no-repeat;
-    background-size: cover;
+.containerProfile h1 {
+    font-size: 28px; /* Tamaño de fuente más grande para los títulos */
+    margin: 10px 0; /* Espaciado superior e inferior para los títulos */
 }
 
-/* Estilos del encabezado */
-#user {
-    text-align: center;
+.containerProfile p {
+    font-size: 20px; /* Tamaño de fuente más grande para el texto */
+    margin: 5px 0; /* Espaciado superior e inferior para el texto */
 }
 
-.logo {
-    font-size: 2em;
-    color: #fff;
-    user-select: none;
+.containerProfile img {
+    max-width: 200px; /* Ajusta el ancho máximo de las imágenes */
+    height: auto; /* Mantén la relación de aspecto de las imágenes */
 }
 
-.navigation a {
-    position: relative;
-    font-size: 1.1em;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    margin-left: 40px;
+.containerProfile button {
+    padding: 10px 20px; /* Espaciado interno para los botones */
+    font-size: 20px; /* Tamaño de fuente más grande para el botón */
+    background-color: #000; /* Fondo negro para el botón */
+    color: #fff; /* Texto blanco para el botón */
+    border: none; /* Elimina el borde del botón */
+    cursor: pointer; /* Cambia el cursor al puntero al pasar por encima */
+    transition: background-color 0.3s; /* Transición de color de fondo al pasar por encima */
 }
 
-.navigation a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
+.containerProfile button:hover {
+    background-color: #333; /* Color de fondo ligeramente más oscuro al pasar por encima del botón */
+}
+/* Diseños de tabla de sucursales */
+
+.styled-table {
+    border-collapse: collapse;
     width: 100%;
-    height: 3px;
-    background-color: #fff;
-    border-radius: 5px;
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .5s;
-}
-
-.navigation a:hover::after {
-    transform: scaleX(1);
-}
-
-.navigation .btnlogin-popup {
-    width: 130px;
-    height: 50px;
-    background-color: transparent;
-    border: 2px solid #fff;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
-    color: #fff;
-    font-weight: 500;
-    margin-left: 40px;
-}
-
-.navigation .btnlogin-popup:hover {
-    background-color: #fff;
-    color: #162938;
-}
-
-/* Menú desplegable de la barra de navegación */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 45px;
-    left: 0;
-    background-color: black;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    width: 205px;
-    height: 145px;
-}
-
-.dropdown-content a {
-    padding: 10px 16px;
-    text-decoration: none;
-    display: block;
-    color: white;
-}
-
-.dropdown-content a:nth-child(2) {
-    margin-bottom: 10px; /* Agrega margen en la segunda opción (Nosotros) */
-}
-
-.dropdown-content a:hover {
-    background-color: black;
-}
-
-body {
     font-family: Arial, sans-serif;
-    background-color: #f1f1f1;
-    margin: 0;
 }
 
-.container {
-    background-color: #fff;
-    border-radius: 10px; /* Mayor valor de borde para un aspecto más redondeado */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombreado */
-    margin-top: 50px;
-    max-width: 650px;
-    max-height: 700px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px; /* Espacio interno */
-}
-img {
-    width: 100px; /* Ancho deseado en píxeles o porcentaje */
-    height: 100px; /* Altura automática para mantener la proporción original */
+.styled-table th,
+.styled-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 }
 
-/* Estilos del contenido dentro del contenedor */
-.form-box {
-    text-align: center;
-    padding: 70px;
-    flex: 1; /* El contenido ocupa todo el espacio disponible */
-    flex-direction: column;
+.styled-table th {
+    background-color: #f2f2f2;
 }
 
-.form-box h1 {
-    font-size: 24px;
-    margin: 0;
-    margin-bottom: 20px; /* Espacio entre el título y los párrafos */
+.styled-table tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-.form-box p {
-    font-size: 16px;
-    margin: 10px 0;
-    line-height: 1.5;
+.styled-table tr:hover {
+    background-color: #ddd;
 }
 
-.form-box p:nth-child(odd) {
-    background-color: #f7f7f7;
+/* Estilo para los enlaces */
+.styled-table a {
+    text-decoration: none;
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.styled-table a:hover {
+    text-decoration: underline;
+}
+
+/* Diseños de edit usuarios */
+.form-control {
+    width: 70%;
     padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px; /* Espacio entre los elementos */
-}
-
-.form-box button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    margin-top: 10px; /* Espacio entre los botones */
-}
-
-.form-box button:hover {
-    background-color: #333;
-}
-
-.btn {
-    width: 100%;
-    height: 45px;
-    background-color: black;
-    border: none;
+    margin-bottom: 10px;
+    font-size: 16px;
     outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    color: #fff;
-    font-weight: 500;
-}
-.left-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    float: left; /* Alinear a la izquierda */
-    margin-right: 10px; /* Agregar un margen a la derecha para separar del botón "Nuevo Local" */
 }
 
-/* Estilo para el botón "Nuevo Local" a la derecha */
-.right-button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: block;
-    float: right; /* Alinear a la derecha */
+.form-control:focus {
+    border-color: #007bff; /* Cambia el color del borde al enfocar el campo */
+}
+.label {
+    font-size: 18px; /* Tamaño de fuente para los labels */
+    margin-bottom: 5px; /* Espaciado inferior entre el label y el campo de entrada */
+    color: #333; /* Color del texto del label */
 }
 

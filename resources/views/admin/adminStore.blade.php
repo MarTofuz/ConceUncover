@@ -82,7 +82,7 @@
     .searchCard{
     width: 340px; /* Ancho personalizado */
         height: 100px; /* Alto personalizado */
-        margin-left: 1200px;
+        margin-left: 900px;
 }
 </style>
 

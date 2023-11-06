@@ -26,6 +26,7 @@
 
 <body>
     <header>
+        
         <h2 class="logo">Conce Uncover</h2>
         <nav class="navigation">
             @role('admin')
