@@ -27,7 +27,7 @@
         .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
             align-self: center;
             border-bottom: none;
-            border-top-color: #3cb4cc;
+            border-top-color: #000000;
         }
 
         /* flecha del popup */
@@ -44,13 +44,14 @@
             border-left: none;
             border-top: none;
         }
+
         .bg-info,
         .bg-info>a {
-            color: white;
+            color: rgb(0, 0, 0);
         }
 
         .bg-info {
-            background-color: #17a2b8;
+            background-color: #000000;
         }
 
         .small-box {
@@ -60,15 +61,16 @@
             margin-bottom: 20px;
             position: relative;
         }
+        /* Color del recuadro de info */
         .inner {
-            background-color: black;
+            background-color: rgb(255, 255, 255);
             border-radius: 8px;
-            padding: 10px;
+            padding: 30px;
         }
 
-        /* boton de abajo del popup */
+        /* boton de más informacion */
         .small-box-footer {
-            background-color: black;
+            background-color: rgb(95, 95, 95);
             color: white;
             display: block;
             padding: 3px 0;
@@ -79,9 +81,14 @@
             border-radius: 8px;
         }
 
+        /* Color del borde */
         .mapboxgl-popup-content {
-            background-color: #3cb4cc ;
+            background-color: #000000 ;
             border-radius: 8px;
+        }
+        /* Se quita la X */
+        .mapboxgl-popup-close-button {
+            display: none;
         }
     </style>
 </head>
@@ -161,7 +168,7 @@
     });
 </script>
 <script>
-    //var tiendas = @json($tiendas);
+    var tiendas = @json($tiendas);
     if (Array.isArray(tiendas)) {
         if (tiendas.length > 0) {
             tiendas.forEach(function(tienda) {
@@ -169,16 +176,16 @@
                     var lngLat = tienda.location.split(',').map(Number);
 
                     var popupContent =
-                        '<div class="small-box bg-info">' +
-                        '<div class="inner">' +
-                        '<h3>' + tienda.name + '</h3>' +
-                        '<p>Dirección: ' + tienda.address + '</p>' +
-                        '<p>Horario: ' + tienda.schedule + '</p>' +
-                        '</div>' +
-                        '</div>'+
-                        '<a href="#" class="small-box-footer">' +
-                        'Mas Informacion <i class="fas fa-arrow-circle-right"></i>' +
-                        '</a>';
+                    '<div class="small-box bg-info" style="text-align: center;">' +
+                    '<div class="inner" style="text-align: center; padding: 10px;"><br>' +
+                    '<h3 style="font-size: 24px; margin: 0; padding-bottom: 10px; text-align: center;">' + tienda.name + '</h3><br>' +
+                    '<p><strong style="text-align: center;">Dirección</strong><br>' + tienda.address + '</p><br>' +
+                    '<p><strong style="text-align: center;">Horario</strong><br>' + tienda.schedule + '</p><br>' +
+                    '</div>' +
+                    '</div>' +
+                    '<a href="#" class="small-box-footer">' +
+                    'Más Información <i class="fas fa-arrow-circle-right"></i>' +
+                    '</a>';
 
                     var popup = new mapboxgl.Popup()
                         .setHTML(popupContent);
@@ -192,31 +199,33 @@
         }
     }
 
-    //var sucursales = @json($sucursales);
+    var sucursales = @json($sucursales);
     if (Array.isArray(sucursales)) {
         if (sucursales.length > 0) {
             sucursales.forEach(function(sucursal) {
-                if (sucursal.location) {
-                    var lngLat = sucursal.location.split(',').map(Number);
+            if (sucursal.location) {
+                var lngLat = sucursal.location.split(',').map(Number);
 
-                    var popupContent =
-                        '<h1>' + sucursal.name + '</h1>' +
-                        '<br>' +
-                        '<p>Dirección: ' + sucursal.address + '</p>' +
-                        '<p>Horario: ' + sucursal.schedule + '</p>';
+                var popupContent =
+                '<div class="small-box bg-info" style="text-align: center;">' +
+                '<div class="inner" style="text-align: center; padding: 10px;"><br>' +
+                '<h3 style="font-size: 24px; margin: 0; padding-bottom: 10px; text-align: center;">' + sucursal.name + '</h3><br>' +
+                '<p><strong style="text-align: center;">Dirección</strong><br>' + sucursal.address + '</p><br>' +
+                '<p><strong style="text-align: center;">Horario</strong><br>' + sucursal.schedule + '</p><br>' +
+                '</div>' +
+                '</div>';
 
-                    var popup = new mapboxgl.Popup()
-                        .setHTML(popupContent);
+                var popup = new mapboxgl.Popup()
+                    .setHTML(popupContent);
 
-                    new mapboxgl.Marker()
-                        .setLngLat(lngLat)
-                        .setPopup(popup)
-                        .addTo(map);
-                }
-            });
-        }
+                new mapboxgl.Marker()
+                    .setLngLat(lngLat)
+                    .setPopup(popup)
+                    .addTo(map);
+            }
+        });
     }
+}
 </script>
-
 
 </html>
