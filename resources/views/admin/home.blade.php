@@ -22,6 +22,67 @@
             height: 100%;
             width: auto;
         }
+
+        /* flecha del popup */
+        .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+            align-self: center;
+            border-bottom: none;
+            border-top-color: #3cb4cc;
+        }
+
+        /* flecha del popup */
+        .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+            align-self: center;
+            border-bottom-color: #3cb4cc;
+            border-top: none;
+        }
+
+        /* flecha del popup */
+        .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
+            align-self: flex-start;
+            border-bottom-color: #3cb4cc;
+            border-left: none;
+            border-top: none;
+        }
+        .bg-info,
+        .bg-info>a {
+            color: white;
+        }
+
+        .bg-info {
+            background-color: #17a2b8;
+        }
+
+        .small-box {
+            border-radius: .25rem;
+            box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
+            display: block;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .inner {
+            background-color: black;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        /* boton de abajo del popup */
+        .small-box-footer {
+            background-color: black;
+            color: white;
+            display: block;
+            padding: 3px 0;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            z-index: 10;
+            border-radius: 8px;
+        }
+
+        .mapboxgl-popup-content {
+            background-color: #3cb4cc ;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
@@ -87,6 +148,7 @@
         });
     });
 </script>
+
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50M2JldGswMDN3MmxxamhpdHlvYWM1In0.Ig_IGmqviFJg-_P99a8EYw';
     const map = new mapboxgl.Map({
@@ -106,35 +168,25 @@
                 if (tienda.location) {
                     var lngLat = tienda.location.split(',').map(Number);
 
-                    // Verifica el estado de la tienda
-                    if (tienda.status === 1) {
-                        // Crea el contenido del popup
-                        var popupContent = `
-                            <div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3>${tienda.name}</h3>
-                                    <p>Dirección: ${tienda.address}</p>
-                                    <p>Horario: ${tienda.schedule}</p>
-                                </div>
-                                <div class="icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">
-                                    More info <i class="fas fa-arrow-circle-right"></i>
-                                </a>
-                            </div>
-                        `;
+                    var popupContent =
+                        '<div class="small-box bg-info">' +
+                        '<div class="inner">' +
+                        '<h3>' + tienda.name + '</h3>' +
+                        '<p>Dirección: ' + tienda.address + '</p>' +
+                        '<p>Horario: ' + tienda.schedule + '</p>' +
+                        '</div>' +
+                        '</div>'+
+                        '<a href="#" class="small-box-footer">' +
+                        'Mas Informacion <i class="fas fa-arrow-circle-right"></i>' +
+                        '</a>';
 
-                        var popup = new mapboxgl.Popup({
-                            closeButton: false,
-                            closeOnClick: false,
-                        }).setHTML(popupContent);
+                    var popup = new mapboxgl.Popup()
+                        .setHTML(popupContent);
 
-                        new mapboxgl.Marker()
-                            .setLngLat(lngLat)
-                            .setPopup(popup)
-                            .addTo(map);
-                    }
+                    new mapboxgl.Marker()
+                        .setLngLat(lngLat)
+                        .setPopup(popup)
+                        .addTo(map);
                 }
             });
         }
@@ -147,22 +199,19 @@
                 if (sucursal.location) {
                     var lngLat = sucursal.location.split(',').map(Number);
 
-                    // Verifica el estado de la sucursal
-                    if (sucursal.status === 1) {
-                        var popupContent =
-                            '<h1>' + tienda.name + '</h1>' +
-                            '<br>' +
-                            '<p>Dirección: ' + tienda.address + '</p>' +
-                            '<p>Horario: ' + tienda.schedule + '</p>';
+                    var popupContent =
+                        '<h1>' + sucursal.name + '</h1>' +
+                        '<br>' +
+                        '<p>Dirección: ' + sucursal.address + '</p>' +
+                        '<p>Horario: ' + sucursal.schedule + '</p>';
 
-                        var popup = new mapboxgl.Popup()
-                            .setHTML(popupContent);
+                    var popup = new mapboxgl.Popup()
+                        .setHTML(popupContent);
 
-                        new mapboxgl.Marker()
-                            .setLngLat(lngLat)
-                            .setPopup(popup)
-                            .addTo(map);
-                    }
+                    new mapboxgl.Marker()
+                        .setLngLat(lngLat)
+                        .setPopup(popup)
+                        .addTo(map);
                 }
             });
         }
