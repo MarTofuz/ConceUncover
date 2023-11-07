@@ -1,6 +1,5 @@
 @extends('layouts.nav&SideBar')
 
-
 @section('content')
 
 <head>
@@ -13,28 +12,28 @@
                     @csrf
                     <h1>Editar Sucursal</h1>
                     <div class="form-group">
-                        <p>Nombre:</p>
+                        <label for="name">Nombre:</label>
                         <input type="text" id="name" name="name" value="{{ $sucursal->name }}" required>
                     </div>
                     <div class="form-group">
-                        <p>Dirección:</p>
+                        <label for="address">Dirección:</label>
                         <input type="text" id="address" name="address" value="{{ $sucursal->address }}" required>
                     </div>
                     <div class="form-group">
-                        <p>Descripción:</p>
-                        <input id="description" name="description" value="{{ $sucursal->description }}" required></input>
+                        <label for="description">Descripción:</label>
+                        <input id="description" name="description" value="{{ $sucursal->description }}" required>
                     </div>
                     <div class="form-group">
-                        <p>Asistente:</p>
-                        <input id="assistant" name="assistant" value="{{ $sucursal->assistant }}" required></input>
+                        <label for="assistant">Asistente:</label>
+                        <input id="assistant" name="assistant" value="{{ $sucursal->assistant }}" required>
                     </div>
                     <div class="form-group">
-                        <p>Horario:</p>
-                        <input id="schedule" name="schedule" value="{{ $sucursal->schedule }}" required></input>
+                        <label for="schedule">Horario:</label>
+                        <input id="schedule" name="schedule" value="{{ $sucursal->schedule }}" required>
                     </div>
                     <div class="form-group">
-                        <p>Ubicacion:</p>
-                        <input id="location" required name="location" value="{{ $sucursal->location }}" readonly></input>
+                        <label for="location">Ubicación:</label>
+                        <input id="location" required name="location" value="{{ $sucursal->location }}" readonly>
                     </div>
                     <!-- Agrega un campo oculto para mantener el ID de la tienda -->
                     <input type="hidden" name="sucursal_id" value="{{ $sucursal->id }}">

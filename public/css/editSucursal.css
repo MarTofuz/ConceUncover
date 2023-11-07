@@ -7,37 +7,41 @@
 
 .wrapper {
   text-align: center;
-  background-color: #f0f0f0; /* Cambia el color de fondo según tus preferencias */
+  background-color: #f0f0f0;
   padding: 20px;
   border-radius: 10px;
   width: 600px;
-  display: flex; /* Agregar display flex */
-  justify-content: center; /* Centrar elementos horizontalmente */
-  align-items: center; /* Centrar elementos verticalmente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form-box {
   margin: 20px;
-  display: flex; /* Agregar display flex */
-  justify-content: space-between; /* Espacio entre elementos */
-  align-items: center; /* Centrar elementos verticalmente */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Estilos adicionales según tus preferencias */
 h1 {
   font-size: 24px;
 }
 
 .label {
   font-weight: bold;
-
 }
 
 .form-group {
   margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-control {
+.form-group label {
+  width: 100%;
+}
+
+.form-control, .form-group textarea {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -51,12 +55,16 @@ h1 {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 30px;
+  height: 45px;
 }
 
-/* Estilos para el mapa, puedes ajustar según tus necesidades */
 #map {
   width: 500px;
   height: 300px;
   margin: 20px auto;
   cursor: pointer;
+}
+input{
+  height: 40px;
 }

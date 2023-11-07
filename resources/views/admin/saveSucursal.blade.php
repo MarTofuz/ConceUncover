@@ -1,59 +1,58 @@
 @extends('layouts.nav&SideBar')
 
-
 @section('content')
 
 <head>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/editSucursal.css') }}">
 </head>
 <div class="containerProfile">
-        <div class="wrapper">
-            <div class="form-box login">
-                <form action="{{ route('saveSucursal', $tienda->id) }}" method="POST">
-                    @csrf
-                    <h1> Agregar Sucursal</h1>
+    <div class="wrapper">
+        <div class="form-box login">
+            <form action="{{ route('saveSucursal', $tienda->id) }}" method="POST">
+                @csrf
+                <h1>Agregar Sucursal</h1>
+                <br>
+
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Dirección:</label>
+                    <input type="text" id="address" name="address" value="{{ old('address') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción:</label>
+                    <textarea id="description" name="description" required>{{ old('description') }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="assistant">Asistente:</label>
+                    <input type="text" id="assistant" name="assistant" value="{{ old('assistant') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="schedule">Horario:</label>
+                    <input type="text" id="schedule" name="schedule" value="{{ old('schedule') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Ubicación:</label>
+                    <input type="text" id="location" required name="location" value="{{ old('location') }}" readonly>
+                </div>
+                <input type="hidden" name="tienda_id" value="{{ $tienda->id }}">
+                <!-- pruebas -->
+                <div class="form-group" style="display: flex; flex-direction: column;">
+                    <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
                     <br>
-
-                    <div class="form-group">
-                        <p>Nombre:</p>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" required>
-                    </div>
-
-                    <div class="form-group">
-                        <p>Dirección:</p>
-                        <input type="text" id="address" name="address" value="{{ old('address') }}" required>
-                    </div>
-
-                    <div class="form-group">
-                        <p>Descripción:</p>
-                        <textarea id="description" name="description" required>{{ old('description') }}</textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <p>Asistente:</p>
-                        <input type="text" id="assistant" name="assistant" value="{{ old('assistant') }}" required>
-                    </div>
-
-                    <div class="form-group">
-                        <p>Horario:</p>
-                        <input type="text" id="schedule" name="schedule" value="{{ old('schedule') }}" required>
-                    </div>
-
-                    <div class="form-group">
-                        <p>Ubicación:</p>
-                        <input type="text" id="location" required name="location" value="{{ old('location') }}" readonly>
-                    </div>
-                    <input type="hidden" name="tienda_id" value="{{ $tienda->id }}">
-                    <!-- pruebas -->
-                    <div class="form-group" style="display: flex; flex-direction: column;">
-                        <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
-                        <br>
-                        <button class="btn btn-dark px-4" type="submit">Agregar Tienda</button>
-                    </div>
-                </form>
-            </div>
+                    <button class="btn btn-dark px-4" type="submit">Agregar Tienda</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
