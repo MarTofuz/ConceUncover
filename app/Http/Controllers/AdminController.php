@@ -50,12 +50,13 @@ class AdminController extends Controller
 
     public function adminPanel()
     {
-        return View('admin.adminPanel');
+        $tiendas = Tienda::where('status', 0)->get();
+        $sucursales = Sucursal::where('status', 0)->get();
+        return View('admin.adminPanel', compact('sucursales', 'tiendas'));
     }
 
     public function adminAccount()
     {
-
         $users = DB::table('users')->get();
         return View('admin.adminAccount', compact('users'));
     }
@@ -109,10 +110,9 @@ class AdminController extends Controller
         return view('admin.adminStore', compact('sucursales', 'tiendas'));
     }
 
-
     public function buscarUsuario(){
         $users = User::orderBy('created_at', 'ASC');
-        
+
         if(request()->has('search')){
             $searchTerm = '%' . request()->get('search', '') . '%';
             $users = $users->where(function ($query) use ($searchTerm) {
@@ -120,14 +120,15 @@ class AdminController extends Controller
                       ->orWhere('email', 'like', $searchTerm);
             });
         }
-        
+
         $users = $users->get(); // Ejecutar la consulta y obtener los resultados
-        
+
         return view('admin.adminAccount', compact('users'));
     }
+
     public function buscarTienda(){
         $tiendas = Tienda::orderBy('created_at', 'ASC');
-        
+
         if(request()->has('search')){
             $searchTerm = '%' . request()->get('search', '') . '%';
             $tiendas = $tiendas->where(function ($query) use ($searchTerm) {
@@ -135,9 +136,39 @@ class AdminController extends Controller
                       ->orWhere('address', 'like', $searchTerm);
             });
         }
-        
+
         $tiendas = $tiendas->get(); // Ejecutar la consulta y obtener los resultados
-        
+
         return view('admin.adminStore', compact('tiendas'));
+    }
+
+    public function statusTienda(Request $request, $id)
+    {
+        $tienda = Tienda::find($id);
+
+        if ($tienda) {
+            if ($tienda->status) {
+                $tienda->status = 0;
+            } else {
+                $tienda->status = 1;
+            }
+            $tienda->save();
+            return back();
+        }
+    }
+
+    public function statusSucursal(Request $request, $id)
+    {
+        $sucursal = Sucursal::find($id);
+
+        if ($sucursal) {
+            if ($sucursal->status) {
+                $sucursal->status = 0;
+            } else {
+                $sucursal->status = 1;
+            }
+            $sucursal->save();
+            return back();
+        }
     }
 }

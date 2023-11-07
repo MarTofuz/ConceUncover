@@ -87,7 +87,6 @@
         });
     });
 </script>
-
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50M2JldGswMDN3MmxxamhpdHlvYWM1In0.Ig_IGmqviFJg-_P99a8EYw';
     const map = new mapboxgl.Map({
@@ -107,19 +106,35 @@
                 if (tienda.location) {
                     var lngLat = tienda.location.split(',').map(Number);
 
-                    var popupContent =
-                        '<h1>' + tienda.name + '</h1>' +
-                        '<br>' +
-                        '<p>Dirección: ' + tienda.address + '</p>' +
-                        '<p>Horario: ' + tienda.schedule + '</p>';
+                    // Verifica el estado de la tienda
+                    if (tienda.status === 1) {
+                        // Crea el contenido del popup
+                        var popupContent = `
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>${tienda.name}</h3>
+                                    <p>Dirección: ${tienda.address}</p>
+                                    <p>Horario: ${tienda.schedule}</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">
+                                    More info <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        `;
 
-                    var popup = new mapboxgl.Popup()
-                        .setHTML(popupContent);
+                        var popup = new mapboxgl.Popup({
+                            closeButton: false,
+                            closeOnClick: false,
+                        }).setHTML(popupContent);
 
-                    new mapboxgl.Marker()
-                        .setLngLat(lngLat)
-                        .setPopup(popup)
-                        .addTo(map);
+                        new mapboxgl.Marker()
+                            .setLngLat(lngLat)
+                            .setPopup(popup)
+                            .addTo(map);
+                    }
                 }
             });
         }
@@ -132,19 +147,22 @@
                 if (sucursal.location) {
                     var lngLat = sucursal.location.split(',').map(Number);
 
-                    var popupContent =
-                        '<h1>' + sucursal.name + '</h1>' +
-                        '<br>' +
-                        '<p>Dirección: ' + sucursal.address + '</p>' +
-                        '<p>Horario: ' + sucursal.schedule + '</p>';
+                    // Verifica el estado de la sucursal
+                    if (sucursal.status === 1) {
+                        var popupContent =
+                            '<h1>' + tienda.name + '</h1>' +
+                            '<br>' +
+                            '<p>Dirección: ' + tienda.address + '</p>' +
+                            '<p>Horario: ' + tienda.schedule + '</p>';
 
-                    var popup = new mapboxgl.Popup()
-                        .setHTML(popupContent);
+                        var popup = new mapboxgl.Popup()
+                            .setHTML(popupContent);
 
-                    new mapboxgl.Marker()
-                        .setLngLat(lngLat)
-                        .setPopup(popup)
-                        .addTo(map);
+                        new mapboxgl.Marker()
+                            .setLngLat(lngLat)
+                            .setPopup(popup)
+                            .addTo(map);
+                    }
                 }
             });
         }

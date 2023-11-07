@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('assistant');
             $table->string('schedule');
             $table->string('location');
+            $table->integer('status')->default(0);
             $table->unsignedBigInteger('user_id'); // Campo para la relación con el usuario
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

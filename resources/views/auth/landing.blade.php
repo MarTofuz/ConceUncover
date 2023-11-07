@@ -36,11 +36,11 @@
             <a href="{{ route('/') }}">Inicio</a>
         </nav>
     </header>
-    
+
     <div class="columna-izquierda">
         <!-- Sidebar -->
         <div class="sidebarleft">
-            
+
             <ul>
             <li> <a href="{{ route('login') }}"><i class='fas fa-portrait'></i> Iniciar Sesión</a></li>
             <li> <a href="{{ route('register') }}"><i class='fas fa-portrait'></i> Registrarse</a></li>
@@ -54,11 +54,7 @@
             </ul>
         </div>
     </div>
-
-
-        <div class="map" id='map'></div>
-    
-
+    <div class="map" id='map'></div>
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -94,28 +90,57 @@
     });
 </script>
 <script>
-    //var tiendas = @json($tiendas);
-    if (Array.isArray(tiendas)) {
+      //var tiendas = @json($tiendas);
+      if (Array.isArray(tiendas)) {
         if (tiendas.length > 0) {
             tiendas.forEach(function(tienda) {
                 if (tienda.location) {
                     var lngLat = tienda.location.split(',').map(Number);
-                    new mapboxgl.Marker()
-                        .setLngLat(lngLat)
-                        .addTo(map);
+
+                    // Verifica el estado de la tienda
+                    if (tienda.status === 1) {
+                        var popupContent =
+                            '<h1>' + tienda.name + '</h1>' +
+                            '<br>' +
+                            '<p>Dirección: ' + tienda.address + '</p>' +
+                            '<p>Horario: ' + tienda.schedule + '</p>';
+
+                        var popup = new mapboxgl.Popup()
+                            .setHTML(popupContent);
+
+                        new mapboxgl.Marker()
+                            .setLngLat(lngLat)
+                            .setPopup(popup)
+                            .addTo(map);
+                    }
                 }
             });
         }
     }
+
     //var sucursales = @json($sucursales);
     if (Array.isArray(sucursales)) {
         if (sucursales.length > 0) {
-            sucursales.forEach(function(sucursales) {
-                if (sucursales.location) {
-                    var lngLat = sucursales.location.split(',').map(Number);
-                    new mapboxgl.Marker()
-                        .setLngLat(lngLat)
-                        .addTo(map);
+            sucursales.forEach(function(sucursal) {
+                if (sucursal.location) {
+                    var lngLat = sucursal.location.split(',').map(Number);
+
+                    // Verifica el estado de la sucursal
+                    if (sucursal.status === 1) {
+                        var popupContent =
+                            '<h1>' + tienda.name + '</h1>' +
+                            '<br>' +
+                            '<p>Dirección: ' + tienda.address + '</p>' +
+                            '<p>Horario: ' + tienda.schedule + '</p>';
+
+                        var popup = new mapboxgl.Popup()
+                            .setHTML(popupContent);
+
+                        new mapboxgl.Marker()
+                            .setLngLat(lngLat)
+                            .setPopup(popup)
+                            .addTo(map);
+                    }
                 }
             });
         }

@@ -103,3 +103,6 @@ Route::group(['prefix' => '/adminStore'], function(){
     Route::get('/', [AdminController::class, 'adminStore'])->name('adminStore')->middleware('auth','CheckIsAdmin');
     Route::get('/buscar-tienda', [AdminController::class, 'buscarTienda'])->name('buscarTiendas');
 });
+
+Route::post('/adminStore-statusTienda/{id}', [AdminController::class, 'statusTienda'])->name('statusTienda')->middleware('auth', 'CheckIsAdmin');;
+Route::post('/adminStore-statusSucursal/{id}', [AdminController::class, 'statusSucursal'])->name('statusSucursal')->middleware('auth', 'CheckIsAdmin');;
