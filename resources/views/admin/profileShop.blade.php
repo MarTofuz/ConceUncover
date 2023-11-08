@@ -9,6 +9,7 @@
 
 <div class="containerProfile">
     <div class="form-box">
+
         <h1>Perfil de Tienda</h1>
         <p>Nombre: {{ $tienda->name}}</p>
         <p>Dirección: {{ $tienda->address}}</p>
@@ -16,9 +17,13 @@
         <p>Asistente: {{ $tienda->assistant }}</p>
         <p>Horario: {{ $tienda->schedule }}</p>
         <br>
-        <form action="{{ route('updateShop') }}">
-            <button class="right-button">Editar</button>
-        </form>
+        <div class="button-container">
+            <form action="{{ route('updateShop') }}">
+                <button class="right-button" style="float: left;">Editar</button>
+            </form>
+            <button class="right-button">Productos</button>
+            <button class="right-button " style="float: right;">Estadisticas </button>
+        </div>
         <br>
         <br>
         <br>
@@ -48,7 +53,7 @@
                     <td>{{ $sucursal->assistant }}</td>
                     <td>{{ $sucursal->schedule }}</td>
                     <td>
-                        <a href="{{ route('viewUpdateSucursal', ['id' => $sucursal->id]) }}" style="color: black;">Editar</a>
+                        <a href="{{ route('viewsucursal', ['id' => $sucursal->id]) }}" style="color: black;">Ver Sucursal</a>
                         <a href="{{ route('deletedSucursal', ['id' => $sucursal->id]) }}" style="color: black;">Eliminar</a>
                     </td>
                 </tr>
