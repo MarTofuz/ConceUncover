@@ -171,4 +171,14 @@ class AdminController extends Controller
             return back();
         }
     }
+    public function viewsucursal($id) {
+        $user = Auth::user();
+        $sucursal = Sucursal::find($id);
+        if (!$sucursal) {
+            // Manejar el caso en el que la sucursal no se encuentre
+            return redirect()->route('home')->with('error', 'Sucursal no encontrada');
+        } else {
+            return view('admin.profileSucursal', compact('sucursal', 'user'));
+        }
+    }
 }
