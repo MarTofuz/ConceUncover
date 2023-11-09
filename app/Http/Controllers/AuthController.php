@@ -47,8 +47,6 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'profile_photo_path' => 'profile_photos/avatar.jpg',
-
         ]);
         
 

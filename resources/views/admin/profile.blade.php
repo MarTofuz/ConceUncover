@@ -12,7 +12,11 @@
         <h1>Perfil</h1>
         <br>
         <div class="text-center">
-        <img src="{{ asset('storage/' . $user->profile_photo_path) }}" class="rounded" alt="Perfil">
+         @if(Auth::user()->profile_photo_path)
+            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"class="rounded" alt="Perfil">
+            @else
+            <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático">
+            @endif
 
         </div>
         <p>Usuario: {{ $user->name ?? 'No hay datos' }}</p>
