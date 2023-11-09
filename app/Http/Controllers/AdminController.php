@@ -9,6 +9,7 @@ use App\Models\Sucursal;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -28,7 +29,17 @@ class AdminController extends Controller
     }
 
     public function update(Request $request)
+
     {
+        // Validar la solicitud
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255',
+            'profile_photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Reglas para la imagen
+        ]);
+
         $user = Auth::user();
 
         if ($user) {
@@ -36,6 +47,25 @@ class AdminController extends Controller
             $user->phone = $request->input('phone');
             $user->address = $request->input('address');
             $user->email = $request->input('email');
+
+            if ($request->has('delete_photo') && $request->input('delete_photo')) {
+                // Eliminar la imagen actual del almacenamiento
+                $user->profile_photo_path = 'profile_photos/avatar.jpg';
+            }
+
+
+
+            // Manejar la carga de la imagen si está presente
+        if ($request->hasFile('profile_photo')) {
+            // Obtener el nombre único de la imagen utilizando el ID del usuario
+            $photoName = $user->id . '.' . $request->file('profile_photo')->getClientOriginalExtension();
+
+            // Almacenar la imagen en el directorio 'profile_photos' con el nombre único
+            $photoPath = $request->file('profile_photo')->storeAs('profile_photos', $photoName, 'public');
+
+            // Guardar el nombre único de la imagen en la base de datos
+            $user->profile_photo_path = $photoPath;
+        }
             /** @var \App\Models\User $user **/
             $user->save();
         } else {
@@ -110,14 +140,15 @@ class AdminController extends Controller
         return view('admin.adminStore', compact('sucursales', 'tiendas'));
     }
 
-    public function buscarUsuario(){
+    public function buscarUsuario()
+    {
         $users = User::orderBy('created_at', 'ASC');
 
-        if(request()->has('search')){
+        if (request()->has('search')) {
             $searchTerm = '%' . request()->get('search', '') . '%';
             $users = $users->where(function ($query) use ($searchTerm) {
                 $query->where('name', 'like', $searchTerm)
-                      ->orWhere('email', 'like', $searchTerm);
+                    ->orWhere('email', 'like', $searchTerm);
             });
         }
 
@@ -126,14 +157,15 @@ class AdminController extends Controller
         return view('admin.adminAccount', compact('users'));
     }
 
-    public function buscarTienda(){
+    public function buscarTienda()
+    {
         $tiendas = Tienda::orderBy('created_at', 'ASC');
 
-        if(request()->has('search')){
+        if (request()->has('search')) {
             $searchTerm = '%' . request()->get('search', '') . '%';
             $tiendas = $tiendas->where(function ($query) use ($searchTerm) {
                 $query->where('name', 'like', $searchTerm)
-                      ->orWhere('address', 'like', $searchTerm);
+                    ->orWhere('address', 'like', $searchTerm);
             });
         }
 
@@ -171,7 +203,8 @@ class AdminController extends Controller
             return back();
         }
     }
-    public function viewsucursal($id) {
+    public function viewsucursal($id)
+    {
         $user = Auth::user();
         $sucursal = Sucursal::find($id);
         if (!$sucursal) {
