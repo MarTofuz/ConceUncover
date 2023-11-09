@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
@@ -50,7 +51,14 @@ class AdminController extends Controller
 
             if ($request->has('delete_photo') && $request->input('delete_photo')) {
                 // Eliminar la imagen actual del almacenamiento
-                $user->profile_photo_path = 'profile_photos/avatar.jpg';
+                $filePath = 'profile_photos/' . $user->profile_photo_path;
+            
+                if (File::exists($filePath)) {
+                    File::delete($filePath);
+                }
+            
+                // Establecer la ruta de la foto de perfil como null
+                $user->profile_photo_path = null;
             }
 
 

@@ -27,8 +27,12 @@
     <div class="columna-izquierda">
         <!-- Sidebar -->
         <div class="sidebarleft">
-            <div class="usuario">
-            <img src="{{ asset('storage/' . $user->profile_photo_path) }}" class="rounded" alt="Perfil" style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
+        <div class="usuario">
+            @if(Auth::user()->profile_photo_path)
+            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"class="rounded" alt="Perfil " style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
+            @else
+            <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático" style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
+            @endif
                 <h3 class="usertitle">{{ $user->name }}</h3>
             </div>
             <ul>
