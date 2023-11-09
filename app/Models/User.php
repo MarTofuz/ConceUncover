@@ -32,6 +32,7 @@ class User extends Authenticatable
         'address',
         'email',
         'password',
+        'profile_photo_path',
     ];
 
     public function tiendas()

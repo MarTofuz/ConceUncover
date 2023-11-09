@@ -12,7 +12,8 @@
         <h1>Perfil</h1>
         <br>
         <div class="text-center">
-            <img src="{{ asset('css/usuario.png') }}" class="rounded" alt="...">
+        <img src="{{ asset('storage/' . $user->profile_photo_path) }}" class="rounded" alt="Perfil">
+
         </div>
         <p>Usuario: {{ $user->name ?? 'No hay datos' }}</p>
         <p>Teléfono: {{ $user->phone ?? 'No hay datos' }}</p>
