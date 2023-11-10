@@ -22,13 +22,15 @@
         </div>
 
 
-        @csrf
-
         <div class="button-container">
             <form action="{{ route('viewUpdateSucursal', ['id' => $sucursal->id]) }}) }}">
+                @csrf
                 <button class="right-button" style="float: left;">Editar</button>
             </form>
-            <button class="right-button">Productos</button>
+            <form action=" {{ route('producto-sucursal', ['sucursalId' => $sucursal->id]) }}">
+                <button class="right-button">Productos</button>
+            </form>
+
             <button class="right-button " style="float: right;">Estadisticas </button>
         </div>
 

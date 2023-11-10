@@ -8,7 +8,7 @@
 <div class="container">
     <h1>Agregar producto</h1>
     <div class="form-div">
-        <form action="{{  route('saveProduct', ['tiendaId' => $tienda->id]) }}" method="POST">
+        <form action="{{  route('saveSucursalProduct', ['sucursalId' => $sucursal->id]) }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
@@ -18,7 +18,7 @@
                 <label for="descripcion">Descripción:</label>
                 <input type="text" class="form-control" id="description" name="description" required>
             </div>
-            <button type="submit" class="btn-add-product">Agregar producto</button>
+            <button type="submit" class="btn-add-product">Agregar producto</button><br>
             @if(session('error'))
             <div class="alert alert-danger" style="color: red;">
                 {{ session('error') }}
