@@ -4,7 +4,7 @@
 @section('content')
 
 <head>
-<link type="text/css" rel="stylesheet" href="{{ asset('css/profile.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/profile.css') }}">
 </head>
 
 <div class="containerProfile">

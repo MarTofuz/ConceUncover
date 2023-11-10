@@ -70,7 +70,8 @@
 
     .form-group-grid {
         display: grid;
-        grid-template-rows: auto auto; /* Establecer el diseño de la etiqueta encima del campo de entrada */
+        grid-template-rows: auto auto;
+        /* Establecer el diseño de la etiqueta encima del campo de entrada */
         margin-bottom: 20px;
     }
 </style>

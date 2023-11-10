@@ -50,20 +50,20 @@
     </div>
 </div>
 <style>
-        .mapboxgl-ctrl-attrib-button {
-            display: none;
-        }
+    .mapboxgl-ctrl-attrib-button {
+        display: none;
+    }
 
-        .mapboxgl-ctrl-attrib-inner {
-            display: none;
-        }
+    .mapboxgl-ctrl-attrib-inner {
+        display: none;
+    }
 
-        .mapboxgl-marker {
-            position: relative;
-            top: -100px;
-            /* Ajusta el valor de top según sea necesario */
-        }
-    </style>
+    .mapboxgl-marker {
+        position: relative;
+        top: -100px;
+        /* Ajusta el valor de top según sea necesario */
+    }
+</style>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 

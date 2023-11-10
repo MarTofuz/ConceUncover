@@ -168,7 +168,7 @@
     });
 </script>
 <script>
-    var tiendas = @json($tiendas);
+    //var tiendas = @json($tiendas);
     if (Array.isArray(tiendas)) {
         if (tiendas.length > 0) {
             tiendas.forEach(function(tienda) {
@@ -199,7 +199,7 @@
         }
     }
 
-    var sucursales = @json($sucursales);
+    //var sucursales = @json($sucursales);
     if (Array.isArray(sucursales)) {
         if (sucursales.length > 0) {
             sucursales.forEach(function(sucursal) {

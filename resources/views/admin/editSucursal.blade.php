@@ -6,47 +6,47 @@
     <link type="text/css" rel="stylesheet" href="{{ asset('css/editSucursal.css') }}">
 </head>
 <div class="containerProfile">
-        <div class="wrapper">
-            <div class="form-box login">
-                <form action="{{ route('updateSucursal', $sucursal->id) }}" method="POST">
-                    @csrf
-                    <h1>Editar Sucursal</h1>
-                    <div class="form-group">
-                        <label for="name">Nombre:</label>
-                        <input type="text" id="name" name="name" value="{{ $sucursal->name }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Dirección:</label>
-                        <input type="text" id="address" name="address" value="{{ $sucursal->address }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Descripción:</label>
-                        <input id="description" name="description" value="{{ $sucursal->description }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="assistant">Asistente:</label>
-                        <input id="assistant" name="assistant" value="{{ $sucursal->assistant }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="schedule">Horario:</label>
-                        <input id="schedule" name="schedule" value="{{ $sucursal->schedule }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="location">Ubicación:</label>
-                        <input id="location" required name="location" value="{{ $sucursal->location }}" readonly>
-                    </div>
-                    <!-- Agrega un campo oculto para mantener el ID de la tienda -->
-                    <input type="hidden" name="sucursal_id" value="{{ $sucursal->id }}">
+    <div class="wrapper">
+        <div class="form-box login">
+            <form action="{{ route('updateSucursal', $sucursal->id) }}" method="POST">
+                @csrf
+                <h1>Editar Sucursal</h1>
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" id="name" name="name" value="{{ $sucursal->name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Dirección:</label>
+                    <input type="text" id="address" name="address" value="{{ $sucursal->address }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Descripción:</label>
+                    <input id="description" name="description" value="{{ $sucursal->description }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="assistant">Asistente:</label>
+                    <input id="assistant" name="assistant" value="{{ $sucursal->assistant }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="schedule">Horario:</label>
+                    <input id="schedule" name="schedule" value="{{ $sucursal->schedule }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Ubicación:</label>
+                    <input id="location" required name="location" value="{{ $sucursal->location }}" readonly>
+                </div>
+                <!-- Agrega un campo oculto para mantener el ID de la tienda -->
+                <input type="hidden" name="sucursal_id" value="{{ $sucursal->id }}">
 
-                    <div class="form-group" style="display: flex; flex-direction: column;">
-                        <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
-                        <br>
-                        <button class="btn btn-dark px-4" type="submit">Actualizar</button>
-                    </div>
-                </form>
-            </div>
+                <div class="form-group" style="display: flex; flex-direction: column;">
+                    <div id="map" style="width: 500px; height: 300px; margin: 20px auto;"></div>
+                    <br>
+                    <button class="btn btn-dark px-4" type="submit">Actualizar</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 

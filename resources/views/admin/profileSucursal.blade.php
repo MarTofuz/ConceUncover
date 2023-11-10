@@ -31,9 +31,5 @@
             <button class="right-button">Productos</button>
             <button class="right-button " style="float: right;">Estadisticas </button>
         </div>
-
-
-
-
-
-        @endsection
+    </div>    
+@endsection

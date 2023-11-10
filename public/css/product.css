@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+.container {
+    padding-left: 200px;
+}
+
+/* INICIO CARDS */
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Ajusta el valor de 200px según tus necesidades */
+    gap: 15px;
+    /* Espacio entre las tarjetas */
+    justify-content: center;
+}
+
+.card {
+    border-color: black;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, .3);
+    box-shadow: 8px 5px 5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 300px;
+    /* Establece un ancho máximo si es necesario */
+    height: auto;
+    /* Permite que la altura se ajuste automáticamente al contenido */
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+}
+
+.card-header {
+    padding-left: 7px;
+    border-bottom: 2px solid rgba(0, 0, 0, .3);
+}
+
+.card-body {
+    padding-right: 5px;
+    padding-left: 5px;
+    height: auto;
+    min-height: 100px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid rgba(0, 0, 0, .3);
+    height: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    gap: 15px;
+}
+
+.btn-delete-product {
+    width: 110px;
+    background-color: rgba(255, 0, 0, .8);
+    border-radius: 4px;
+    color: #fff;
+}
+
+.btn-edit-product {
+    width: 110px;    
+    background-color: rgba(0, 95, 255, .8);
+    border-radius: 4px;
+    color: #fff;
+}
+
+/* FIN CARDS */
+
+/* INICIO FORM */
+.form-div {
+    display: block;
+    padding: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    /* Style label text, for example: */
+    font-weight: bold;
+}
+
+.form-group input {
+    /* Style input fields, for example: */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    width: 50%;
+    /* You can adjust the width as needed */
+}
+.btn-add-product{
+    width: 120px;
+    height: 30px;    
+    background-color: #333;
+    border-radius: 4px;
+    color: #fff;
+}
+
+/* FIN FORM */

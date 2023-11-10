@@ -17,6 +17,7 @@ header {
     align-items: center;
     z-index: 99;
 }
+
 /* Estilos del encabezado */
 #user {
     text-align: center;
@@ -101,7 +102,8 @@ header {
 }
 
 .dropdown-content a:nth-child(2) {
-    margin-bottom: 10px; /* Agrega margen en la segunda opción (Nosotros) */
+    margin-bottom: 10px;
+    /* Agrega margen en la segunda opción (Nosotros) */
 }
 
 .dropdown-content a:hover {
@@ -123,22 +125,24 @@ header {
 }
 
 /* Estilos del sidebar */
-.sidebarleft{
+.sidebarleft {
     position: fixed;
     left: 0;
     width: 250px;
     height: 100%;
     background: black;
 }
-.usuario{
+
+.usuario {
     font-size: 22px;
-    color:white;
+    color: white;
     text-align: center;
     line-height: 70px;
     background: #0C0D0D;
     user-select: none;
 }
-.sidebarleft ul a{
+
+.sidebarleft ul a {
     display: block;
     height: 100%;
     width: 100%;
@@ -147,7 +151,7 @@ header {
     color: white;
     padding-left: 40px;
     box-sizing: border-box;
-    border-top: 1px solid rgba(255,255,255,.1);
+    border-top: 1px solid rgba(255, 255, 255, .1);
     border-bottom: 1px solid black;
     text-decoration: none;
     transition: .4s;
@@ -157,65 +161,75 @@ ul li:hover a {
     padding-left: 50px;
     background: #0C0D0D;
 }
-.sidebarleft ul a i{
+
+.sidebarleft ul a i {
     margin-right: 16px;
 }
-#check{
+
+#check {
     display: none;
 }
+
 label #bars {
-    position:absolute;
+    position: absolute;
     cursor: pointer;
     border-radius: 3px;
 }
-label #bars{
+
+label #bars {
     left: 40px;
     top: 25px;
     font-size: 35px;
     color: white;
 }
+
 .columna-izquierda {
     display: none;
     transition: all 0.3s;
 }
 
-#check:checked + .columna-izquierda {
+#check:checked+.columna-izquierda {
     display: none;
 }
 
 /* Ajusta el estilo de la columna derecha cuando la columna izquierda está oculta */
-#check:checked + .columna-izquierda + .columna-derecha {
+#check:checked+.columna-izquierda+.columna-derecha {
     flex: 1;
 }
+
 /* Ajusta el estilo de la columna izquierda cuando está desactivada */
 .columna-izquierda.desactivada {
     display: none;
 }
 
 /* Agrega este estilo para ocultar la columna izquierda cuando se marca el input */
-#check:checked + .columna-izquierda {
+#check:checked+.columna-izquierda {
     display: none;
 }
 
 /* Ajusta el estilo de la columna derecha cuando la columna izquierda está oculta */
-#check:checked + .columna-izquierda + .columna-derecha {
+#check:checked+.columna-izquierda+.columna-derecha {
     flex: 1;
 }
+
 .usuario {
     display: flex;
     align-items: center;
 }
 
 .user-avatar {
-    width: 40px; /* Tamaño deseado */
-    height: 40px; /* Tamaño deseado */
-    border-radius: 50%; /* Esto hace que la imagen sea redonda, ajusta según tus preferencias */
-    margin-right: 10px; /* Espacio entre la imagen y el nombre */
+    width: 40px;
+    /* Tamaño deseado */
+    height: 40px;
+    /* Tamaño deseado */
+    border-radius: 50%;
+    /* Esto hace que la imagen sea redonda, ajusta según tus preferencias */
+    margin-right: 10px;
+    /* Espacio entre la imagen y el nombre */
     margin-left: 42px;
 }
 
 .usertitle {
-    font-size: 28px; /* Ajusta el tamaño de fuente según tus preferencias */
+    font-size: 28px;
+    /* Ajusta el tamaño de fuente según tus preferencias */
 }
-  
-  
