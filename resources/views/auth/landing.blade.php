@@ -225,6 +225,7 @@
                     'properties': {
                         'title': tienda.name,
                         'address': tienda.address,
+                        'schedule' : tienda.schedule,
                         'type': 'Tienda' // Agrega un tipo para distinguir entre tiendas y sucursales
                     },
                     'geometry': {
