@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css" type="text/css">
+
     <link type="text/css" rel="stylesheet" href="{{ asset('css/nav&SideBar.css') }}">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -11,6 +14,9 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+
 
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
@@ -138,6 +144,33 @@
             color: #fff;
             transform: scale(1);
         }
+
+        .mapboxgl-ctrl-top-left {
+            top: 100px;
+        }
+
+        input.mapboxgl-ctrl-geocoder {
+            width: 1000px;
+        }
+
+        .mapboxgl-ctrl-geocoder {
+            width: 260px;
+            right: 100px;
+            top: 0px;
+            left: 1px;
+        }
+
+        .mapboxgl-ctrl-geocoder input[type="text"] {
+            padding: 10px 40px 10px 30px;
+        }
+
+        .mapboxgl-ctrl-geocoder--input {
+            top: 10px;
+        }
+
+        .mapboxgl-ctrl-top-right {
+            top: 100px;
+        }
     </style>
 </head>
 
@@ -225,7 +258,7 @@
                     'properties': {
                         'title': tienda.name,
                         'address': tienda.address,
-                        'schedule' : tienda.schedule,
+                        'schedule': tienda.schedule,
                         'type': 'Tienda' // Agrega un tipo para distinguir entre tiendas y sucursales
                     },
                     'geometry': {
@@ -251,7 +284,7 @@
                     'properties': {
                         'title': sucursal.name,
                         'address': sucursal.address,
-                        'schedule' : sucursal.schedule,
+                        'schedule': sucursal.schedule,
                         'type': 'Sucursal' // Agrega un tipo para distinguir entre tiendas y sucursales
                     },
                     'geometry': {
@@ -288,16 +321,16 @@
     }
 
     function addMarkersAndPopups() {
-    customData.features.forEach(function(feature) {
-        var popupContent = generatePopupContent(feature);
-        var marker = new mapboxgl.Marker()
-            .setLngLat(feature.geometry.coordinates)
-            .setPopup(new mapboxgl.Popup().setHTML(popupContent))
-            .addTo(map);
+        customData.features.forEach(function(feature) {
+            var popupContent = generatePopupContent(feature);
+            var marker = new mapboxgl.Marker()
+                .setLngLat(feature.geometry.coordinates)
+                .setPopup(new mapboxgl.Popup().setHTML(popupContent))
+                .addTo(map);
             marker.setPopup(new mapboxgl.Popup().setHTML(popupContent));
-    });
-}
-addMarkersAndPopups();
+        });
+    }
+    addMarkersAndPopups();
 
     // Función para generar el contenido del popup
     function generatePopupContent(feature) {
@@ -313,6 +346,10 @@ addMarkersAndPopups();
                 '</div>' +
                 '<a href="#" class="small-box-footer">' +
                 'Más Información <i class="fas fa-arrow-circle-right"></i>' +
+                '</a>' +
+                '<br>' +
+                '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
+                'Ir <i class="fas fa-arrow-circle-right"></i>' +
                 '</a>';
         } else if (feature.properties.type === 'Sucursal') {
             // Código para sucursales
@@ -326,40 +363,131 @@ addMarkersAndPopups();
                 '</div>' +
                 '<a href="#" class="small-box-footer">' +
                 'Más Información <i class="fas fa-arrow-circle-right"></i>' +
+                '</a>' +
+                '<br>' +
+                '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
+                'Ir <i class="fas fa-arrow-circle-right"></i>' +
                 '</a>';
         }
 
         return popupContent;
     }
 
+    // Variables para mantener el seguimiento del destino y la capa de ruta
+    let destination = null;
+    let routeLayer = null;
+
+    function goToLocation(lng, lat) {
+        // Guardar la nueva ubicación como destino
+        destination = [lng, lat];
+
+        // Eliminar la capa de la ruta anterior si existe
+        if (routeLayer) {
+            map.removeLayer('route');
+            map.removeSource('route');
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var userLocation = [position.coords.longitude, position.coords.latitude];
+                var start = userLocation;
+                var end = [lng, lat];
+
+                var directionsRequest = 'https://api.mapbox.com/directions/v5/mapbox/driving/' + start[0] + ',' + start[1] + ';' + end[0] + ',' + end[1] + '?steps=true&geometries=geojson&access_token=' + mapboxgl.accessToken;
+
+                fetch(directionsRequest)
+                    .then(response => response.json())
+                    .then(data => {
+                        var route = data.routes[0].geometry.coordinates; // Coordenadas de la ruta
+
+                        // Crear una nueva capa para la ruta
+                        map.addLayer({
+                            'id': 'route',
+                            'type': 'line',
+                            'source': {
+                                'type': 'geojson',
+                                'data': {
+                                    'type': 'Feature',
+                                    'properties': {},
+                                    'geometry': {
+                                        'type': 'LineString',
+                                        'coordinates': route
+                                    }
+                                }
+                            },
+                            'layout': {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            'paint': {
+                                'line-color': '#3887be',
+                                'line-width': 5
+                            }
+                        });
+
+                        // Asignar la nueva capa de ruta a la variable routeLayer
+                        routeLayer = 'route';
+                    })
+                    .catch(error => {
+                        console.log('Hubo un error al obtener las direcciones: ', error);
+                    });
+            });
+        } else {
+            alert('La geolocalización no está disponible en este navegador.');
+        }
+    }
+
+    // Evento para manejar el clic en el enlace "Ir" en los popups
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('go-to-location')) {
+            e.preventDefault();
+            var lng = e.target.getAttribute('data-lng');
+            var lat = e.target.getAttribute('data-lat');
+
+            // Ir al destino aunque sea el mismo
+            goToLocation(lng, lat);
+        } else {
+            // Si se hace clic en cualquier otra parte del mapa, eliminar la ruta
+            if (routeLayer) {
+                map.removeLayer('route');
+                map.removeSource('route');
+                routeLayer = null; // Restablecer la capa de ruta a null
+            }
+        }
+    });
 
 
     // Add the control to the map.
     map.addControl(
-    new MapboxGeocoder({
-        accessToken: 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ',
-        localGeocoder: forwardGeocoder,
-        zoom: 14,
-        placeholder: 'Buscar lugar.....',
-        mapboxgl: mapboxgl
-    })
-    .on('result', function (e) {
-        // 'e.result' contiene la información del lugar seleccionado
-        const { center, popupContent } = e.result;
+        new MapboxGeocoder({
+            accessToken: 'pk.eyJ1IjoibWFydG9mdSIsImEiOiJjbG50MndhbWYxZjVmMmttcnBqc2Vuajl3In0.Pg-TR5uXMGW1feRu5obIMQ',
+            localGeocoder: forwardGeocoder,
+            zoom: 14,
+            placeholder: 'Buscar lugar.....',
+            mapboxgl: mapboxgl
+        })
+        .on('result', function(e) {
+            // 'e.result' contiene la información del lugar seleccionado
+            const {
+                center,
+                popupContent
+            } = e.result;
 
-        // Centra el mapa en las coordenadas del lugar
-        map.flyTo({
-            center: center,
-            zoom: 16
-        });
+            // Centra el mapa en las coordenadas del lugar
+            map.flyTo({
+                center: center,
+                zoom: 16
+            });
 
-        // Abre un popup con el contenido personalizado
-        new mapboxgl.Popup({ offset: [0, -40] })
-            .setHTML(popupContent)
-            .setLngLat(center)
-            .addTo(map);
-    })
-);
+            // Abre un popup con el contenido personalizado
+            new mapboxgl.Popup({
+                    offset: [0, -40]
+                })
+                .setHTML(popupContent)
+                .setLngLat(center)
+                .addTo(map);
+        })
+    );
 
     const locateButton = document.querySelector('.btn');
     let userMarker; // Variable para almacenar el marcador del usuario
@@ -427,4 +555,5 @@ addMarkersAndPopups();
         }
     });
 </script>
+
 </html>
