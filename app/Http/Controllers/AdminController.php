@@ -222,4 +222,10 @@ class AdminController extends Controller
             return view('admin.profileSucursal', compact('sucursal', 'user'));
         }
     }
+    public function viewStoreClient()
+    {
+        $user = Auth::user();
+
+        return view('admin.storeClient', compact('user'));
+    }
 }

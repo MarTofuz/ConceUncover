@@ -114,3 +114,4 @@ Route::get('/viewsucursal/{id}', [AdminController::class, 'viewsucursal'])->name
 //Products
 Route::get('/products/{tiendaId}', [ProductController::class, 'productView'])->name('productView')->middleware('auth');
 Route::post('/products/{tiendaId}', [ProductController::class, 'saveProduct'])->name('saveProduct')->middleware('auth');
+Route::get('/storeClient', [AdminController::class, 'viewStoreClient'])->name('storeClient')->middleware('auth');
