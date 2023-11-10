@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SucursalController;
+use App\Http\Controllers\ProductController;
 
 
 /*
@@ -109,3 +110,7 @@ Route::group(['prefix' => '/adminStore'], function () {
 Route::post('/adminStore-statusTienda/{id}', [AdminController::class, 'statusTienda'])->name('statusTienda')->middleware('auth', 'CheckIsAdmin');;
 Route::post('/adminStore-statusSucursal/{id}', [AdminController::class, 'statusSucursal'])->name('statusSucursal')->middleware('auth', 'CheckIsAdmin');;
 Route::get('/viewsucursal/{id}', [AdminController::class, 'viewsucursal'])->name('viewsucursal');
+
+//Products
+Route::get('/products/{tiendaId}', [ProductController::class, 'productView'])->name('productView')->middleware('auth');
+Route::post('/products/{tiendaId}', [ProductController::class, 'saveProduct'])->name('saveProduct')->middleware('auth');

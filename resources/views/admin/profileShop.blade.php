@@ -21,7 +21,9 @@
             <form action="{{ route('updateShop') }}">
                 <button class="right-button" style="float: left;">Editar</button>
             </form>
-            <button class="right-button">Productos</button>
+            <form action="{{ route('productView', ['tiendaId' => $tienda->id]) }}">
+                <button class="right-button">Productos</button>
+            </form>
             <button class="right-button " style="float: right;">Estadisticas </button>
         </div>
         <br>

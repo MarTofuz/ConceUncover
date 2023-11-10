@@ -17,4 +17,8 @@ class Sucursal extends Model
     {
         return $this->belongsTo(Tienda::class, 'tienda_id');
     }
+    public function productos()
+    {
+        return $this->hasMany(Product::class, 'sucursal_id');
+    }
 }
