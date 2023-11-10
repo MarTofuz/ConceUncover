@@ -36,8 +36,15 @@
                     <p class="card-text">Descripción: {{ $producto->description }}</p>
                 </div>
                 <div class="card-footer">
-                    <input class="btn-delete-product form-control" type="button" value="Eliminar">
-                    <input class="btn-edit-product form-control" type="button" value="Editar">
+                    <form action="{{ route('deleteProduct', ['productId' => $producto->id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn-delete-product" type="submit">Eliminar</button>
+                    </form>
+                    <form action="{{ route('editProduct', ['productId' => $producto->id]) }}">
+                        <button class="btn-edit-product" type="submit">Editar</button>
+                    </form>
+
                 </div>
 
             </div>
