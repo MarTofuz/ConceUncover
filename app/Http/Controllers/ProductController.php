@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Sucursal;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,31 +11,39 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    //Vista productos
-    public function productView($tiendaId)
+    /* ------ PRODUCTOS TIENDAS ------ */
+    public function productView($tiendaId) //Vista productos
     {
         $user = Auth::user();
         $tienda = Tienda::findOrFail($tiendaId);
 
-        // Obtén los productos relacionados con esta tienda
-        $productos = $tienda->productos;
+        if ($user->id !== $tienda->user_id) {
+            abort(403, 'No tienes permisos para acceder a esta tienda.');
+        }
 
-        // Pasa los productos y la tienda a la vista
+        $productos = $tienda->productos;
         return view('admin.topProduct', compact('user', 'tienda', 'productos'));
     }
-    //Ver vista edicion producto
-    public function editProduct($productId)
+    public function editProduct($productId) //Ver vista edicion producto
     {
-        $user = Auth::user();        
+        $user = Auth::user();
         $tienda = $user->tiendas;
         $producto = Product::findOrFail($productId);
         return view('admin.editProduct', compact('producto'));
     }
-    //Guardar producto segun la
-    public function saveProduct(Request $request)
+    public function saveProduct(Request $request) //Guardar producto
     {
         $user = Auth::user();
         $tienda = $user->tiendas;
+
+        $productosCount = $tienda->productos->count();
+        $limiteProductos = 12;
+
+        if ($productosCount >= $limiteProductos) {
+            $mensajeError = 'No puedes agregar más de 12 productos a esta tienda.';
+            return redirect()->route('productView', ['tiendaId' => $tienda->id])->with('error', $mensajeError);
+        }
+
         $producto = new Product([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
@@ -43,16 +52,13 @@ class ProductController extends Controller
         $producto->save();
         return redirect()->route('productView', ['tiendaId' => $tienda->id])->with('success', 'Producto agregado exitosamente.');
     }
-    //Eliminar producto por id
-    public function deleteProduct($productId)
+    public function deleteProduct($productId) //Eliminar producto por id
     {
         $producto = Product::findOrFail($productId);
         $producto->delete();
         return redirect()->back()->with('success', 'Producto eliminado exitosamente.');
     }
-    
-    //Editar producto (update)
-    public function updateProduct(Request $request, $productId)
+    public function updateProduct(Request $request, $productId) //Editar producto (update)
     {
         $producto = Product::findOrFail($productId);
         $validator = Validator::make($request->all(), [
@@ -68,4 +74,49 @@ class ProductController extends Controller
         ]);
         return redirect()->route('productView', ['tiendaId' => $producto->tienda_id])->with('success', 'Producto actualizado exitosamente.');
     }
+    /* ------ FIN PRODUCTO TIENDAS ------ */
+
+    /* ------ PRODUCTOS SUCURSALES ------ */
+
+    public function productSucursalView($sucursalId) //Vista productos
+    {
+        $user = Auth::user();
+        $sucursal = Sucursal::findOrFail($sucursalId);
+        if ($user->id !== $sucursal->tienda->user_id) {
+            abort(403, 'No tienes permisos para acceder a esta sucursal.');
+        }
+        $productos = $sucursal->productos;
+        return view('admin.topProductSucursal', compact('user', 'sucursal', 'productos'));
+    }
+    public function saveSucursalProduct(Request $request, $sucursalId)
+    {
+        $sucursal = Sucursal::findOrFail($sucursalId);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:80',
+            'description' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $productosCount = $sucursal->productos->count();
+        $limiteProductos = 12;
+
+        if ($productosCount >= $limiteProductos) {
+            $mensajeError = 'No puedes agregar más de 12 productos a esta sucursal.';
+            return redirect()->route('producto-sucursal', ['sucursalId' => $sucursal->id])->with('error', $mensajeError);
+        }
+
+        $producto = new Product([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'sucursal_id' => $sucursal->id,
+        ]);
+
+        $producto->save();
+
+        return redirect()->route('producto-sucursal', ['sucursalId' => $sucursal->id])->with('success', 'Producto agregado exitosamente.');
+    }
+    /* ------ FIN PRODUCTOS SUCURSALES ------ */
 }

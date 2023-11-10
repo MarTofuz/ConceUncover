@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('image')->nullable();
-            $table->unsignedBigInteger('tienda_id');
+            $table->unsignedBigInteger('tienda_id')->nullable();
             $table->unsignedBigInteger('sucursal_id')->nullable();
             $table->timestamps();
         });
