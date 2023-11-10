@@ -33,7 +33,7 @@
             @else
             <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático" style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
             @endif
-                <h3 class="usertitle">{{ $user->name }}</h3>
+                <h3 class="usertitle">{{ Auth::user()->name }}</h3>
             </div>
             <ul>
                 <li> <a href="{{ route('profile') }}"><i class='fas fa-portrait'></i> Perfil</a></li>
@@ -76,16 +76,6 @@
             });
         });
     </script>
-
-
-
-
-
-
-
-
-
-
 </body>
 
 </html>

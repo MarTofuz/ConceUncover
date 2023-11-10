@@ -111,7 +111,12 @@ Route::post('/adminStore-statusTienda/{id}', [AdminController::class, 'statusTie
 Route::post('/adminStore-statusSucursal/{id}', [AdminController::class, 'statusSucursal'])->name('statusSucursal')->middleware('auth', 'CheckIsAdmin');;
 Route::get('/viewsucursal/{id}', [AdminController::class, 'viewsucursal'])->name('viewsucursal');
 
-//Products
+/* RUTAS PRODUCTOS */
 Route::get('/products/{tiendaId}', [ProductController::class, 'productView'])->name('productView')->middleware('auth');
 Route::post('/products/{tiendaId}', [ProductController::class, 'saveProduct'])->name('saveProduct')->middleware('auth');
+Route::delete('/products/delete/{productId}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
+Route::get('/edit-product/{productId}', [ProductController::class, 'editProduct'])->name('editProduct');
+Route::put('/update-product/{productId}', [ProductController::class, 'updateProduct'])->name('updateProduct');
+/* FIN RUTAS PRODUCTOS */
+
 Route::get('/storeClient', [AdminController::class, 'viewStoreClient'])->name('storeClient')->middleware('auth');
