@@ -8,7 +8,8 @@ use App\Http\Controllers\TiendaController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\SucursalClientController;
+use App\Http\Controllers\TiendaClientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,4 +124,13 @@ Route::get('/producto-sucursal/{sucursalId}', [ProductController::class, 'produc
 Route::post('/producto-sucursal/{sucursalId}', [ProductController::class, 'saveSucursalProduct'])->name('saveSucursalProduct');
 /* ------ FIN RUTAS PRODUCTOS SUCURSALES ------ */
 
-Route::get('/storeClient', [AdminController::class, 'viewStoreClient'])->name('storeClient')->middleware('auth');
+
+
+Route::group(['prefix' => '/storeClientTienda/{id}'], function () {
+    Route::get('/', [TiendaClientController::class, 'viewClientTienda'])->name('viewClientTienda')->middleware('auth');
+});
+
+
+Route::group(['prefix' => '/storeClientSucursal/{id}'], function () {
+    Route::get('/', [TiendaClientController::class, 'viewClientSucursal'])->name('viewClientSucursal')->middleware('auth');
+});

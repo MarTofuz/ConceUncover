@@ -171,11 +171,43 @@
         .mapboxgl-ctrl-top-right {
             top: 100px;
         }
+
+        .right-button {
+            background-color: rgb(95, 95, 95);
+            color: white;
+            display: block;
+            padding: 3px 0;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            z-index: 10;
+            border-radius: 8px;
+            width: 150px;
+            cursor: pointer;
+            border: none;
+            height: 27px;
+        }
+
+        .left-button {
+            background-color: rgb(95, 95, 95);
+            color: white;
+            display: block;
+            padding: 3px 0;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            z-index: 10;
+            border-radius: 8px;
+            width: 150px;
+            cursor: pointer;
+            border: none;
+            height: 27px;
+        }
     </style>
 </head>
 
 <body>
-<header>
+    <header>
         <input type="checkbox" id="check" style="display: none;">
         <label for="check">
             <i class="fas fa-bars" id="bars"></i>
@@ -190,11 +222,11 @@
         <!-- Sidebar -->
         <div class="sidebarleft">
             <div class="usuario">
-            @if(Auth::user()->profile_photo_path)
-            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"class="rounded" alt="Perfil " style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
-            @else
-            <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático" style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
-            @endif
+                @if(Auth::user()->profile_photo_path)
+                <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="rounded" alt="Perfil " style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
+                @else
+                <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático" style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
+                @endif
                 <h3 class="usertitle">{{ $user->name }}</h3>
             </div>
             <ul>
@@ -268,6 +300,7 @@
                         'title': tienda.name,
                         'address': tienda.address,
                         'schedule': tienda.schedule,
+                        'id': tienda.id,
                         'type': 'Tienda' // Agrega un tipo para distinguir entre tiendas y sucursales
                     },
                     'geometry': {
@@ -294,6 +327,7 @@
                         'title': sucursal.name,
                         'address': sucursal.address,
                         'schedule': sucursal.schedule,
+                        'id': sucursal.id,
                         'type': 'Sucursal' // Agrega un tipo para distinguir entre tiendas y sucursales
                     },
                     'geometry': {
@@ -344,6 +378,8 @@
     // Función para generar el contenido del popup
     function generatePopupContent(feature) {
         if (feature.properties.type === 'Tienda') {
+            var idtienda = feature.properties.id;
+
             // Código para tiendas
             var popupContent =
                 '<div class="small-box bg-info" style="text-align: center;">' +
@@ -353,14 +389,30 @@
                 '<p><strong style="text-align: center;">Horario</strong><br>' + feature.properties.schedule + '</p><br>' +
                 '</div>' +
                 '</div>' +
-                '<a href="#" class="small-box-footer">' +
-                'Más Información <i class="fas fa-arrow-circle-right"></i>' +
-                '</a>' +
+                '<button class="small-box-footer right-button" data-tienda-id="' + idtienda + '">Más Información   <i class="fas fa-arrow-circle-right"></i></button>' +
                 '<br>' +
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
                 '</a>';
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('right-button')) {
+                    event.preventDefault(); // Evita la acción predeterminada del botón
+
+                    var tiendaId = event.target.dataset.tiendaId;
+                    if (tiendaId) {
+                        var form = document.createElement('form');
+                        form.method = 'GET'; // Método del formulario
+
+                        // Modificar la acción del formulario para incluir el ID en la URL
+                        form.action = "{{ route('viewClientTienda', ['id' => ':id']) }}".replace(':id', tiendaId);
+
+                        document.body.appendChild(form); // Agrega el formulario al DOM
+                        form.submit(); // Envía el formulario
+                    }
+                }
+            });
         } else if (feature.properties.type === 'Sucursal') {
+            var idsucursal = feature.properties.id;
             // Código para sucursales
             var popupContent =
                 '<div class="small-box bg-info" style="text-align: center;">' +
@@ -370,13 +422,30 @@
                 '<p><strong style="text-align: center;">Horario</strong><br>' + feature.properties.schedule + '</p><br>' +
                 '</div>' +
                 '</div>' +
-                '<a href="#" class="small-box-footer">' +
-                'Más Información <i class="fas fa-arrow-circle-right"></i>' +
-                '</a>' +
+                '<button class="small-box-footer left-button" data-sucursal-id="' + idsucursal + '">Más Información   <i class="fas fa-arrow-circle-right"></i></button>' +
                 '<br>' +
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
                 '</a>';
+
+            // Listener para los botones de "Más Información"
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('left-button')) {
+                    event.preventDefault(); // Evita la acción predeterminada del botón
+
+                    var sucursalId = event.target.dataset.sucursalId;
+                    if (sucursalId) {
+                        var form = document.createElement('form');
+                        form.method = 'GET'; // Método del formulario
+
+                        // Modificar la acción del formulario para incluir el ID en la URL
+                        form.action = "{{ route('viewClientSucursal', ['id' => ':id']) }}".replace(':id', sucursalId);
+
+                        document.body.appendChild(form); // Agrega el formulario al DOM
+                        form.submit(); // Envía el formulario
+                    }
+                }
+            });
         }
 
         return popupContent;
