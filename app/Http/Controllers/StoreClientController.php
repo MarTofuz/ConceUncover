@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tienda;
 
-class TiendaClientController extends Controller
+class StoreClientController extends Controller
 {
     public function viewClientTienda($id)
     {
