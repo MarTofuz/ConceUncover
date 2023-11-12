@@ -33,36 +33,36 @@ class ProductController extends Controller
         return view('admin.editProduct', compact('producto'));
     }
     public function saveProduct(Request $request)
-{
-    $user = Auth::user();
-    $tienda = $user->tiendas;
+    {
+        $user = Auth::user();
+        $tienda = $user->tiendas;
 
-    $productosCount = $tienda->productos->count();
-    $limiteProductos = 12;
+        $productosCount = $tienda->productos->count();
+        $limiteProductos = 12;
 
-    if ($productosCount >= $limiteProductos) {
-        $mensajeError = 'No puedes agregar más de 12 productos a esta tienda.';
-        return redirect()->route('productView', ['tiendaId' => $tienda->id])->with('error', $mensajeError);
+        if ($productosCount >= $limiteProductos) {
+            $mensajeError = 'No puedes agregar más de 12 productos a esta tienda.';
+            return redirect()->route('productView', ['tiendaId' => $tienda->id])->with('error', $mensajeError);
+        }
+
+        $producto = new Product([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'tienda_id' => $tienda->id
+        ]);
+
+        // Manejo de la subida de la imagen
+        if ($request->hasFile('image')) {
+            $request->validate(['image' => 'required|image']);
+            $path = $request->file('image')->store('products', 'public');
+            $producto->image = $path;
+        }
+
+        $producto->save();
+
+        return redirect()->route('productView', ['tiendaId' => $tienda->id])
+            ->with('success', 'Producto agregado exitosamente.');
     }
-
-    $producto = new Product([
-        'name' => $request->input('name'),
-        'description' => $request->input('description'),
-        'tienda_id' => $tienda->id
-    ]);
-
-    // Manejo de la subida de la imagen
-    if ($request->hasFile('image')) {
-        $request->validate(['image' => 'required|image']);
-        $path = $request->file('image')->store('products', 'public');
-        $producto->image = $path;
-    }
-
-    $producto->save();
-
-    return redirect()->route('productView', ['tiendaId' => $tienda->id])
-                     ->with('success', 'Producto agregado exitosamente.');
-}
 
     public function deleteProduct($productId) //Eliminar producto por id
     {
@@ -71,48 +71,48 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Producto eliminado exitosamente.');
     }
     public function updateProduct(Request $request, $productId)
-{
-    $producto = Product::findOrFail($productId);
+    {
+        $producto = Product::findOrFail($productId);
 
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:80',
-        'description' => 'required|string',
-        'image' => 'sometimes|image', // Regla opcional para la imagen
-    ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:80',
+            'description' => 'required|string',
+            'image' => 'sometimes|image', // Regla opcional para la imagen
+        ]);
 
-    if ($validator->fails()) {
-        return redirect()->back()->withErrors($validator)->withInput();
-    }
-
-    // Datos a actualizar
-    $dataToUpdate = [
-        'name' => $request->input('name'),
-        'description' => $request->input('description'),
-    ];
-    if ($request->has('delete_photo') && $request->input('delete_photo')) {
-        // Eliminar la imagen actual del almacenamiento
-        $filePath = 'profile_photos/' . $producto->image;
-    
-        if (File::exists($filePath)) {
-            File::delete($filePath);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-    
-        // Establecer la ruta de la foto de perfil como null
-        $producto->image = null;
+
+        // Datos a actualizar
+        $dataToUpdate = [
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ];
+        if ($request->has('delete_photo') && $request->input('delete_photo')) {
+            // Eliminar la imagen actual del almacenamiento
+            $filePath = 'profile_photos/' . $producto->image;
+
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+
+            // Establecer la ruta de la foto de perfil como null
+            $producto->image = null;
+        }
+
+        // Manejo de la subida de la imagen
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $dataToUpdate['image'] = $path;
+        }
+
+        // Actualizar el producto
+        $producto->update($dataToUpdate);
+
+        return redirect()->route('productView', ['tiendaId' => $producto->tienda_id])
+            ->with('success', 'Producto actualizado exitosamente.');
     }
-
-    // Manejo de la subida de la imagen
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('products', 'public');
-        $dataToUpdate['image'] = $path;
-    }
-
-    // Actualizar el producto
-    $producto->update($dataToUpdate);
-
-    return redirect()->route('productView', ['tiendaId' => $producto->tienda_id])
-                     ->with('success', 'Producto actualizado exitosamente.');
-}
 
     /* ------ FIN PRODUCTO TIENDAS ------ */
 
@@ -128,45 +128,96 @@ class ProductController extends Controller
         $productos = $sucursal->productos;
         return view('admin.topProductSucursal', compact('user', 'sucursal', 'productos'));
     }
+    public function editProductSucursal($productId) //Ver vista edicion producto
+    {
+        $user = Auth::user();
+        $sucursal = $user->sucursal;
+        $producto = Product::findOrFail($productId);
+        return view('admin.editProductSucursal', compact('producto'));
+    }
     public function saveSucursalProduct(Request $request, $sucursalId)
-{
-    $sucursal = Sucursal::findOrFail($sucursalId);
+    {
+        $sucursal = Sucursal::findOrFail($sucursalId);
 
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:80',
-        'description' => 'required|string',
-        'image' => 'image', // Añade esta línea
-    ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:80',
+            'description' => 'required|string',
+            'image' => 'image', // Añade esta línea
+        ]);
 
-    if ($validator->fails()) {
-        return redirect()->back()->withErrors($validator)->withInput();
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $productosCount = $sucursal->productos->count();
+        $limiteProductos = 12;
+
+        if ($productosCount >= $limiteProductos) {
+            $mensajeError = 'No puedes agregar más de 12 productos a esta sucursal.';
+            return redirect()->route('producto-sucursal', ['sucursalId' => $sucursal->id])->with('error', $mensajeError);
+        }
+
+        $producto = new Product([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'sucursal_id' => $sucursal->id,
+        ]);
+
+        // Manejo de la subida de la imagen
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $producto->image = $path;
+        }
+
+        $producto->save();
+
+        return redirect()->route('producto-sucursal', ['sucursalId' => $sucursal->id])
+            ->with('success', 'Producto agregado exitosamente.');
     }
 
-    $productosCount = $sucursal->productos->count();
-    $limiteProductos = 12;
+    public function updateProductSucursal(Request $request, $productId)
+    {
+        $producto = Product::findOrFail($productId);
 
-    if ($productosCount >= $limiteProductos) {
-        $mensajeError = 'No puedes agregar más de 12 productos a esta sucursal.';
-        return redirect()->route('producto-sucursal', ['sucursalId' => $sucursal->id])->with('error', $mensajeError);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:80',
+            'description' => 'required|string',
+            'image' => 'sometimes|image', // Regla opcional para la imagen
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Datos a actualizar
+        $dataToUpdate = [
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ];
+        if ($request->has('delete_photo') && $request->input('delete_photo')) {
+            // Eliminar la imagen actual del almacenamiento
+            $filePath = 'profile_photos/' . $producto->image;
+
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+
+            // Establecer la ruta de la foto de perfil como null
+            $producto->image = null;
+        }
+
+        // Manejo de la subida de la imagen
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('products', 'public');
+            $dataToUpdate['image'] = $path;
+        }
+
+        // Actualizar el producto
+        $producto->update($dataToUpdate);
+
+        return redirect()->route('producto-sucursal', ['sucursalId' => $producto->sucursal_id])
+            ->with('success', 'Producto actualizado exitosamente.');
     }
-
-    $producto = new Product([
-        'name' => $request->input('name'),
-        'description' => $request->input('description'),
-        'sucursal_id' => $sucursal->id,
-    ]);
-
-    // Manejo de la subida de la imagen
-    if ($request->hasFile('image')) {
-        $path = $request->file('image')->store('products', 'public');
-        $producto->image = $path;
-    }
-
-    $producto->save();
-
-    return redirect()->route('producto-sucursal', ['sucursalId' => $sucursal->id])
-                     ->with('success', 'Producto agregado exitosamente.');
-}
 
     /* ------ FIN PRODUCTOS SUCURSALES ------ */
 }
