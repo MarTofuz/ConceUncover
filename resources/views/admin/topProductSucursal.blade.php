@@ -51,7 +51,7 @@
                         @method('DELETE')
                         <button class="btn-delete-product" type="submit">Eliminar</button>
                     </form>
-                    <form action="{{ route('editProduct', ['productId' => $producto->id]) }}">
+                    <form action="{{ route('editProductSucursal', ['productId' => $producto->id]) }}">
                         <button class="btn-edit-product" type="submit">Editar</button>
                     </form>
 

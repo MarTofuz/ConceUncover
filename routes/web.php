@@ -112,8 +112,8 @@ Route::post('/adminStore-statusSucursal/{id}', [AdminController::class, 'statusS
 Route::get('/viewsucursal/{id}', [AdminController::class, 'viewsucursal'])->name('viewsucursal');
 
 /* ------ PRODUCTOS TIENDAS ------ */
-Route::get('/products/{tiendaId}', [ProductController::class, 'productView'])->name('productView')->middleware('auth');
-Route::post('/products/{tiendaId}', [ProductController::class, 'saveProduct'])->name('saveProduct')->middleware('auth');
+Route::get('/productos/{tiendaId}', [ProductController::class, 'productView'])->name('productView')->middleware('auth');
+Route::post('/productos/{tiendaId}', [ProductController::class, 'saveProduct'])->name('saveProduct')->middleware('auth');
 Route::delete('/products/delete/{productId}', [ProductController::class, 'deleteProduct'])->name('deleteProduct');
 Route::get('/edit-product/{productId}', [ProductController::class, 'editProduct'])->name('editProduct');
 Route::put('/update-product/{productId}', [ProductController::class, 'updateProduct'])->name('updateProduct');
@@ -121,6 +121,8 @@ Route::put('/update-product/{productId}', [ProductController::class, 'updateProd
 /* ------ RUTAS PRODUCTOS SUCURSALES ------ */
 Route::get('/producto-sucursal/{sucursalId}', [ProductController::class, 'productSucursalView'])->name('producto-sucursal')->middleware('auth');
 Route::post('/producto-sucursal/{sucursalId}', [ProductController::class, 'saveSucursalProduct'])->name('saveSucursalProduct');
+Route::get('/edit-product-sucursal/{productId}', [ProductController::class, 'editProductSucursal'])->name('editProductSucursal');
+Route::put('/update-product-sucursal/{productId}', [ProductController::class, 'updateProductSucursal'])->name('updateProductSucursal');
 /* ------ FIN RUTAS PRODUCTOS SUCURSALES ------ */
 
 
