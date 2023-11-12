@@ -49,22 +49,28 @@
 
 
     <div class="columna-derecha">
-        <div class="container">
-            <div class="products">
-                <h2>TIENDA</h2>
-                @for ($i = 0; $i < 8; $i++) <div class="card">
-                    <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático">
-                    <h3>Título de tarjeta</h3>
-                    <p>Breve descripción</p>
-            </div>
-            @endfor
-        </div>
+        <div class="body-container">
+            <div class="columna-producto">
+                <h2>Productos</h2><br>
+                <div>
+                    <div class="card-deck">
+                        @foreach($productos as $producto)
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title"> {{ $producto->name }}</h5>
+                            </div>
+                            <img src="http://localhost/ConceUncover/public/img/producto.png" alt="">
+                            <div class="card-body">
+                                <p class="card-text">Descripción: {{ $producto->description }}</p>
+                            </div>
 
-        <div class="store-info">
-            <h2>Información de la tienda</h2>
-            <h1 style="margin-bottom: 80px;">Perfil de Sucursales</h1>
-            <div class="form-container" style="margin-bottom: 80px;"
-                <p>Nombre: {{ $sucursal->name }}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="columna-info">
+                <h2>Información de la tienda "{{$sucursal->name}}"</h2><br>
                 <p>Dirección: {{ $sucursal->address }}</p>
                 <p>Descripción: {{ $sucursal->description }}</p>
                 <p>Asistente: {{ $sucursal->assistant }}</p>
@@ -72,13 +78,6 @@
             </div>
         </div>
     </div>
-
-    <div class="comments">
-        <h2>Comentarios y valoraciones</h2>
-        <!-- Añade aquí el contenido dinámico de comentarios y valoraciones -->
-    </div>
-    </div>
-
 
 </body>
 <script>
@@ -111,6 +110,5 @@
         }
     });
 </script>
-
 
 </html>

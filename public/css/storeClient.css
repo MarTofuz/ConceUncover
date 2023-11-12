@@ -18,6 +18,7 @@ header {
     align-items: center;
     z-index: 99;
 }
+
 /* Estilos del encabezado */
 #user {
     text-align: center;
@@ -102,14 +103,18 @@ header {
 }
 
 .dropdown-content a:nth-child(2) {
-    margin-bottom: 10px; /* Agrega margen en la segunda opción (Nosotros) */
+    margin-bottom: 10px;
+    /* Agrega margen en la segunda opción (Nosotros) */
 }
 
 .dropdown-content a:hover {
     background-color: black;
 }
-.columna-izquierda, .columna-derecha {
-    height: calc(100% - 60px); /* Ajusta la altura para que llene la pantalla menos la altura del header */
+
+.columna-izquierda,
+.columna-derecha {
+    height: calc(100% - 60px);
+    /* Ajusta la altura para que llene la pantalla menos la altura del header */
     display: flex;
     flex-direction: column;
 }
@@ -122,30 +127,35 @@ header {
 }
 
 .columna-derecha {
+    padding-top: 74px;
     width: auto;
     flex-grow: 1;
 }
+
 .columna-derecha.with-sidebar {
-    flex: 0 0 80%; /* Ajusta el ancho cuando el sidebar está visible */
+    flex: 0 0 80%;
+    /* Ajusta el ancho cuando el sidebar está visible */
 }
 
 /* Estilos del sidebar */
-.sidebarleft{
+.sidebarleft {
     position: fixed;
     left: 0;
     width: 250px;
     height: 100%;
     background: black;
 }
-.usuario{
+
+.usuario {
     font-size: 22px;
-    color:white;
+    color: white;
     text-align: center;
     line-height: 70px;
     background: #0C0D0D;
     user-select: none;
 }
-.sidebarleft ul a{
+
+.sidebarleft ul a {
     display: block;
     height: 100%;
     width: 100%;
@@ -154,7 +164,7 @@ header {
     color: white;
     padding-left: 40px;
     box-sizing: border-box;
-    border-top: 1px solid rgba(255,255,255,.1);
+    border-top: 1px solid rgba(255, 255, 255, .1);
     border-bottom: 1px solid black;
     text-decoration: none;
     transition: .4s;
@@ -164,83 +174,189 @@ ul li:hover a {
     padding-left: 50px;
     background: #0C0D0D;
 }
-.sidebarleft ul a i{
+
+.sidebarleft ul a i {
     margin-right: 16px;
 }
-#check{
+
+#check {
     display: none;
 }
+
 label #bars {
-    position:absolute;
+    position: absolute;
     cursor: pointer;
     border-radius: 3px;
 }
-label #bars{
+
+label #bars {
     left: 40px;
     top: 25px;
     font-size: 35px;
     color: white;
 }
+
 .columna-izquierda {
     display: none;
     transition: all 0.3s;
 }
 
-#check:checked + .columna-izquierda {
+#check:checked+.columna-izquierda {
     display: none;
 }
 
 /* Ajusta el estilo de la columna derecha cuando la columna izquierda está oculta */
-#check:checked + .columna-izquierda + .columna-derecha {
+#check:checked+.columna-izquierda+.columna-derecha {
     flex: 1;
 }
+
 /* Ajusta el estilo de la columna izquierda cuando está desactivada */
 .columna-izquierda.desactivada {
     display: none;
 }
 
 /* Agrega este estilo para ocultar la columna izquierda cuando se marca el input */
-#check:checked + .columna-izquierda {
+#check:checked+.columna-izquierda {
     display: none;
 }
 
 /* Ajusta el estilo de la columna derecha cuando la columna izquierda está oculta */
-#check:checked + .columna-izquierda + .columna-derecha {
+#check:checked+.columna-izquierda+.columna-derecha {
     flex: 1;
 }
+
 .usuario {
     display: flex;
     align-items: center;
 }
 
 .user-avatar {
-    width: 40px; /* Tamaño deseado */
-    height: 40px; /* Tamaño deseado */
-    border-radius: 50%; /* Esto hace que la imagen sea redonda, ajusta según tus preferencias */
-    margin-right: 10px; /* Espacio entre la imagen y el nombre */
+    width: 40px;
+    /* Tamaño deseado */
+    height: 40px;
+    /* Tamaño deseado */
+    border-radius: 50%;
+    /* Esto hace que la imagen sea redonda, ajusta según tus preferencias */
+    margin-right: 10px;
+    /* Espacio entre la imagen y el nombre */
     margin-left: 42px;
 }
 
 .usertitle {
-    font-size: 28px; /* Ajusta el tamaño de fuente según tus preferencias */
+    font-size: 28px;
+    /* Ajusta el tamaño de fuente según tus preferencias */
 }
-  
-  
+
+
 body {
+    display: flex;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    height: 100%;
 }
+
+.body-container {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.columna-producto {
+    width: 86%;
+    height: 100vh;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+.columna-info {
+    flex-basis: 300px;
+    flex-shrink: 0;
+    padding-right: 5px;
+    width: 14%;
+    background-color: #ccc;
+    padding: 20px;
+}
+
+/* INICIO CARDS */
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Ajusta el valor de 200px según tus necesidades */
+    gap: 15px;
+    /* Espacio entre las tarjetas */
+    justify-content: center;
+}
+
+.card {
+    border-color: black;
+    border-radius: 5px;
+    border: 2px solid rgba(0, 0, 0, .4);
+    box-shadow: 8px 5px 5px rgba(0, 0, 0, 0.2);
+    width: 100% !important;
+    max-width: 200px !important;
+    height: auto;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+}
+
+.card-header {
+    padding-left: 7px;
+    border-bottom: 2px solid rgba(0, 0, 0, .3);
+}
+
+.card-body {
+    padding-right: 5px;
+    padding-left: 5px;
+    height: auto;
+    min-height: 100px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: center;
+    border-top: 2px solid rgba(0, 0, 0, .3);
+    height: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    gap: 15px;
+}
+
+.btn-delete-product {
+    width: 110px;
+    height: 30px;
+    background-color: rgba(255, 0, 0, .8);
+    border-radius: 4px;
+    color: #fff;
+}
+
+.btn-edit-product {
+    width: 110px;
+    height: 30px;
+    background-color: rgba(0, 95, 255, .8);
+    border-radius: 4px;
+    color: #fff;
+}
+
+/* ------FIN CARDS------ */
 
 .container {
     display: flex;
-    flex-direction: row; /* Para un diseño de fila */
+    flex-direction: row;
+    /* Para un diseño de fila */
     margin: 0 auto;
-    width: 100%; /* Esto permitirá que el contenedor se expanda al ancho completo de la ventana */
+    width: auto;
+    /* Esto permitirá que el contenedor se expanda al ancho completo de la ventana */
 }
 
-.products, .store-info, .comments {
+.products,
+.store-info,
+.comments {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -255,35 +371,64 @@ body {
 }
 
 .store-info {
-    flex-basis: 500px; /* Esto dará un ancho inicial a la info de la tienda */
-    flex-shrink: 0; /* Esto evitará que la info de la tienda se encoja si no hay espacio */
+    flex-basis: 400px;
+    /* Esto dará un ancho inicial a la info de la tienda */
+    flex-shrink: 0;
+    /* Esto evitará que la info de la tienda se encoja si no hay espacio */
     height: 100px;
     /* margin-left: 400px; Esto debería eliminarse o ajustarse */
     /* ...otros estilos... */
 }
 
 .comments {
-    width: 75%; /* 75% del ancho para comentarios, bajo los productos */
+    width: 75%;
+    /* 75% del ancho para comentarios, bajo los productos */
 }
 
-.card {
-    width: calc(33.333% - 10px); /* Ajuste para 3 tarjetas por fila, cambiado de 25% a 33.333% */
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+/* ------ COMENTARIOS ------ */
+.footer-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
     background-color: #f9f9f9;
-    box-sizing: border-box;
 }
 
-.card img {
-    /* No hay cambios aquí, mantén tu estilo actual */
+form {
+    margin-top: 15px;
 }
 
-.card h3, .card p {
-    /* No hay cambios aquí, mantén tu estilo actual */
+label {
+    display: block;
+    margin-bottom: 5px;
 }
 
-h2 {
-    /* No hay cambios aquí, mantén tu estilo actual */
+textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
 }
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* ------FIN COMENTARIOS------ */
