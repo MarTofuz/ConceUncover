@@ -197,7 +197,11 @@
                             <div class="card-header">
                                 <h5 class="card-title"> {{ $producto->name }}</h5>
                             </div>
-                            <img src="http://localhost/ConceUncover/public/img/producto.png" alt="">
+                            @if ($producto->image)
+                            <img src="{{ asset('storage/' . $producto->image) }}" alt="{{ $producto->name }}" class="card-img-top">
+                            @else
+                            <img src="{{ asset('img/producto.png')  }}" alt="Imagen predeterminada" class="card-img-top">
+                            @endif
                             <div class="card-body">
                                 <p class="card-text">Descripción: {{ $producto->description }}</p>
                             </div>
