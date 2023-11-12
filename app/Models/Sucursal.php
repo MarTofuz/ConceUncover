@@ -21,4 +21,9 @@ class Sucursal extends Model
     {
         return $this->hasMany(Product::class, 'sucursal_id');
     }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'sucursal_id');
+    }
 }

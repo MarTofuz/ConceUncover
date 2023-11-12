@@ -26,4 +26,9 @@ class Tienda extends Model
     {
         return $this->hasMany(Product::class, 'tienda_id');
     }
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'tienda_id');
+    }
 }
