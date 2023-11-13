@@ -309,10 +309,10 @@
     }
 
     // Agregar sucursales al objeto customData
-    var sucursales = @json($sucursales && sucursal.status === 1);
+    var sucursales = @json($tiendas);
     if (Array.isArray(sucursales)) {
         sucursales.forEach(function(sucursal) {
-            if (sucursal.location) {
+            if (sucursal.location && sucursal.status === 1) {
                 var lngLat = sucursal.location.split(',').map(Number);
 
                 var feature = {

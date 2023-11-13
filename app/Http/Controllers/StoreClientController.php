@@ -6,6 +6,7 @@ use App\Models\Sucursal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tienda;
+use App\Models\Comment;
 
 class StoreClientController extends Controller
 {
@@ -14,7 +15,7 @@ class StoreClientController extends Controller
         $user = Auth::user();
         $tienda = Tienda::find($id);
         $productos = $tienda->productos;
-        return view('admin.storeClientTienda', compact('user', 'tienda','productos'));
+        return view('admin.storeClientTienda', compact('user', 'tienda', 'productos'));
     }
 
     public function commentSave(Request $request, Tienda $tienda)
@@ -38,7 +39,7 @@ class StoreClientController extends Controller
         $user = Auth::user();
         $sucursal = Sucursal::find($id);
         $productos = $sucursal->productos;
-        return view('admin.storeClientSucursal', compact('user', 'sucursal','productos'));
+        return view('admin.storeClientSucursal', compact('user', 'sucursal', 'productos'));
     }
 
     public function commentSaveSucursal(Request $request, Sucursal $sucursal)
@@ -56,5 +57,4 @@ class StoreClientController extends Controller
 
         return redirect()->back();
     }
-
 }

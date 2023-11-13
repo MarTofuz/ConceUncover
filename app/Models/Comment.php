@@ -14,7 +14,7 @@ class Comment extends Model
     protected $fillable = ['content','comment_id','sucursal_id', 'tienda_id', 'user_id'];
 
     public function user(){
-        return $this->belongsTo(Comment::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function hijo()
