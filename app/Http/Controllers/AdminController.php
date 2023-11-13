@@ -52,11 +52,11 @@ class AdminController extends Controller
             if ($request->has('delete_photo') && $request->input('delete_photo')) {
                 // Eliminar la imagen actual del almacenamiento
                 $filePath = 'profile_photos/' . $user->profile_photo_path;
-            
+
                 if (File::exists($filePath)) {
                     File::delete($filePath);
                 }
-            
+
                 // Establecer la ruta de la foto de perfil como null
                 $user->profile_photo_path = null;
             }
@@ -144,7 +144,7 @@ class AdminController extends Controller
     public function adminStore()
     {
         $tiendas = Tienda::all();
-        $sucursales = Tienda::with('sucursales')->get();
+        $sucursales = Tienda::all();
         return view('admin.adminStore', compact('sucursales', 'tiendas'));
     }
 
