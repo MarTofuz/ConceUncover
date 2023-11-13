@@ -62,16 +62,21 @@
     width: 110px;
     height: 30px;
     background-color: rgba(255, 0, 0, .8);
+    border: 2px solid rgba(0, 0, 0, .3);
     border-radius: 4px;
     color: #fff;
+    cursor: pointer;
 }
+
 
 .btn-edit-product {
     width: 110px;
     height: 30px;
     background-color: rgba(0, 95, 255, .8);
+    border: 2px solid rgba(0, 0, 0, .3);
     border-radius: 4px;
     color: #fff;
+    cursor: pointer;
 }
 
 /* ------FIN CARDS------ */
@@ -89,17 +94,14 @@
 }
 
 .form-group label {
-    /* Style label text, for example: */
     font-weight: bold;
 }
 
 .form-group input {
-    /* Style input fields, for example: */
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 5px;
     width: 50%;
-    /* You can adjust the width as needed */
 }
 
 .btn-add-product {
@@ -108,15 +110,19 @@
     background-color: #333;
     border-radius: 4px;
     color: #fff;
+    cursor: pointer;
 }
+
 /* Form edit */
-.btn-update-product{
+.btn-update-product {
     width: 128px;
     height: 30px;
     background-color: #333;
     border-radius: 4px;
     color: #fff;
+    cursor: pointer;
 }
+
 /* Fin Form edit */
 
 /* ------FIN FORM------ */

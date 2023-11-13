@@ -208,11 +208,13 @@
 
 <body>
     <header>
-        <input type="checkbox" id="check" style="display: none;">
-        <label for="check">
-            <i class="fas fa-bars" id="bars"></i>
-        </label>
-        <h2 class="logo">Conce Uncover</h2>
+        <div class="logo-container">
+            <h2 class="logo">Conce Uncover</h2>
+            <input type="checkbox" id="check" style="display: none;">
+            <label for="check">
+                <i class="fas fa-bars" id="bars"></i>
+            </label>
+        </div>
         <nav class="navigation">
             <a href="{{ route('home') }}">Inicio</a>
         </nav>
