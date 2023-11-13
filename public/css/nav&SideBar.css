@@ -26,7 +26,7 @@ header {
     font-size: 2em;
     color: #fff;
     user-select: none;
-    margin-left: -1000px;
+    margin-right: 20px;
 }
 
 .navigation a {
@@ -110,16 +110,25 @@ header {
 
 .columna-izquierda {
     float: left;
-    width: 16%;
+    width: 12%;
     padding-top: 74px;
 
 }
 
 .columna-derecha {
     float: left;
-    width: 84%;
+    width: 88%;
     padding: 10px;
     padding-top: 100px;
+}
+#bars {
+    font-size: 35px;
+    color: white;
+    cursor: pointer;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
 }
 
 /* Estilos del sidebar */

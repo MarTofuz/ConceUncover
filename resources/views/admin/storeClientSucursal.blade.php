@@ -8,16 +8,27 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Conce Uncover</title>
+    <style>
+        .media-body {
+            width: 100%;
+        }
+
+        .form-reply {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
     @if(Auth::check())
     <header>
-        <input type="checkbox" id="check" style="display: none;">
-        <label for="check">
-            <i class="fas fa-bars" id="bars"></i>
-        </label>
-        <h2 class="logo">Conce Uncover</h2>
+        <div class="logo-container">
+            <h2 class="logo">Conce Uncover</h2>
+            <input type="checkbox" id="check" style="display: none;">
+            <label for="check">
+                <i class="fas fa-bars" id="bars"></i>
+            </label>
+        </div>
         <nav class="navigation">
             <a href="{{ route('home') }}">Inicio</a>
         </nav>
@@ -78,6 +89,7 @@
                 <p>Horario: {{ $sucursal->schedule }}</p>
             </div>
         </div>
+
     </div>
 
     <div class="comments">
@@ -129,40 +141,44 @@
                                         @else
                                         <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                         @endif
+
                                     </div>
-                                    <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $hijo->content }}</p>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
-                        @endforeach
-                    </div>
-                    <div class="form-reply" style="display: none;">
-                        <form action="{{ route('commentSaveSucursal', $sucursal) }}" role="form" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <h3>Respuesta</h3>
-                                <textarea name="content" id="content" rows="8" require></textarea>
-                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                            </div>
-                            <p><button class="btn btn-primary" type="submit">Enviar</button></p>
-                        </form>
+                        <div class="form-reply" style="display: none;">
+                            <form action="{{ route('commentSaveSucursal', $sucursal) }}" role="form" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <h3>Respuesta</h3>
+                                    <textarea name="content" id="content" rows="8" require></textarea>
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                </div>
+                                <p><button class="btn btn-primary" type="submit">Enviar</button></p>
+                            </form>
+                        </div>
                     </div>
                 </div>
+
             </div>
             @empty
             No hay comentarios para la sucursal
             <br>
             @endforelse
+
         </div>
     </div>
     @else
     <header>
-        <input type="checkbox" id="check" style="display: none;">
-        <label for="check">
-            <i class="fas fa-bars" id="bars"></i>
-        </label>
-        <h2 class="logo">Conce Uncover</h2>
+        <div class="logo-container">
+            <h2 class="logo">Conce Uncover</h2>
+            <input type="checkbox" id="check" style="display: none;">
+            <label for="check">
+                <i class="fas fa-bars" id="bars"></i>
+            </label>
+        </div>
         <nav class="navigation">
             <a href="{{ route('/') }}">Inicio</a>
         </nav>
@@ -209,6 +225,7 @@
                 <p>Horario: {{ $sucursal->schedule }}</p>
             </div>
         </div>
+
     </div>
 
     <div class="comments">
@@ -263,21 +280,21 @@
                                         <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
                                         <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                         @endif
+
                                     </div>
-                                    <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $hijo->content }}</p>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
                 </div>
+                @empty
+                No hay comentarios para la sucursal
+                <br>
+                @endforelse
             </div>
-            @empty
-            No hay comentarios para la sucursal
-            <br>
-            @endforelse
+            @endif
         </div>
-        @endif
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

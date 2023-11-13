@@ -15,11 +15,13 @@
 
 <body>
     <header>
-        <input type="checkbox" id="check" style="display: none;">
-        <label for="check">
-            <i class="fas fa-bars" id="bars"></i>
-        </label>
-        <h2 class="logo">Conce Uncover</h2>
+        <div class="logo-container">
+            <h2 class="logo">Conce Uncover</h2>
+            <input type="checkbox" id="check" style="display: none;">
+            <label for="check">
+                <i class="fas fa-bars" id="bars"></i>
+            </label>
+        </div>
         <nav class="navigation">
             <a href="{{ route('home') }}">Inicio</a>
         </nav>
@@ -27,12 +29,12 @@
     <div class="columna-izquierda">
         <!-- Sidebar -->
         <div class="sidebarleft">
-        <div class="usuario">
-            @if(Auth::user()->profile_photo_path)
-            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}"class="rounded" alt="Perfil " style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
-            @else
-            <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático" style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
-            @endif
+            <div class="usuario">
+                @if(Auth::user()->profile_photo_path)
+                <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="rounded" alt="Perfil " style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
+                @else
+                <img src="{{ asset('img/avatar.jpg') }}" alt="Perfil Estático" style="width: 40px;height: 40px; border-radius: 50%; margin-right: 10px;margin-left: 42px;">
+                @endif
                 <h3 class="usertitle">{{ Auth::user()->name }}</h3>
             </div>
             <ul>
