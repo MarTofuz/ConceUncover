@@ -293,7 +293,7 @@
     var tiendas = @json($tiendas);
     if (Array.isArray(tiendas)) {
         tiendas.forEach(function(tienda) {
-            if (tienda.location) {
+            if (tienda.location && tienda.status === 1) {
                 var lngLat = tienda.location.split(',').map(Number);
 
                 var feature = {
@@ -320,7 +320,7 @@
     var sucursales = @json($sucursales);
     if (Array.isArray(sucursales)) {
         sucursales.forEach(function(sucursal) {
-            if (sucursal.location) {
+            if (sucursal.location && sucursal.status === 1) {
                 var lngLat = sucursal.location.split(',').map(Number);
 
                 var feature = {
