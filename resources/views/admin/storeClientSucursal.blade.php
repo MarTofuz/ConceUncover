@@ -89,10 +89,7 @@
                 <p>Horario: {{ $sucursal->schedule }}</p>
             </div>
         </div>
-
-    </div>
-
-    <div class="comments">
+        <div class="comments">
         <h2>Comentarios y valoraciones</h2>
         <div class="comentarios">
             @if (Auth::check())
@@ -170,6 +167,9 @@
 
         </div>
     </div>
+    </div>
+
+    
     @else
     <header>
         <div class="logo-container">
@@ -225,10 +225,7 @@
                 <p>Horario: {{ $sucursal->schedule }}</p>
             </div>
         </div>
-
-    </div>
-
-    <div class="comments">
+        <div class="comments">
         <h2>Comentarios y valoraciones</h2>
         <div class="comentarios">
             @if (Auth::check())
@@ -296,6 +293,9 @@
             @endif
         </div>
     </div>
+    </div>
+
+    
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

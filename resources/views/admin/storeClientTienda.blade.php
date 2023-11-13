@@ -84,10 +84,7 @@
                 <p>Horario: {{ $tienda->schedule }}</p>
             </div>
         </div>
-
-    </div>
-
-    <div class="comments">
+        <div class="comments">
         <h2>Comentarios y valoraciones</h2>
         <div class="comentarios">
             @if (Auth::check())
@@ -165,6 +162,10 @@
         </div>
     </div>
 
+    </div>
+
+    
+
 
     @else
     <header>
@@ -218,10 +219,7 @@
                 <p>Horario: {{ $tienda->schedule }}</p>
             </div>
         </div>
-
-    </div>
-
-    <div class="comments">
+        <div class="comments">
         <h2>Comentarios y valoraciones</h2>
         <div class="comentarios">
             @if (Auth::check())
@@ -258,7 +256,7 @@
                             <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                             @endif
                         </div>
-                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
+                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
                         @foreach ($comment->hijo as $hijo)
                         <div class="media">
                             <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
@@ -289,6 +287,9 @@
             @endif
         </div>
     </div>
+    </div>
+
+    
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
