@@ -91,11 +91,11 @@
             <!-- Mostrar el formulario solo si el usuario está autenticado -->
             <form action="{{ route('commentSave', $tienda) }}" method="post">
                 @csrf
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label>Nombre</label>
                     <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
                 </div>
-                <div class="form-control" type="text">
+                <div class="form-control" type="text" style="display: none;">
                     <label>Email <span class="color-red">*</span></label>
                     <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
                 </div>
@@ -176,17 +176,9 @@
     <div class="columna-izquierda">
         <!-- Sidebar -->
         <div class="sidebarleft">
-
             <ul>
                 <li> <a href="{{ route('login') }}"><i class='fas fa-portrait'></i> Iniciar Sesión</a></li>
                 <li> <a href="{{ route('register') }}"><i class='fas fa-portrait'></i> Registrarse</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <a></a>
-
             </ul>
         </div>
     </div>
@@ -228,11 +220,11 @@
             <!-- Mostrar el formulario solo si el usuario está autenticado -->
             <form action="{{ route('commentSave', $tienda) }}" method="post">
                 @csrf
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label>Nombre</label>
                     <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
                 </div>
-                <div class="form-control" type="text">
+                <div class="form-control" type="text" style="display: none;">
                     <label>Email <span class="color-red">*</span></label>
                     <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
                 </div>
@@ -289,8 +281,6 @@
         </div>
         @endif
     </div>
-
-
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

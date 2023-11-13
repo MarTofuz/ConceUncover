@@ -87,11 +87,11 @@
             <!-- Mostrar el formulario solo si el usuario está autenticado -->
             <form action="{{ route('commentSaveSucursal', $sucursal) }}" method="post">
                 @csrf
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label>Nombre</label>
                     <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
                 </div>
-                <div class="form-control" type="text">
+                <div class="form-control" type="text" style="display: none;">
                     <label>Email <span class="color-red">*</span></label>
                     <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
                 </div>
@@ -153,7 +153,6 @@
             @empty
             No hay comentarios para la sucursal
             <br>
-
             @endforelse
         </div>
     </div>
@@ -172,17 +171,9 @@
     <div class="columna-izquierda">
         <!-- Sidebar -->
         <div class="sidebarleft">
-
             <ul>
                 <li> <a href="{{ route('login') }}"><i class='fas fa-portrait'></i> Iniciar Sesión</a></li>
                 <li> <a href="{{ route('register') }}"><i class='fas fa-portrait'></i> Registrarse</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <a></a>
-
             </ul>
         </div>
     </div>
@@ -205,7 +196,6 @@
                             <div class="card-body">
                                 <p class="card-text">Descripción: {{ $producto->description }}</p>
                             </div>
-
                         </div>
                         @endforeach
                     </div>
@@ -228,11 +218,11 @@
             <!-- Mostrar el formulario solo si el usuario está autenticado -->
             <form action="{{ route('commentSaveSucursal', $sucursal) }}" method="post">
                 @csrf
-                <div class="form-group">
+                <div class="form-group" style="display: none;">
                     <label>Nombre</label>
                     <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
                 </div>
-                <div class="form-control" type="text">
+                <div class="form-control" type="text" style="display: none;">
                     <label>Email <span class="color-red">*</span></label>
                     <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
                 </div>
