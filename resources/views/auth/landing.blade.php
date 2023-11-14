@@ -309,7 +309,7 @@
     }
 
     // Agregar sucursales al objeto customData
-    var sucursales = @json($tiendas);
+    var sucursales = @json($sucursales);
     if (Array.isArray(sucursales)) {
         sucursales.forEach(function(sucursal) {
             if (sucursal.location && sucursal.status === 1) {
@@ -374,18 +374,17 @@
         if (feature.properties.type === 'Tienda') {
             var idtienda = feature.properties.id;
 
-            var closeBtn = '<button class="close-button">Cerrar</button>';
+            var closeBtntienda = '<button class="close-buttontienda">Cerrar</button>';
 
             // Escucha el clic en el botón de cierre para cerrar el popup
             document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('close-button')) {
+                if (event.target.classList.contains('close-buttontienda')) {
                     var popup = document.querySelector('.mapboxgl-popup');
                     if (popup) {
                         popup.remove(); // Elimina el popup al hacer clic en el botón de cierre
                     }
                 }
             });
-
             // Código para tiendas
             var popupContent =
                 '<div class="small-box bg-info" style="text-align: center;">' +
@@ -399,8 +398,9 @@
                 '<br>' +
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
-                '</a>';
-                closeBtn;
+                '</a>' +
+                '<br>' +
+                closeBtntienda;
             document.addEventListener('click', function(event) {
                 if (event.target.classList.contains('right-button')) {
                     event.preventDefault(); // Evita la acción predeterminada del botón
@@ -421,17 +421,18 @@
         } else if (feature.properties.type === 'Sucursal') {
             var idsucursal = feature.properties.id;
 
-            var closeBtn = '<button class="close-button">Cerrar</button>';
+            var closeBtnsucursal = '<button class="close-buttonsucursal">Cerrar</button>';
 
             // Escucha el clic en el botón de cierre para cerrar el popup
             document.addEventListener('click', function(event) {
-                if (event.target.classList.contains('close-button')) {
+                if (event.target.classList.contains('close-buttonsucursal')) {
                     var popup = document.querySelector('.mapboxgl-popup');
                     if (popup) {
                         popup.remove(); // Elimina el popup al hacer clic en el botón de cierre
                     }
                 }
             });
+
             // Código para sucursales
             var popupContent =
                 '<div class="small-box bg-info" style="text-align: center;">' +
@@ -445,8 +446,8 @@
                 '<br>' +
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
-                '</a>';
-                closeBtn;
+                '</a>' +
+                '<br>' + closeBtnsucursal;
 
             // Listener para los botones de "Más Información"
             document.addEventListener('click', function(event) {
@@ -562,7 +563,6 @@
             }
         }
     });
-
 
     // Add the control to the map.
     map.addControl(
