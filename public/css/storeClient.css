@@ -413,6 +413,10 @@ body {
     /* ...otros estilos... */
 }
 
+
+
+/* ------ COMENTARIOS ------ */
+
 .comments {
     width: 100%;
     height: 100%;
@@ -420,7 +424,7 @@ body {
     padding: 20px;
 }
 
-/* ------ COMENTARIOS ------ */
+
 .footer-container {
     max-width: 600px;
     margin: 0 auto;
