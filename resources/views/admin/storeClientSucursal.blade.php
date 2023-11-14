@@ -117,10 +117,11 @@
                 <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
                     <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }} / <a href="javascript:;" class="boton-reply" style="margin-left: 10px;">Responder</a></h5>
                     <div style="display: flex;">
+                        {{$comment->user->name}}
                         <div style="flex-shrink: 0; margin-right: 10px;">
                             <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                            @if(Auth::user()->profile_photo_path)
-                            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
+                            @if($comment->user->profile_photo_path)
+                            <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
                             @else
                             <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                             @endif
@@ -131,10 +132,11 @@
                             <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
                                 <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
                                 <div style="display: flex;">
+                                    {{$hijo->user->name}}
                                     <div style="flex-shrink: 0; margin-right: 10px;">
                                         <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                        @if(Auth::user()->profile_photo_path)
-                                        <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
+                                        @if( $hijo->user->profile_photo_path)
+                                        <img src="{{ asset('storage/' .  $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
                                         @else
                                         <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                         @endif
@@ -169,7 +171,7 @@
     </div>
     </div>
 
-    
+
     @else
     <header>
         <div class="logo-container">
@@ -295,7 +297,7 @@
     </div>
     </div>
 
-    
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
