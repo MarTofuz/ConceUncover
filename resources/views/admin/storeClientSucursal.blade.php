@@ -13,6 +13,18 @@
             width: 100%;
         }
 
+        .media-body-answer {
+            padding-left: 150px;
+        }
+
+        .media p {
+            width: 75%;
+        }
+
+        .media {
+            width: 100%;
+        }
+
         .form-reply {
             width: 100%;
         }
@@ -165,7 +177,7 @@
                 @endif
                 @forelse ($sucursal->comment->whereNull('comment_id')->reverse() as $comment)
                 <div class="media">
-                    <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
+                    <div class="media-body">
                         <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }} / <a href="javascript:;" class="boton-reply" style="margin-left: 10px;">Responder</a></h5>
                         <div style="display: flex;">
                             {{$comment->user->name}}
@@ -178,41 +190,42 @@
                                 @endif
                             </div>
                             <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
-                            @foreach ($comment->hijo as $hijo)
-                            <div class="media">
-                                <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
-                                    <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
-                                    <div style="display: flex;">
-                                        {{$hijo->user->name}}
-                                        <div style="flex-shrink: 0; margin-right: 10px;">
-                                            <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                            @if( $hijo->user->profile_photo_path)
-                                            <img src="{{ asset('storage/' .  $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                                            @else
-                                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                            @endif
-                                        </div>
-                                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width:100%;">{{ $hijo->content }}</p>
+                        </div>
+                        @foreach ($comment->hijo as $hijo)
+                        <div class="media">
+                            <div class="media-body-answer">
+                                <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
+                                <div style="display: flex;">
+                                    {{$hijo->user->name}}
+                                    <div style="flex-shrink: 0; margin-right: 10px;">
+                                        <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
+                                        @if( $hijo->user->profile_photo_path)
+                                        <img src="{{ asset('storage/' .  $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                        @else
+                                        <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                        @endif
                                     </div>
+                                    <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width:100%;">{{ $hijo->content }}</p>
                                 </div>
-                                @endforeach
                             </div>
-                            <div class="form-reply" style="display: none;">
-                                <form action="{{ route('commentSaveSucursal', $sucursal) }}" role="form" method="post">
-                                    @csrf
-                                    <div class="form-group">
-                                        <h3>Respuesta</h3>
-                                        <textarea name="content" id="content" rows="8" require></textarea>
-                                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                                    </div>
-                                    <p><button class="btn btn-primary" type="submit">Enviar</button></p>
-                                </form>
-                            </div>
+                            @endforeach
+                        </div>
+                        <div class="form-reply" style="display: none;">
+                            <form action="{{ route('commentSaveSucursal', $sucursal) }}" role="form" method="post">
+                                @csrf
+                                <div class="form-group">
+                                    <h3>Respuesta</h3>
+                                    <textarea name="content" id="content" rows="8" require></textarea>
+                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                </div>
+                                <p><button class="btn btn-primary" type="submit">Enviar</button></p>
+                            </form>
                         </div>
                     </div>
 
                 </div>
+
                 @empty
                 No hay comentarios para la sucursal
                 <br>
@@ -303,9 +316,10 @@
                 @endif
                 @forelse ($sucursal->comment->whereNull('comment_id')->reverse() as $comment)
                 <div class="media">
-                    <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
+                    <div class="media-body">
                         <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }}</h5>
                         <div style="display: flex;">
+                            {{$comment->user->name}}
                             <div style="flex-shrink: 0; margin-right: 10px;">
                                 @if(Auth::check() && Auth::user()->profile_photo_path)
                                 <!-- Si el usuario está autenticado y tiene una foto de perfil -->
@@ -316,28 +330,26 @@
                                 @endif
                             </div>
                             <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
-                            @foreach ($comment->hijo as $hijo)
-                            <div class="media">
-                                <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
-                                    <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
-                                    <div style="display: flex;">
-                                        <div style="flex-shrink: 0; margin-right: 10px;">
-                                            <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                            @if(Auth::check() && Auth::user()->profile_photo_path)
-                                            <!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                                            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
-                                            @else
-                                            <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
-                                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                            @endif
-
-                                        </div>
-                                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $hijo->content }}</p>
+                        </div>
+                        @foreach ($comment->hijo as $hijo)
+                        <div class="media">
+                            <div class="media-body-answer">
+                                <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
+                                <div style="display: flex;">
+                                    <div style="flex-shrink: 0; margin-right: 10px;">
+                                        <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
+                                        @if(Auth::check() && Auth::user()->profile_photo_path)<!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                        <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
+                                        @else
+                                        <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                        @endif
                                     </div>
+                                    <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $hijo->content }}</p>
                                 </div>
-                                @endforeach
                             </div>
                         </div>
+                        @endforeach
+
                     </div>
                     @empty
                     No hay comentarios para la sucursal
