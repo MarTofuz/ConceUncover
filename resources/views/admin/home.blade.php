@@ -171,70 +171,6 @@
         .mapboxgl-ctrl-top-right {
             top: 100px;
         }
-
-        .right-button {
-            background-color: rgb(95, 95, 95);
-            color: white;
-            display: block;
-            padding: 3px 0;
-            position: relative;
-            text-align: center;
-            text-decoration: none;
-            z-index: 10;
-            border-radius: 8px;
-            width: 150px;
-            cursor: pointer;
-            border: none;
-            height: 27px;
-        }
-
-        .left-button {
-            background-color: rgb(95, 95, 95);
-            color: white;
-            display: block;
-            padding: 3px 0;
-            position: relative;
-            text-align: center;
-            text-decoration: none;
-            z-index: 10;
-            border-radius: 8px;
-            width: 150px;
-            cursor: pointer;
-            border: none;
-            height: 27px;
-        }
-
-        .close-buttontienda {
-            background-color: rgb(95, 95, 95);
-            color: white;
-            display: block;
-            padding: 3px 0;
-            position: relative;
-            text-align: center;
-            text-decoration: none;
-            z-index: 10;
-            border-radius: 8px;
-            width: 150px;
-            cursor: pointer;
-            border: none;
-            height: 27px;
-        }
-
-        .close-buttonsucursal {
-            background-color: rgb(95, 95, 95);
-            color: white;
-            display: block;
-            padding: 3px 0;
-            position: relative;
-            text-align: center;
-            text-decoration: none;
-            z-index: 10;
-            border-radius: 8px;
-            width: 150px;
-            cursor: pointer;
-            border: none;
-            height: 27px;
-        }
     </style>
 </head>
 
@@ -414,7 +350,7 @@
         if (feature.properties.type === 'Tienda') {
             var idtienda = feature.properties.id;
 
-            var closeBtntienda = '<button class="close-buttontienda">Cerrar</button>';
+            var closeBtntienda = '<a href="#" class="small-box-footer close-buttontienda">Cerrar</a>';
 
             // Escucha el clic en el botón de cierre para cerrar el popup
             document.addEventListener('click', function(event) {
@@ -434,7 +370,7 @@
                 '<p><strong style="text-align: center;">Horario</strong><br>' + feature.properties.schedule + '</p><br>' +
                 '</div>' +
                 '</div>' +
-                '<button class="small-box-footer right-button" data-tienda-id="' + idtienda + '">Más Información   <i class="fas fa-arrow-circle-right"></i></button>' +
+                '<a href="#" class="small-box-footer right-button" data-tienda-id="' + idtienda + '">Más Información   <i class="fas fa-arrow-circle-right"></i></a>' +
                 '<br>' +
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
@@ -461,7 +397,7 @@
         } else if (feature.properties.type === 'Sucursal') {
             var idsucursal = feature.properties.id;
 
-            var closeBtnsucursal = '<button class="close-buttonsucursal">Cerrar</button>';
+            var closeBtnsucursal = '<a href="#" class="small-box-footer close-buttonsucursal">Cerrar</a>';
 
             // Escucha el clic en el botón de cierre para cerrar el popup
             document.addEventListener('click', function(event) {
@@ -482,7 +418,7 @@
                 '<p><strong style="text-align: center;">Horario</strong><br>' + feature.properties.schedule + '</p><br>' +
                 '</div>' +
                 '</div>' +
-                '<button class="small-box-footer left-button" data-sucursal-id="' + idsucursal + '">Más Información   <i class="fas fa-arrow-circle-right"></i></button>' +
+                '<a href="#" class="small-box-footer left-button" data-sucursal-id="' + idsucursal + '">Más Información   <i class="fas fa-arrow-circle-right"></i></a>' +
                 '<br>' +
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
