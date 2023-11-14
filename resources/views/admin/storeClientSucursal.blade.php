@@ -16,6 +16,24 @@
         .form-reply {
             width: 100%;
         }
+
+        .star {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('path-to-your-star-icon.png') no-repeat;
+            background-size: contain;
+            cursor: pointer;
+        }
+
+        .rated {
+            background-position: 0 -20px;
+            /* Ajusta este valor según las dimensiones de tu icono de estrella */
+        }
+
+        .rating-container {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -90,85 +108,122 @@
             </div>
         </div>
         <div class="comments">
-        <h2>Comentarios y valoraciones</h2>
-        <div class="comentarios">
-            @if (Auth::check())
-            <!-- Mostrar el formulario solo si el usuario está autenticado -->
-            <form action="{{ route('commentSaveSucursal', $sucursal) }}" method="post">
-                @csrf
-                <div class="form-group" style="display: none;">
-                    <label>Nombre</label>
-                    <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
-                </div>
-                <div class="form-control" type="text" style="display: none;">
-                    <label>Email <span class="color-red">*</span></label>
-                    <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
-                </div>
-                <div>
-                    <label>Mensaje</label>
-                    <textarea class="form-control" name="content" id="content" rows="8" required></textarea>
-                    <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
-                </div>
-                <p><button class="btn btn-primary" type="submit">Agregar</button></p>
-            </form>
-            @endif
-            @forelse ($sucursal->comment->whereNull('comment_id')->reverse() as $comment)
-            <div class="media">
-                <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
-                    <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }} / <a href="javascript:;" class="boton-reply" style="margin-left: 10px;">Responder</a></h5>
-                    <div style="display: flex;">
-                        {{$comment->user->name}}
-                        <div style="flex-shrink: 0; margin-right: 10px;">
-                            <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                            @if($comment->user->profile_photo_path)
-                            <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                            @else
-                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                            @endif
-                        </div>
-                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
-                        @foreach ($comment->hijo as $hijo)
-                        <div class="media">
-                            <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
-                                <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
-                                <div style="display: flex;">
-                                    {{$hijo->user->name}}
-                                    <div style="flex-shrink: 0; margin-right: 10px;">
-                                        <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                        @if( $hijo->user->profile_photo_path)
-                                        <img src="{{ asset('storage/' .  $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                                        @else
-                                        <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                        @endif
-
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                        <div class="form-reply" style="display: none;">
-                            <form action="{{ route('commentSaveSucursal', $sucursal) }}" role="form" method="post">
-                                @csrf
-                                <div class="form-group">
-                                    <h3>Respuesta</h3>
-                                    <textarea name="content" id="content" rows="8" require></textarea>
-                                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                                    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-                                </div>
-                                <p><button class="btn btn-primary" type="submit">Enviar</button></p>
-                            </form>
+            <h2>Comentarios y valoraciones</h2>
+            <div class="comentarios">
+                @if (Auth::check())
+                @php
+                $user = Auth::user();
+                $sucursalId = $sucursal->id;
+                $hasCommented = \App\Models\Comment::where('user_id', $user->id)->where('sucursal_id', $sucursalId)->exists();
+                @endphp
+                @if (!$hasCommented)
+                <!-- Mostrar el formulario solo si el usuario no ha comentado -->
+                <form action="{{ route('commentRatingSucursal', $sucursal) }}" method="post">
+                    @csrf
+                    <div class="form-group" style="display: none;">
+                        <label>Nombre</label>
+                        <input class="form-control" type="text" value="{{ Auth::user()->name }}" readonly>
+                    </div>
+                    <div class="form-group" style="display: none;">
+                        <label>Email <span class="color-red">*</span></label>
+                        <input class="form-control" type="text" value="{{ Auth::user()->email }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="rating-container">
+                            @for ($i = 1; $i
+                            <= 5; $i++) <input type="radio" name="rating" value="{{ $i }}" id="star{{ $i }}" style="display: none;" />
+                            <label for="star{{ $i }}" class="star" data-value="{{ $i }}"><i class="fa-solid fa-star" style="color: #808080;"></i></label>
+                            @endfor
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Mensaje</label>
+                        <textarea class="form-control" name="content" id="content" rows="8" required></textarea>
+                        <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
+                    </div>
+                    <p><button class="btn btn-primary" type="submit">Agregar</button></p>
+                </form>
+                @else
+                @if (Auth::check())
+                <!-- Mostrar el formulario solo si el usuario está autenticado -->
+                <form action="{{ route('commentSaveSucursal', $sucursal) }}" method="post">
+                    @csrf
+                    <div class="form-group" style="display: none;">
+                        <label>Nombre</label>
+                        <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
+                    </div>
+                    <div class="form-control" type="text" style="display: none;">
+                        <label>Email <span class="color-red">*</span></label>
+                        <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
+                    </div>
+                    <div>
+                        <label>Mensaje</label>
+                        <textarea class="form-control" name="content" id="content" rows="8" required></textarea>
+                        <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                    </div>
+                    <p><button class="btn btn-primary" type="submit">Agregar</button></p>
+                </form>
+                @endif
+                @endif
+                @endif
+                @forelse ($sucursal->comment->whereNull('comment_id')->reverse() as $comment)
+                <div class="media">
+                    <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
+                        <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }} / <a href="javascript:;" class="boton-reply" style="margin-left: 10px;">Responder</a></h5>
+                        <div style="display: flex;">
+                            {{$comment->user->name}}
+                            <div style="flex-shrink: 0; margin-right: 10px;">
+                                <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
+                                @if($comment->user->profile_photo_path)
+                                <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                @else
+                                <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                @endif
+                            </div>
+                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
+                            @foreach ($comment->hijo as $hijo)
+                            <div class="media">
+                                <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
+                                    <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
+                                    <div style="display: flex;">
+                                        {{$hijo->user->name}}
+                                        <div style="flex-shrink: 0; margin-right: 10px;">
+                                            <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
+                                            @if( $hijo->user->profile_photo_path)
+                                            <img src="{{ asset('storage/' .  $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                            @else
+                                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="form-reply" style="display: none;">
+                                <form action="{{ route('commentSaveSucursal', $sucursal) }}" role="form" method="post">
+                                    @csrf
+                                    <div class="form-group">
+                                        <h3>Respuesta</h3>
+                                        <textarea name="content" id="content" rows="8" require></textarea>
+                                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+                                    </div>
+                                    <p><button class="btn btn-primary" type="submit">Enviar</button></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+                @empty
+                No hay comentarios para la sucursal
+                <br>
+                @endforelse
 
             </div>
-            @empty
-            No hay comentarios para la sucursal
-            <br>
-            @endforelse
-
         </div>
-    </div>
     </div>
 
 
@@ -228,73 +283,73 @@
             </div>
         </div>
         <div class="comments">
-        <h2>Comentarios y valoraciones</h2>
-        <div class="comentarios">
-            @if (Auth::check())
-            <!-- Mostrar el formulario solo si el usuario está autenticado -->
-            <form action="{{ route('commentSaveSucursal', $sucursal) }}" method="post">
-                @csrf
-                <div class="form-group" style="display: none;">
-                    <label>Nombre</label>
-                    <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
-                </div>
-                <div class="form-control" type="text" style="display: none;">
-                    <label>Email <span class="color-red">*</span></label>
-                    <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
-                </div>
-                <div>
-                    <label>Mensaje</label>
-                    <textarea class="form-control" name="content" id="content" rows="8" required></textarea>
-                    <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
-                </div>
-                <p><button class="btn btn-primary" type="submit">Agregar</button></p>
-            </form>
-            @endif
-            @forelse ($sucursal->comment->whereNull('comment_id')->reverse()  as $comment)
-            <div class="media">
-                <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
-                    <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }}</h5>
-                    <div style="display: flex;">
-                        <div style="flex-shrink: 0; margin-right: 10px;">
-                            @if(Auth::check() && Auth::user()->profile_photo_path)
-                            <!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
-                            @else
-                            <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
-                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                            @endif
-                        </div>
-                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
-                        @foreach ($comment->hijo as $hijo)
-                        <div class="media">
-                            <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
-                                <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
-                                <div style="display: flex;">
-                                    <div style="flex-shrink: 0; margin-right: 10px;">
-                                        <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                        @if(Auth::check() && Auth::user()->profile_photo_path)
-                                        <!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                                        <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
-                                        @else
-                                        <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
-                                        <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                        @endif
+            <h2>Comentarios y valoraciones</h2>
+            <div class="comentarios">
+                @if (Auth::check())
+                <!-- Mostrar el formulario solo si el usuario está autenticado -->
+                <form action="{{ route('commentSaveSucursal', $sucursal) }}" method="post">
+                    @csrf
+                    <div class="form-group" style="display: none;">
+                        <label>Nombre</label>
+                        <input class="form-control" type="text" value="{{Auth::user()->name}}" readonly>
+                    </div>
+                    <div class="form-control" type="text" style="display: none;">
+                        <label>Email <span class="color-red">*</span></label>
+                        <input class="form-control" type="text" value="{{Auth::user()->email}}" readonly>
+                    </div>
+                    <div>
+                        <label>Mensaje</label>
+                        <textarea class="form-control" name="content" id="content" rows="8" required></textarea>
+                        <input type="hidden" name="user_id" id="user_id" value="{{Auth::user()->id}}">
+                    </div>
+                    <p><button class="btn btn-primary" type="submit">Agregar</button></p>
+                </form>
+                @endif
+                @forelse ($sucursal->comment->whereNull('comment_id')->reverse() as $comment)
+                <div class="media">
+                    <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
+                        <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }}</h5>
+                        <div style="display: flex;">
+                            <div style="flex-shrink: 0; margin-right: 10px;">
+                                @if(Auth::check() && Auth::user()->profile_photo_path)
+                                <!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
+                                @else
+                                <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
+                                <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                @endif
+                            </div>
+                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
+                            @foreach ($comment->hijo as $hijo)
+                            <div class="media">
+                                <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
+                                    <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
+                                    <div style="display: flex;">
+                                        <div style="flex-shrink: 0; margin-right: 10px;">
+                                            <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
+                                            @if(Auth::check() && Auth::user()->profile_photo_path)
+                                            <!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                            <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
+                                            @else
+                                            <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
+                                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                            @endif
 
+                                        </div>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
                     </div>
+                    @empty
+                    No hay comentarios para la sucursal
+                    <br>
+                    @endforelse
                 </div>
-                @empty
-                No hay comentarios para la sucursal
-                <br>
-                @endforelse
+                @endif
             </div>
-            @endif
         </div>
-    </div>
     </div>
 
 
@@ -330,5 +385,29 @@
         });
     });
 </script>
+
+<script>
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.querySelector('input[name="rating"]');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = star.getAttribute('data-value');
+            ratingInput.value = value;
+
+            stars.forEach(s => {
+                const starIcon = s.querySelector('i');
+                const starValue = s.getAttribute('data-value');
+
+                if (starValue <= value) {
+                    starIcon.style.color = '#ffd700'; // Amarillo
+                } else {
+                    starIcon.style.color = '#808080'; // Gris
+                }
+            });
+        });
+    });
+</script>
+
 
 </html>

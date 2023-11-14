@@ -34,6 +34,24 @@ class StoreClientController extends Controller
         return redirect()->back();
     }
 
+    public function commentRatingTienda(Request $request, Tienda $tienda)
+    {
+        $content = $request->input('content');
+        $user_id = $request->input('user_id');
+        $comment_id = $request->input('comment_id');
+        $rating = $request->input('rating');
+
+
+        $tienda->comment()->create([
+            'content' => $content,
+            'user_id' => $user_id,
+            'comment_id' => $comment_id, // Asegurarse de asignar el ID del usuario
+            'rating' => $rating
+        ]);
+
+        return redirect()->back();
+    }
+
     public function viewClientSucursal($id)
     {
         $user = Auth::user();
@@ -53,6 +71,24 @@ class StoreClientController extends Controller
             'content' => $content,
             'user_id' => $user_id,
             'comment_id' => $comment_id // Asegurarse de asignar el ID del usuario
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function commentRatingSucursal(Request $request, Sucursal $sucursal)
+    {
+        $content = $request->input('content');
+        $user_id = $request->input('user_id');
+        $comment_id = $request->input('comment_id');
+        $rating = $request->input('rating');
+
+
+        $sucursal->comment()->create([
+            'content' => $content,
+            'user_id' => $user_id,
+            'comment_id' => $comment_id, // Asegurarse de asignar el ID del usuario
+            'rating' => $rating
         ]);
 
         return redirect()->back();

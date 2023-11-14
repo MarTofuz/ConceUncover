@@ -132,10 +132,11 @@ Route::group(['prefix' => '/storeClientTienda/{id}'], function () {
 });
 
 Route::post('/storeClientTienda/{tienda}', [StoreClientController::class, 'commentSave'])->name('commentSave')->middleware('auth');
-
+Route::post('/storeClientTiendaRating/{tienda}', [StoreClientController::class, 'commentRatingTienda'])->name('commentRatingTienda')->middleware('auth');
 
 Route::group(['prefix' => '/storeClientSucursal/{id}'], function () {
     Route::get('/', [StoreClientController::class, 'viewClientSucursal'])->name('viewClientSucursal');
 });
 
 Route::post('/storeClientSucursal/{sucursal}', [StoreClientController::class, 'commentSaveSucursal'])->name('commentSaveSucursal')->middleware('auth');
+Route::post('/storeClientSucursalRating/{sucursal}', [StoreClientController::class, 'commentRatingSucursal'])->name('commentRatingSucursal')->middleware('auth');

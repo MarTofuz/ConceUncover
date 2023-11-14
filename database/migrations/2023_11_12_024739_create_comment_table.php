@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('comment', function (Blueprint $table) {
             $table->id();
             $table->string('content');
+            $table->string('rating')->nullable();
             $table->integer('comment_id')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('tienda_id')->nullable();
