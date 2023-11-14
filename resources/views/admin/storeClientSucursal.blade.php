@@ -66,10 +66,6 @@
             <ul>
                 <li> <a href="{{ route('profile') }}"><i class='fas fa-portrait'></i> Perfil</a></li>
                 <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
                 <li><a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a></li>
                 <a></a>
 
@@ -181,7 +177,7 @@
                                 <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                 @endif
                             </div>
-                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
+                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
                             @foreach ($comment->hijo as $hijo)
                             <div class="media">
                                 <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
@@ -195,8 +191,8 @@
                                             @else
                                             <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                             @endif
-
                                         </div>
+                                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width:100%;">{{ $hijo->content }}</p>
                                     </div>
                                 </div>
                                 @endforeach
@@ -319,7 +315,7 @@
                                 <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                 @endif
                             </div>
-                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
+                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
                             @foreach ($comment->hijo as $hijo)
                             <div class="media">
                                 <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
@@ -336,6 +332,7 @@
                                             @endif
 
                                         </div>
+                                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $hijo->content }}</p>
                                     </div>
                                 </div>
                                 @endforeach

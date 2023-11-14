@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Conce Uncover</title>
     <style>
-
         .star {
             display: inline-block;
             width: 20px;
@@ -180,7 +179,7 @@
                                 <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                 @endif
                             </div>
-                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px;">{{ $comment->content }}</p>
+                            <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
                             @foreach ($comment->hijo as $hijo)
                             <div class="media">
                                 <div class="media-body" style="margin-left: 10px; border: 1px solid #ccc;">
@@ -194,8 +193,8 @@
                                             @else
                                             <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
                                             @endif
-
                                         </div>
+                                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%">{{ $hijo->content }}</p>
                                     </div>
                                 </div>
                                 @endforeach
@@ -332,6 +331,7 @@
                                             @endif
 
                                         </div>
+                                        <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%">{{ $hijo->content }}</p>
                                     </div>
                                 </div>
                                 @endforeach
