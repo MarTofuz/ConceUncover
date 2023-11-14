@@ -14,7 +14,10 @@ class StoreClientController extends Controller
     {
         $user = Auth::user();
         $tienda = Tienda::find($id);
+        $tienda->increment('visits');
+
         $productos = $tienda->productos;
+
         return view('admin.storeClientTienda', compact('user', 'tienda', 'productos'));
     }
 
@@ -56,6 +59,7 @@ class StoreClientController extends Controller
     {
         $user = Auth::user();
         $sucursal = Sucursal::find($id);
+        $sucursal->increment('visits');
         $productos = $sucursal->productos;
         return view('admin.storeClientSucursal', compact('user', 'sucursal', 'productos'));
     }

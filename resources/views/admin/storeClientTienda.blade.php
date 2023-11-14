@@ -102,6 +102,7 @@
                 <p>Descripción: {{ $tienda->description }}</p>
                 <p>Asistente: {{ $tienda->assistant }}</p>
                 <p>Horario: {{ $tienda->schedule }}</p>
+                <p>Visitas: {{ $tienda->visits}}</p>
             </div>
         </div>
         <div class="comments">

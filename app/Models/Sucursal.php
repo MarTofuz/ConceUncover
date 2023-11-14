@@ -11,7 +11,7 @@ class Sucursal extends Model
 
     protected $table = 'sucursales';
 
-    protected $fillable = ['name', 'address', 'description', 'assistant', 'schedule', 'location', 'status', 'tienda_id'];
+    protected $fillable = ['name', 'address', 'description', 'assistant', 'schedule', 'location', 'visits', 'status', 'tienda_id'];
 
     public function tienda()
     {

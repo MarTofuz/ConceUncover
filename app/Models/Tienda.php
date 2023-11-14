@@ -11,7 +11,7 @@ class Tienda extends Model
 
     protected $table = 'tiendas';
 
-    protected $fillable = ['name', 'address', 'description', 'assistant', 'schedule', 'location', 'status', 'user_id'];
+    protected $fillable = ['name', 'address', 'description', 'assistant', 'schedule', 'location', 'visits', 'status', 'user_id'];
 
     public function propietario()
     {
