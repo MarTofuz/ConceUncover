@@ -374,6 +374,18 @@
         if (feature.properties.type === 'Tienda') {
             var idtienda = feature.properties.id;
 
+            var closeBtn = '<button class="close-button">Cerrar</button>';
+
+            // Escucha el clic en el botón de cierre para cerrar el popup
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('close-button')) {
+                    var popup = document.querySelector('.mapboxgl-popup');
+                    if (popup) {
+                        popup.remove(); // Elimina el popup al hacer clic en el botón de cierre
+                    }
+                }
+            });
+
             // Código para tiendas
             var popupContent =
                 '<div class="small-box bg-info" style="text-align: center;">' +
@@ -388,6 +400,7 @@
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
                 '</a>';
+                closeBtn;
             document.addEventListener('click', function(event) {
                 if (event.target.classList.contains('right-button')) {
                     event.preventDefault(); // Evita la acción predeterminada del botón
@@ -407,6 +420,18 @@
             });
         } else if (feature.properties.type === 'Sucursal') {
             var idsucursal = feature.properties.id;
+
+            var closeBtn = '<button class="close-button">Cerrar</button>';
+
+            // Escucha el clic en el botón de cierre para cerrar el popup
+            document.addEventListener('click', function(event) {
+                if (event.target.classList.contains('close-button')) {
+                    var popup = document.querySelector('.mapboxgl-popup');
+                    if (popup) {
+                        popup.remove(); // Elimina el popup al hacer clic en el botón de cierre
+                    }
+                }
+            });
             // Código para sucursales
             var popupContent =
                 '<div class="small-box bg-info" style="text-align: center;">' +
@@ -421,6 +446,7 @@
                 '<a href="#" class="small-box-footer go-to-location" data-lng="' + feature.geometry.coordinates[0] + '" data-lat="' + feature.geometry.coordinates[1] + '">' +
                 'Ir <i class="fas fa-arrow-circle-right"></i>' +
                 '</a>';
+                closeBtn;
 
             // Listener para los botones de "Más Información"
             document.addEventListener('click', function(event) {
@@ -518,8 +544,17 @@
 
             // Ir al destino aunque sea el mismo
             goToLocation(lng, lat);
-        } else {
-            // Si se hace clic en cualquier otra parte del mapa, eliminar la ruta
+        }
+    });
+
+    // Evento para manejar el clic en el mapa
+    map.on('click', function(e) {
+        var features = map.queryRenderedFeatures(e.point, {
+            layers: ['route']
+        });
+
+        if (!features.length) {
+            // Si no se hace clic en una capa con la clase 'route' (la ruta)
             if (routeLayer) {
                 map.removeLayer('route');
                 map.removeSource('route');
