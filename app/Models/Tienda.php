@@ -31,4 +31,9 @@ class Tienda extends Model
     {
         return $this->hasMany(Comment::class, 'tienda_id');
     }
+
+    public function tienda_visits()
+    {
+        return $this->hasMany(TiendaVisit::class);
+    }
 }

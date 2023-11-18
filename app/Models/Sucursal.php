@@ -26,4 +26,9 @@ class Sucursal extends Model
     {
         return $this->hasMany(Comment::class, 'sucursal_id');
     }
+
+    public function sucursal_visits()
+    {
+        return $this->hasMany(SucursalVisit::class);
+    }
 }

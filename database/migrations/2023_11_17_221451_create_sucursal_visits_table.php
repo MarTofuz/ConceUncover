@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tiendas', function (Blueprint $table) {
+        Schema::create('sucursal_visits', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->text('description');
-            $table->string('assistant');
-            $table->string('schedule');
-            $table->string('location');
-            $table->integer('status')->default(0);
-            $table->unsignedBigInteger('user_id'); // Campo para la relación con el usuario
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('sucursal_id');
+            $table->unsignedInteger('visit_count')->default(1)->nullable();
+            $table->boolean('is_user')->default(false);
             $table->timestamps();
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('sucursal_id')->references('id')->on('sucursales')->onDelete('cascade');
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tiendas');
+        Schema::dropIfExists('sucursal_visits');
     }
 };

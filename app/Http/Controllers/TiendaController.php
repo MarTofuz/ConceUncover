@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tienda;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class TiendaController extends Controller
 {
@@ -71,5 +74,44 @@ class TiendaController extends Controller
         $tienda = $user->tiendas;
         $sucursales = $tienda->sucursales;
         return view('admin.profileShop', compact('user', 'tienda', 'sucursales'));
+    }
+
+    public function viewStatisticsTienda($id)
+    {
+        $tienda = Tienda::find($id);
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+
+        // Establecer la configuración regional a español
+        Carbon::setLocale('es');
+
+        $weeklyVisits = DB::table('tienda_visits')
+            ->select(
+                DB::raw('CONCAT(' . Carbon::now()->format('"F Y"') . ') as month_year'), // Formatear el mes en español
+                DB::raw('WEEK(tienda_visits.created_at) - WEEK(DATE_SUB(tienda_visits.created_at, INTERVAL DAY(tienda_visits.created_at)-1 DAY)) + 1 as week_in_month'),
+                'tienda_visits.tienda_id',
+                DB::raw('COALESCE(users.name, "Usuarios no logeados") as user_name'),
+                DB::raw('SUM(tienda_visits.visit_count) as visit_count')
+            )
+            ->leftJoin('users', 'tienda_visits.user_id', '=', 'users.id')
+            ->whereBetween('tienda_visits.created_at', [$startDate, $endDate])
+            ->groupBy('month_year', 'week_in_month', 'tienda_visits.tienda_id', 'users.name')
+            ->orderBy('month_year', 'ASC')
+            ->orderBy('week_in_month', 'ASC')
+            ->get();
+
+
+        $historicalTotal = DB::table('tienda_visits')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->sum('visit_count');
+
+
+            $comments = Comment::where('tienda_id', $id)->get();
+
+            $count = $comments->where('rating', '!=', null)->count();
+
+            $avgRating = $comments->avg('rating');
+
+        return view('admin.statisticsTienda', compact('tienda', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating'));
     }
 }

@@ -46,6 +46,16 @@
         .rating-container {
             margin-bottom: 20px;
         }
+
+
+        .rating {
+            display: flex;
+        }
+
+        .star.filled {
+            background-image: url('star-filled.png');
+            /* Ajusta la ruta según la ubicación de tu imagen de estrella llena */
+        }
     </style>
 </head>
 
@@ -85,7 +95,6 @@
         </div>
     </div>
 
-
     <div class="columna-derecha">
         <div class="body-container">
             <div class="columna-producto">
@@ -113,6 +122,11 @@
                 <p>Descripción: {{ $sucursal->description }}</p>
                 <p>Asistente: {{ $sucursal->assistant }}</p>
                 <p>Horario: {{ $sucursal->schedule }}</p>
+                <p>Visitas: {{ $totalVisits }}</p>
+                <h1>Calificaciones de la Página</h1>
+
+                <p>Cantidad de Calificaciones: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
+                <p>Promedio de Evaluación: {{ $sucursal->comment->avg('rating') }}</p>
             </div>
         </div>
         <div class="comments">
@@ -180,14 +194,18 @@
                     <div class="media-body">
                         <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }} / <a href="javascript:;" class="boton-reply" style="margin-left: 10px;">Responder</a></h5>
                         <div style="display: flex;">
-                            {{$comment->user->name}}
                             <div style="flex-shrink: 0; margin-right: 10px;">
-                                <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                @if($comment->user->profile_photo_path)
-                                <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                                @else
-                                <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                @endif
+                                <p>
+                                    <strong>{{ $comment->user->name }}</strong><br>
+
+                                    @if($comment->user->profile_photo_path)
+                                    <!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                    <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                    @else
+                                    <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
+                                    <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                    @endif
+                                </p>
                             </div>
                             <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
                         </div>
@@ -196,14 +214,17 @@
                             <div class="media-body-answer">
                                 <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
                                 <div style="display: flex;">
-                                    {{$hijo->user->name}}
                                     <div style="flex-shrink: 0; margin-right: 10px;">
-                                        <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                        @if( $hijo->user->profile_photo_path)
-                                        <img src="{{ asset('storage/' .  $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                                        @else
-                                        <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                        @endif
+                                        <p>
+                                            <strong>{{ $hijo->user->name }}</strong>
+
+                                            <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
+                                            @if($hijo->user->profile_photo_path)<!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                            <img src="{{ asset('storage/' . $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                            @else
+                                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                            @endif
+                                        </p>
                                     </div>
                                     <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width:100%;">{{ $hijo->content }}</p>
                                 </div>
@@ -223,9 +244,7 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
-
                 @empty
                 No hay comentarios para la sucursal
                 <br>
@@ -289,6 +308,12 @@
                 <p>Descripción: {{ $sucursal->description }}</p>
                 <p>Asistente: {{ $sucursal->assistant }}</p>
                 <p>Horario: {{ $sucursal->schedule }}</p>
+                <p>Visitas: {{ $totalVisits }}</p>
+                <h1>Calificaciones de la Página</h1>
+
+                <p>Cantidad de Calificaciones: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
+                <p>Promedio de Evaluación: {{ $sucursal->comment->avg('rating') }}</p>
+
             </div>
         </div>
         <div class="comments">
@@ -319,15 +344,18 @@
                     <div class="media-body">
                         <h5 style="margin-left: 1000px;">{{ $comment->created_at->diffForHumans() }}</h5>
                         <div style="display: flex;">
-                            {{$comment->user->name}}
                             <div style="flex-shrink: 0; margin-right: 10px;">
-                                @if(Auth::check() && Auth::user()->profile_photo_path)
-                                <!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                                <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
-                                @else
-                                <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
-                                <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                @endif
+                                <p>
+                                    <strong>{{ $comment->user->name }}</strong><br>
+
+                                    @if($comment->user->profile_photo_path)
+                                    <!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                    <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                    @else
+                                    <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
+                                    <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                    @endif
+                                </p>
                             </div>
                             <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
                         </div>
@@ -337,12 +365,16 @@
                                 <h5 style="margin-left: 1000px;">{{ $hijo->created_at->diffForHumans() }}</h5>
                                 <div style="display: flex;">
                                     <div style="flex-shrink: 0; margin-right: 10px;">
-                                        <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
-                                        @if(Auth::check() && Auth::user()->profile_photo_path)<!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                                        <img src="{{ asset('storage/' . Auth::user()->profile_photo_path) }}" class="media-object" style="width:60px">
-                                        @else
-                                        <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                        @endif
+                                        <p>
+                                            <strong>{{ $hijo->user->name }}</strong>
+
+                                            <!-- Imagen del usuario (opcional si deseas mostrarla nuevamente) -->
+                                            @if($hijo->user->profile_photo_path)<!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                            <img src="{{ asset('storage/' . $hijo->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                            @else
+                                            <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                            @endif
+                                        </p>
                                     </div>
                                     <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $hijo->content }}</p>
                                 </div>

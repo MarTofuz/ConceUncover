@@ -40,6 +40,16 @@ class User extends Authenticatable
         return $this->hasOne(Tienda::class, 'user_id');
     }
 
+    public function sucursal_visits()
+    {
+        return $this->hasMany(SucursalVisit::class);
+    }
+
+    public function tienda_visits()
+    {
+        return $this->hasMany(TiendaVisit::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

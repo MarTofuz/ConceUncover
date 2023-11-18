@@ -140,3 +140,7 @@ Route::group(['prefix' => '/storeClientSucursal/{id}'], function () {
 
 Route::post('/storeClientSucursal/{sucursal}', [StoreClientController::class, 'commentSaveSucursal'])->name('commentSaveSucursal')->middleware('auth');
 Route::post('/storeClientSucursalRating/{sucursal}', [StoreClientController::class, 'commentRatingSucursal'])->name('commentRatingSucursal')->middleware('auth');
+
+Route::get('/statisticsTienda{id}', [TiendaController::class, 'viewStatisticsTienda'])->name('viewStatisticsTienda')->middleware('auth');
+
+Route::get('/statisticsSucursal{id}', [SucursalController::class, 'viewStatisticsSucursal'])->name('viewStatisticsSucursal')->middleware('auth');

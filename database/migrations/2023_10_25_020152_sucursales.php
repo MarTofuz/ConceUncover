@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('assistant');
             $table->string('schedule');
             $table->string('location');
-            $table->integer('visits')->default(0);
             $table->integer('status')->default(0);
             $table->unsignedBigInteger('tienda_id'); // Clave foránea para la relación con la tienda
             $table->timestamps();
