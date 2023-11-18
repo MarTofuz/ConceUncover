@@ -105,3 +105,8 @@ form button{
     color: #333; /* Color del texto del label */
 }
 
+table{
+    padding-left: 20px;
+    padding-top: 20px;
+    width: 100%;
+}

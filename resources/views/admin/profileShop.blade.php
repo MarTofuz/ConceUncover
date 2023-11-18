@@ -70,7 +70,7 @@
         <br>
         <br>
         <form action="{{ route('viewSaveSucursal', ['id' => $tienda->id]) }}">
-            <button class="right-button">Nueva Sucursal</button>
+            <button style="width: 200px;" class="right-button">Nueva Sucursal</button>
         </form>
 
     </div>
