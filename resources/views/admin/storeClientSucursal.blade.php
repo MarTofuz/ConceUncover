@@ -123,10 +123,15 @@
                 <p>Asistente: {{ $sucursal->assistant }}</p>
                 <p>Horario: {{ $sucursal->schedule }}</p>
                 <p>Visitas: {{ $totalVisits }}</p>
-                <h1>Calificaciones de la Página</h1>
+                <h2>Calificaciones de la Página</h2>
 
-                <p>Cantidad de Calificaciones: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
-                <p>Promedio de Evaluación: {{ $sucursal->comment->avg('rating') }}</p>
+                <p>Valoraciones totales: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
+                <p>Valoraciones de una estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 1)->count() }}</p>
+                <p>Valoraciones de dos estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 2)->count() }}</p>
+                <p>Valoraciones de tres estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 3)->count() }}</p>
+                <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 4)->count() }}</p>
+                <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 5)->count() }}</p>
+                <p>Promedio de Valoraciones: {{ $sucursal->comment->avg('rating') }}</p>
             </div>
         </div>
         <div class="comments">
@@ -154,14 +159,14 @@
                         <label>Rating</label>
                         <div class="rating-container">
                             @for ($i = 1; $i
-                            <= 5; $i++) <input type="radio" name="rating" value="{{ $i }}" id="star{{ $i }}" style="display: none;" />
+                            <= 5; $i++) <input type="radio" name="rating" value="{{ $i }}" id="star{{ $i }}" style="display: none;" required />
                             <label for="star{{ $i }}" class="star" data-value="{{ $i }}"><i class="fa-solid fa-star" style="color: #808080;"></i></label>
                             @endfor
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Mensaje</label>
-                        <textarea class="form-control" name="content" id="content" rows="8" required></textarea>
+                        <textarea class="form-control" name="content" id="content" rows="8" placeholder="Selecciona tu calificación y comenta..." required></textarea>
                         <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
                     </div>
                     <p><button class="btn btn-primary" type="submit">Agregar</button></p>
@@ -197,14 +202,17 @@
                             <div style="flex-shrink: 0; margin-right: 10px;">
                                 <p>
                                     <strong>{{ $comment->user->name }}</strong><br>
+                                    @if($comment->rating)
+                                <p><i class="fa fa-star" style="color: yellow;"></i> {{ $comment->rating }}</p>
+                                @endif
 
-                                    @if($comment->user->profile_photo_path)
-                                    <!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                                    <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                                    @else
-                                    <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
-                                    <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                    @endif
+                                @if($comment->user->profile_photo_path)
+                                <!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                @else
+                                <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
+                                <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                @endif
                                 </p>
                             </div>
                             <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
@@ -309,10 +317,15 @@
                 <p>Asistente: {{ $sucursal->assistant }}</p>
                 <p>Horario: {{ $sucursal->schedule }}</p>
                 <p>Visitas: {{ $totalVisits }}</p>
-                <h1>Calificaciones de la Página</h1>
+                <h2>Calificaciones de la Página</h2>
 
-                <p>Cantidad de Calificaciones: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
-                <p>Promedio de Evaluación: {{ $sucursal->comment->avg('rating') }}</p>
+                <p>Valoraciones totales: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
+                <p>Valoraciones de una estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 1)->count() }}</p>
+                <p>Valoraciones de dos estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 2)->count() }}</p>
+                <p>Valoraciones de tres estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 3)->count() }}</p>
+                <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 4)->count() }}</p>
+                <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 5)->count() }}</p>
+                <p>Promedio de Valoraciones: {{ $sucursal->comment->avg('rating') }}</p>
 
             </div>
         </div>
@@ -347,14 +360,17 @@
                             <div style="flex-shrink: 0; margin-right: 10px;">
                                 <p>
                                     <strong>{{ $comment->user->name }}</strong><br>
+                                    @if($comment->rating)
+                                <p><i class="fa fa-star" style="color: yellow;"></i> {{ $comment->rating }}</p>
+                                @endif
 
-                                    @if($comment->user->profile_photo_path)
-                                    <!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                                    <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                                    @else
-                                    <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
-                                    <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                    @endif
+                                @if($comment->user->profile_photo_path)
+                                <!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                @else
+                                <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
+                                <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                @endif
                                 </p>
                             </div>
                             <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
