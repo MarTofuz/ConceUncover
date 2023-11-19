@@ -16,7 +16,8 @@ class SucursalController extends Controller
     {
         $user = Auth::user();
         $tienda = Tienda::find($id);
-        return view('admin.saveSucursal', compact('user', 'tienda'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.saveSucursal', compact('user', 'tienda', 'favoritos'));
     }
 
     public function saveSucursal(Request $request)
@@ -57,7 +58,8 @@ class SucursalController extends Controller
     {
         $user = Auth::user();
         $sucursal = Sucursal::find($id);
-        return view('admin.editSucursal', compact('user', 'sucursal'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.editSucursal', compact('user', 'sucursal', 'favoritos'));
     }
 
     public function updateSucursal(Request $request, $id)
@@ -111,6 +113,8 @@ class SucursalController extends Controller
 
             $avgRating = $comments->avg('rating');
 
-        return view('admin.statisticsSucursal', compact('sucursal', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating'));
+            $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+
+        return view('admin.statisticsSucursal', compact('sucursal', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating', 'favoritos'));
     }
 }

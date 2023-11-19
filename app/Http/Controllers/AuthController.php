@@ -48,13 +48,11 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-        
+
 
         Auth::login($user);
         return redirect()->route('home');
     }
-
-   
 
     public function logout(){
         Auth::logout();

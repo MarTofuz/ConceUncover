@@ -43,6 +43,20 @@
         .rating-container {
             margin-bottom: 20px;
         }
+
+        /* Estilos para ocultar la lista de favoritos al inicio */
+        #favoritos-list {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        /* Estilos para la opción "Favoritos" */
+        #favoritos:hover #favoritos-list {
+            display: block;
+        }
     </style>
 </head>
 
@@ -73,15 +87,39 @@
                 <h3 class="usertitle">{{ $user->name }}</h3>
             </div>
             <ul>
-                <li> <a href="{{ route('profile') }}"><i class='fas fa-portrait'></i> Perfil</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a></li>
-                <a></a>
-
+                <li>
+                    <a href="{{ route('profile') }}">
+                        <i class='fas fa-portrait'></i> Perfil
+                    </a>
+                </li>
+                <li id="favoritos">
+                    <!-- Opción "Favoritos" -->
+                    <a href="#">
+                        <i class="fas fa-star"></i> Favoritos
+                    </a>
+                    <!-- Lista de favoritos que se mostrará al pasar el ratón sobre "Favoritos" -->
+                    <ul id="favoritos-list">
+                        @foreach ($favoritos->reverse() as $favorito)
+                        <li id="favoritos">
+                            @if ($favorito->sucursal)
+                            <a href="{{ route('viewClientSucursal', ['id' => $favorito->sucursal->id]) }}">
+                                <i class="fas fa-star"></i> {{ $favorito->sucursal->name }}
+                            </a>
+                            @elseif ($favorito->tienda)
+                            <a href="{{ route('viewClientTienda', ['id' => $favorito->tienda->id]) }}">
+                                <i class="fas fa-star"></i> {{ $favorito->tienda->name }}
+                            </a>
+                            @endif
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+                <li>
+                    <a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a>
+                </li>
             </ul>
         </div>
     </div>
-
 
     <div class="columna-derecha">
         <div class="body-container">
@@ -123,7 +161,21 @@
                 <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $tienda->comment->where('rating', 4)->count() }}</p>
                 <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $tienda->comment->where('rating', 5)->count() }}</p>
                 <p>Promedio de Evaluación: <i class="fa fa-star" style="color: yellow;"></i> {{ round($tienda->comment->avg('rating'), 1) }}</p>
+                <form action="{{ route('favoritosTienda') }}" method="POST">
+                    @csrf
+                    <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
+                    <input type="text" name="tienda_id" value="{{ $tienda->id }}" hidden>
 
+                    @if ($tienda->favoritos->contains('user_id', Auth::user()->id)) <!-- Verifica si la tienda está en favoritos del usuario -->
+                    <button class="right-button" style="float: right; background-color: red; color: white;" type="submit">
+                        Eliminar Favorito
+                    </button>
+                    @else
+                    <button class="right-button" style="float: right; background-color: yellow; color: black;" type="submit">
+                        Agregar a Favoritos
+                    </button>
+                    @endif
+                </form>
             </div>
         </div>
         <div class="comments">
@@ -186,7 +238,6 @@
                 @endif
                 @endif
                 @endif
-
                 @forelse ($tienda->comment->whereNull('comment_id')->reverse() as $comment)
                 <div class="media">
                     <div class="media-body">
@@ -198,7 +249,6 @@
                                     @if($comment->rating)
                                 <p><i class="fa fa-star" style="color: yellow;"></i> {{ $comment->rating }}</p>
                                 @endif
-
                                 @if($comment->user->profile_photo_path)
                                 <!-- Si el usuario está autenticado y tiene una foto de perfil -->
                                 <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
@@ -249,13 +299,11 @@
                     @empty
                     No hay comentarios para la tienda
                     <br>
-
                     @endforelse
                 </div>
             </div>
         </div>
     </div>
-
     @else
     <header>
         <div class="logo-container">
@@ -316,8 +364,6 @@
                 <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $tienda->comment->where('rating', 4)->count() }}</p>
                 <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $tienda->comment->where('rating', 5)->count() }}</p>
                 <p>Promedio de Valoraciones: <i class="fa fa-star" style="color: yellow;"></i> {{ round($tienda->comment->avg('rating'), 1) }}</p>
-
-
             </div>
         </div>
         <div class="comments">
@@ -354,15 +400,13 @@
                                     @if($comment->rating)
                                 <p><i class="fa fa-star" style="color: yellow;"></i> {{ $comment->rating }}</p>
                                 @endif
-
-
-                                    @if($comment->user->profile_photo_path)
-                                    <!-- Si el usuario está autenticado y tiene una foto de perfil -->
-                                    <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
-                                    @else
-                                    <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
-                                    <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
-                                    @endif
+                                @if($comment->user->profile_photo_path)
+                                <!-- Si el usuario está autenticado y tiene una foto de perfil -->
+                                <img src="{{ asset('storage/' . $comment->user->profile_photo_path) }}" class="media-object" style="width:60px">
+                                @else
+                                <!-- Si el usuario no está autenticado o no tiene una foto de perfil -->
+                                <img src="{{ asset('img/avatar.jpg') }}" class="media-object" style="width:60px">
+                                @endif
                                 </p>
                             </div>
                             <p style="background-color: #f5f5f5; padding: 10px; border-radius: 5px; width: 100%;">{{ $comment->content }}</p>
@@ -398,6 +442,7 @@
                 @endif
             </div>
         </div>
+    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -452,7 +497,23 @@
             });
         });
     });
+
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('favorite')) {
+            event.preventDefault(); // Evita la acción predeterminada del botón
+
+            var tiendaId = event.target.dataset.tiendaId;
+            if (tiendaId) {
+                var form = document.createElement('form');
+                form.method = 'GET'; // Método del formulario
+
+                // Modificar la acción del formulario para incluir el ID en la URL
+                form.action = "{{ route('viewClientTienda', ['id' => ':id']) }}".replace(':id', tiendaId);
+
+                document.body.appendChild(form); // Agrega el formulario al DOM
+                form.submit(); // Envía el formulario
+            }
+        }
+    });
 </script>
-
-
 </html>

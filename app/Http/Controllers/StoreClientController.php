@@ -48,7 +48,9 @@ class StoreClientController extends Controller
 
         $totalVisits = $tienda->tienda_visits->sum('visit_count');
 
-        return view('admin.storeClientTienda', compact('user', 'tienda', 'productos', 'totalVisits'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+
+        return view('admin.storeClientTienda', compact('user', 'tienda', 'productos', 'totalVisits', 'favoritos'));
     }
 
     public function commentSave(Request $request, Tienda $tienda)
@@ -56,7 +58,6 @@ class StoreClientController extends Controller
         $content = $request->input('content');
         $user_id = $request->input('user_id');
         $comment_id = $request->input('comment_id');
-
 
         $tienda->comment()->create([
             'content' => $content,
@@ -123,7 +124,9 @@ class StoreClientController extends Controller
 
         $totalVisits = $sucursal->sucursal_visits->sum('visit_count');
 
-        return view('admin.storeClientSucursal', compact('user', 'sucursal', 'productos', 'totalVisits'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+
+        return view('admin.storeClientSucursal', compact('user', 'sucursal', 'productos', 'totalVisits', 'favoritos'));
     }
 
     public function commentSaveSucursal(Request $request, Sucursal $sucursal)

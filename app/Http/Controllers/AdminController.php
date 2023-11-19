@@ -18,15 +18,16 @@ class AdminController extends Controller
     {
         $authenticated_user = Auth::user();
         $tienda = $authenticated_user->tiendas; // Obtener las tiendas del usuario
-        return View('admin.profile')->with(['user' => $authenticated_user, 'tienda' => $tienda]);
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return View('admin.profile')->with(['user' => $authenticated_user, 'tienda' => $tienda, 'favoritos' => $favoritos]);
     }
-
 
     public function edit()
     {
         $user = Auth::user();
         $tiendas = $user->tiendas;
-        return view('admin.edit', compact('user', 'tiendas'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.edit', compact('user', 'tiendas', 'favoritos'));
     }
 
     public function update(Request $request)
@@ -60,9 +61,6 @@ class AdminController extends Controller
                 // Establecer la ruta de la foto de perfil como null
                 $user->profile_photo_path = null;
             }
-
-
-
             // Manejar la carga de la imagen si está presente
         if ($request->hasFile('profile_photo')) {
             // Obtener el nombre único de la imagen utilizando el ID del usuario
@@ -83,21 +81,25 @@ class AdminController extends Controller
 
         $authenticated_user = Auth::user();
         $tienda = $authenticated_user->tiendas;
-        return view('admin.profile', compact('user', 'tienda'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.profile', compact('user', 'tienda', 'favoritos'));
     }
 
     public function adminPanel()
     {
         $tiendas = Tienda::where('status', 0)->get();
         $sucursales = Sucursal::where('status', 0)->get();
-        return View('admin.adminPanel', compact('sucursales', 'tiendas'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return View('admin.adminPanel', compact('sucursales', 'tiendas', 'favoritos'));
     }
 
     public function adminAccount()
     {
         $users = DB::table('users')->get();
-        return View('admin.adminAccount', compact('users'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return View('admin.adminAccount', compact('users', 'favoritos'));
     }
+
     public function eliminarUsuario($id)
     {
         $users = User::find($id);
@@ -128,6 +130,7 @@ class AdminController extends Controller
 
         return redirect()->route('adminStore')->with('success', 'Tienda eliminada correctamente.');
     }
+
     public function eliminarSucursal($id)
     {
         $sucursales = Sucursal::find($id);
@@ -145,7 +148,8 @@ class AdminController extends Controller
     {
         $tiendas = Tienda::all();
         $sucursales = Tienda::all();
-        return view('admin.adminStore', compact('sucursales', 'tiendas'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.adminStore', compact('sucursales', 'tiendas', 'favoritos'));
     }
 
     public function buscarUsuario()
@@ -161,8 +165,9 @@ class AdminController extends Controller
         }
 
         $users = $users->get(); // Ejecutar la consulta y obtener los resultados
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
 
-        return view('admin.adminAccount', compact('users'));
+        return view('admin.adminAccount', compact('users', 'favoritos'));
     }
 
     public function buscarTienda()
@@ -178,8 +183,9 @@ class AdminController extends Controller
         }
 
         $tiendas = $tiendas->get(); // Ejecutar la consulta y obtener los resultados
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
 
-        return view('admin.adminStore', compact('tiendas'));
+        return view('admin.adminStore', compact('tiendas', 'favoritos'));
     }
 
     public function statusTienda(Request $request, $id)
@@ -211,21 +217,25 @@ class AdminController extends Controller
             return back();
         }
     }
+
     public function viewsucursal($id)
     {
         $user = Auth::user();
         $sucursal = Sucursal::find($id);
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
         if (!$sucursal) {
             // Manejar el caso en el que la sucursal no se encuentre
             return redirect()->route('home')->with('error', 'Sucursal no encontrada');
         } else {
-            return view('admin.profileSucursal', compact('sucursal', 'user'));
+            return view('admin.profileSucursal', compact('sucursal', 'user', 'favoritos'));
         }
     }
+
     public function viewStoreClient()
     {
         $user = Auth::user();
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
 
-        return view('admin.storeClient', compact('user'));
+        return view('admin.storeClient', compact('user', 'favoritos'));
     }
 }

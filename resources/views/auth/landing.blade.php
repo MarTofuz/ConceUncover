@@ -191,17 +191,9 @@
     <div class="columna-izquierda">
         <!-- Sidebar -->
         <div class="sidebarleft">
-
             <ul>
                 <li> <a href="{{ route('login') }}"><i class='fas fa-portrait'></i> Iniciar Sesión</a></li>
                 <li> <a href="{{ route('register') }}"><i class='fas fa-portrait'></i> Registrarse</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <a></a>
-
             </ul>
         </div>
     </div>

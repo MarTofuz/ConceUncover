@@ -31,4 +31,9 @@ class Sucursal extends Model
     {
         return $this->hasMany(SucursalVisit::class);
     }
+
+    public function favoritos()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }
