@@ -76,8 +76,9 @@ class TiendaController extends Controller
         return view('admin.profileShop', compact('user', 'tienda', 'sucursales'));
     }
 
-    public function viewStatisticsTienda($id)
+    public function viewStatisticsTienda(Request $request, $id)
     {
+        $selectedMonth = $request->input('month_filter');
         $tienda = Tienda::find($id);
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
@@ -85,9 +86,21 @@ class TiendaController extends Controller
         // Establecer la configuración regional a español
         Carbon::setLocale('es');
 
+        $monthlyVisits = DB::table('tienda_visits')
+            ->select(
+                DB::raw('CONCAT(' . Carbon::now()->format('"F Y"') . ') as month_year'),
+                DB::raw('MONTH(tienda_visits.created_at) as month'),
+                'tienda_visits.tienda_id',
+                DB::raw('SUM(tienda_visits.visit_count) as visit_count')
+            )
+            ->whereBetween('tienda_visits.created_at', [$startDate, $endDate])
+            ->groupBy('month_year', 'month', 'tienda_visits.tienda_id')
+            ->orderBy('month_year', 'ASC')
+            ->get();
+
         $weeklyVisits = DB::table('tienda_visits')
             ->select(
-                DB::raw('CONCAT(' . Carbon::now()->format('"F Y"') . ') as month_year'), // Formatear el mes en español
+                DB::raw('CONCAT(' . Carbon::now()->format('"F Y"') . ') as month_year'),
                 DB::raw('WEEK(tienda_visits.created_at) - WEEK(DATE_SUB(tienda_visits.created_at, INTERVAL DAY(tienda_visits.created_at)-1 DAY)) + 1 as week_in_month'),
                 'tienda_visits.tienda_id',
                 DB::raw('COALESCE(users.name, "Usuarios no logeados") as user_name'),
@@ -112,6 +125,6 @@ class TiendaController extends Controller
 
             $avgRating = $comments->avg('rating');
 
-        return view('admin.statisticsTienda', compact('tienda', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating'));
+        return view('admin.statisticsTienda', compact('tienda', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating','monthlyVisits'));
     }
 }

@@ -76,13 +76,27 @@ class SucursalController extends Controller
         return redirect('/profileShop')->with('success', 'Sucursal actualizada exitosamente.');
     }
 
-    public function viewStatisticsSucursal($id){
+    public function viewStatisticsSucursal(Request $request, $id)
+    {
+        $selectedMonth = $request->input('month_filter');
         $sucursal = Sucursal::find($id);
         $startDate = Carbon::now()->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
 
         // Establecer la configuración regional a español
         Carbon::setLocale('es');
+
+        $monthlyVisits = DB::table('sucursal_visits')
+            ->select(
+                DB::raw('CONCAT(' . Carbon::now()->format('"F Y"') . ') as month_year'), // Formatear el mes en español
+                DB::raw('MONTH(sucursal_visits.created_at) as month'),
+                'sucursal_visits.sucursal_id',
+                DB::raw('SUM(sucursal_visits.visit_count) as visit_count')
+            )
+            ->whereBetween('sucursal_visits.created_at', [$startDate, $endDate])
+            ->groupBy('month_year', 'month', 'sucursal_visits.sucursal_id')
+            ->orderBy('month_year', 'ASC')
+            ->get();
 
         $weeklyVisits = DB::table('sucursal_visits')
             ->select(
@@ -99,18 +113,16 @@ class SucursalController extends Controller
             ->orderBy('week_in_month', 'ASC')
             ->get();
 
-
         $historicalTotal = DB::table('sucursal_visits')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->sum('visit_count');
 
+        $comments = Comment::where('sucursal_id', $id)->get();
 
-            $comments = Comment::where('sucursal_id', $id)->get();
+        $count = $comments->where('rating', '!=', null)->count();
 
-            $count = $comments->where('rating', '!=', null)->count();
+        $avgRating = $comments->avg('rating');
 
-            $avgRating = $comments->avg('rating');
-
-        return view('admin.statisticsSucursal', compact('sucursal', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating'));
+        return view('admin.statisticsSucursal', compact('sucursal',  'weeklyVisits', 'historicalTotal', 'count', 'avgRating','monthlyVisits'));
     }
 }

@@ -34,9 +34,6 @@
                 <button class="right-button " style="float: right;">Estadisticas </button>
             </form>
         </div>
-
-
-
-
-
-        @endsection
+    </div>
+</div>
+@endsection
