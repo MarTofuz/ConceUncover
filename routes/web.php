@@ -9,7 +9,11 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreClientController;
+
+use App\Models\Tienda;
+
 use App\Http\Controllers\FavoriteController;
+
 
 /*
 |--------------------------------------------------------------------------
