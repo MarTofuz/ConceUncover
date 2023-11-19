@@ -15,7 +15,8 @@ class TiendaController extends Controller
     {
         $user = Auth::user();
         $tiendas = $user->tiendas;
-        return view('admin.editShop', compact('user', 'tiendas'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.editShop', compact('user', 'tiendas', 'favoritos'));
     }
 
     public function saveShop(Request $request)
@@ -46,7 +47,8 @@ class TiendaController extends Controller
     {
         $user = Auth::user();
         $tienda = $user->tiendas;
-        return view('admin.editLocal', compact('user', 'tienda'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.editLocal', compact('user', 'tienda', 'favoritos'));
     }
 
     public function updateShop(Request $request)
@@ -73,7 +75,8 @@ class TiendaController extends Controller
         $user = Auth::user();
         $tienda = $user->tiendas;
         $sucursales = $tienda->sucursales;
-        return view('admin.profileShop', compact('user', 'tienda', 'sucursales'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.profileShop', compact('user', 'tienda', 'sucursales', 'favoritos'));
     }
 
     public function viewStatisticsTienda(Request $request, $id)
@@ -125,6 +128,10 @@ class TiendaController extends Controller
 
             $avgRating = $comments->avg('rating');
 
-        return view('admin.statisticsTienda', compact('tienda', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating','monthlyVisits'));
+
+            $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+
+        return view('admin.statisticsTienda', compact('tienda', 'weeklyVisits', 'historicalTotal', 'count', 'avgRating', 'favoritos','monthlyVisits'));
+
     }
 }

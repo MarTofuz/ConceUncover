@@ -8,9 +8,23 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     @yield('source')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 <title>Conce Uncover</title>
+<style>
+    /* Estilos para ocultar la lista de favoritos al inicio */
+    #favoritos-list {
+        display: none;
+        position: absolute;
+        background-color: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+
+    /* Estilos para la opción "Favoritos" */
+    #favoritos:hover #favoritos-list {
+        display: block;
+    }
+</style>
 </head>
 
 <body>
@@ -38,15 +52,36 @@
                 <h3 class="usertitle">{{ Auth::user()->name }}</h3>
             </div>
             <ul>
-                <li> <a href="{{ route('profile') }}"><i class='fas fa-portrait'></i> Perfil</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a></li>
-                <a></a>
-
+                <li>
+                    <a href="{{ route('profile') }}">
+                        <i class='fas fa-portrait'></i> Perfil
+                    </a>
+                </li>
+                <li id="favoritos">
+                    <!-- Opción "Favoritos" -->
+                    <a href="#">
+                        <i class="fas fa-star"></i> Favoritos
+                    </a>
+                    <!-- Lista de favoritos que se mostrará al pasar el ratón sobre "Favoritos" -->
+                    <ul id="favoritos-list">
+                        @foreach ($favoritos->reverse() as $favorito)
+                        <li id="favoritos">
+                            @if ($favorito->sucursal)
+                            <a href="{{ route('viewClientSucursal', ['id' => $favorito->sucursal->id]) }}">
+                                <i class="fas fa-star"></i> {{ $favorito->sucursal->name }}
+                            </a>
+                            @elseif ($favorito->tienda)
+                            <a href="{{ route('viewClientTienda', ['id' => $favorito->tienda->id]) }}">
+                                <i class="fas fa-star"></i> {{ $favorito->tienda->name }}
+                            </a>
+                            @endif
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+                <li>
+                    <a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a>
+                </li>
             </ul>
         </div>
     </div>

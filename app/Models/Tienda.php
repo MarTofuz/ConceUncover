@@ -36,4 +36,9 @@ class Tienda extends Model
     {
         return $this->hasMany(TiendaVisit::class);
     }
+
+    public function favoritos()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

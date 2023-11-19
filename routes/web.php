@@ -9,7 +9,11 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreClientController;
+
 use App\Models\Tienda;
+
+use App\Http\Controllers\FavoriteController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +42,6 @@ Route::group(['prefix' => '/register'], function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
 
 //user normal
 
@@ -126,8 +128,6 @@ Route::get('/edit-product-sucursal/{productId}', [ProductController::class, 'edi
 Route::put('/update-product-sucursal/{productId}', [ProductController::class, 'updateProductSucursal'])->name('updateProductSucursal');
 /* ------ FIN RUTAS PRODUCTOS SUCURSALES ------ */
 
-
-
 Route::group(['prefix' => '/storeClientTienda/{id}'], function () {
     Route::get('/', [StoreClientController::class, 'viewClientTienda'])->name('viewClientTienda');
 });
@@ -145,3 +145,7 @@ Route::post('/storeClientSucursalRating/{sucursal}', [StoreClientController::cla
 Route::get('/statisticsTienda{id}', [TiendaController::class, 'viewStatisticsTienda'])->name('viewStatisticsTienda')->middleware('auth');
 
 Route::get('/statisticsSucursal{id}', [SucursalController::class, 'viewStatisticsSucursal'])->name('viewStatisticsSucursal')->middleware('auth');
+
+Route::post('/favoritosTienda', [FavoriteController::class, 'favoritosTienda'])->name('favoritosTienda')->middleware('auth');
+
+Route::post('/favoritosSucursal', [FavoriteController::class, 'favoritosSucursal'])->name('favoritosSucursal')->middleware('auth');

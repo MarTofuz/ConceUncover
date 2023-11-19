@@ -1,7 +1,11 @@
 @extends('layouts.nav&SideBar')
 
 @section('content')
-
+<style>
+    .mapboxgl-ctrl-attrib-inner{
+        display: none;
+    }
+</style>
 <head>
     <link type="text/css" rel="stylesheet" href="{{ asset('css/editSucursal.css') }}">
 </head>

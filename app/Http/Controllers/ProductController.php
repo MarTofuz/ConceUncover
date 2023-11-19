@@ -23,15 +23,19 @@ class ProductController extends Controller
         }
 
         $productos = $tienda->productos;
-        return view('admin.topProduct', compact('user', 'tienda', 'productos'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.topProduct', compact('user', 'tienda', 'productos', 'favoritos'));
     }
+
     public function editProduct($productId) //Ver vista edicion producto
     {
         $user = Auth::user();
         $tienda = $user->tiendas;
         $producto = Product::findOrFail($productId);
-        return view('admin.editProduct', compact('producto'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.editProduct', compact('producto', 'favoritos'));
     }
+
     public function saveProduct(Request $request)
     {
         $user = Auth::user();
@@ -70,6 +74,7 @@ class ProductController extends Controller
         $producto->delete();
         return redirect()->back()->with('success', 'Producto eliminado exitosamente.');
     }
+
     public function updateProduct(Request $request, $productId)
     {
         $producto = Product::findOrFail($productId);
@@ -126,15 +131,19 @@ class ProductController extends Controller
             abort(403, 'No tienes permisos para acceder a esta sucursal.');
         }
         $productos = $sucursal->productos;
-        return view('admin.topProductSucursal', compact('user', 'sucursal', 'productos'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.topProductSucursal', compact('user', 'sucursal', 'productos', 'favoritos'));
     }
+
     public function editProductSucursal($productId) //Ver vista edicion producto
     {
         $user = Auth::user();
         $sucursal = $user->sucursal;
         $producto = Product::findOrFail($productId);
-        return view('admin.editProductSucursal', compact('producto'));
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return view('admin.editProductSucursal', compact('producto', 'favoritos'));
     }
+
     public function saveSucursalProduct(Request $request, $sucursalId)
     {
         $sucursal = Sucursal::findOrFail($sucursalId);
@@ -218,6 +227,5 @@ class ProductController extends Controller
         return redirect()->route('producto-sucursal', ['sucursalId' => $producto->sucursal_id])
             ->with('success', 'Producto actualizado exitosamente.');
     }
-
     /* ------ FIN PRODUCTOS SUCURSALES ------ */
 }

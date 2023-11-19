@@ -17,6 +17,7 @@ class HomeController extends Controller
         $authenticated_user = Auth::user();
         $tiendas = Tienda::all();
         $sucursales = Sucursal::all();
-        return View('admin.home', compact('tiendas', 'sucursales'))->with(['user' => $authenticated_user, 'tiendas' => $tiendas, 'sucursales' => $sucursales]);
+        $favoritos = auth()->user() ? auth()->user()->favoritos : [];
+        return View('admin.home', compact('tiendas', 'sucursales'))->with(['user' => $authenticated_user, 'tiendas' => $tiendas, 'sucursales' => $sucursales, 'favoritos' => $favoritos]);
     }
 }

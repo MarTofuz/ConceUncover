@@ -56,6 +56,20 @@
             background-image: url('star-filled.png');
             /* Ajusta la ruta según la ubicación de tu imagen de estrella llena */
         }
+
+        /* Estilos para ocultar la lista de favoritos al inicio */
+        #favoritos-list {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        /* Estilos para la opción "Favoritos" */
+        #favoritos:hover #favoritos-list {
+            display: block;
+        }
     </style>
 </head>
 
@@ -86,11 +100,36 @@
                 <h3 class="usertitle">{{ $user->name }}</h3>
             </div>
             <ul>
-                <li> <a href="{{ route('profile') }}"><i class='fas fa-portrait'></i> Perfil</a></li>
-                <li><a href="#"><i class="fas fa-star"></i> Favoritos</a></li>
-                <li><a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a></li>
-                <a></a>
-
+                <li>
+                    <a href="{{ route('profile') }}">
+                        <i class='fas fa-portrait'></i> Perfil
+                    </a>
+                </li>
+                <li id="favoritos">
+                    <!-- Opción "Favoritos" -->
+                    <a href="#">
+                        <i class="fas fa-star"></i> Favoritos
+                    </a>
+                    <!-- Lista de favoritos que se mostrará al pasar el ratón sobre "Favoritos" -->
+                    <ul id="favoritos-list">
+                        @foreach ($favoritos->reverse() as $favorito)
+                        <li id="favoritos">
+                            @if ($favorito->sucursal)
+                            <a href="{{ route('viewClientSucursal', ['id' => $favorito->sucursal->id]) }}">
+                                <i class="fas fa-star"></i> {{ $favorito->sucursal->name }}
+                            </a>
+                            @elseif ($favorito->tienda)
+                            <a href="{{ route('viewClientTienda', ['id' => $favorito->tienda->id]) }}">
+                                <i class="fas fa-star"></i> {{ $favorito->tienda->name }}
+                            </a>
+                            @endif
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+                <li>
+                    <a class="btn btn-outline-dark" href="{{ route('logout') }}">Cerrar Sesión</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -132,6 +171,21 @@
                 <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 4)->count() }}</p>
                 <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 5)->count() }}</p>
                 <p>Promedio de Valoraciones: {{ $sucursal->comment->avg('rating') }}</p>
+                <form action="{{ route('favoritosSucursal') }}" method="POST">
+                    @csrf
+                    <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
+                    <input type="text" name="sucursal_id" value="{{ $sucursal->id }}" hidden>
+
+                    @if ($sucursal->favoritos->contains('user_id', Auth::user()->id)) <!-- Verifica si la tienda está en favoritos del usuario -->
+                    <button class="right-button" style="float: right; background-color: red; color: white;" type="submit">
+                        Eliminar Favorito
+                    </button>
+                    @else
+                    <button class="right-button" style="float: right; background-color: yellow; color: black;" type="submit">
+                        Agregar a Favoritos
+                    </button>
+                    @endif
+                </form>
             </div>
         </div>
         <div class="comments">
@@ -261,8 +315,6 @@
             </div>
         </div>
     </div>
-
-
     @else
     <header>
         <div class="logo-container">
@@ -326,7 +378,6 @@
                 <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 4)->count() }}</p>
                 <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 5)->count() }}</p>
                 <p>Promedio de Valoraciones: {{ $sucursal->comment->avg('rating') }}</p>
-
             </div>
         </div>
         <div class="comments">
@@ -397,7 +448,6 @@
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                     @empty
                     No hay comentarios para la sucursal
@@ -408,8 +458,6 @@
             </div>
         </div>
     </div>
-
-
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -465,6 +513,4 @@
         });
     });
 </script>
-
-
 </html>
