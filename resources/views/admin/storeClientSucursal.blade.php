@@ -165,12 +165,16 @@
                 <h2>Calificaciones de la Página</h2>
 
                 <p>Valoraciones totales: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
-                <p>Valoraciones de una estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 1)->count() }}</p>
-                <p>Valoraciones de dos estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 2)->count() }}</p>
-                <p>Valoraciones de tres estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 3)->count() }}</p>
-                <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 4)->count() }}</p>
-                <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 5)->count() }}</p>
+                <p>@for ($i = 1; $i <= 1; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 1)->count() }}</p>
+                <p>@for ($i = 1; $i <= 2; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 2)->count() }}</p>
+                <p>@for ($i = 1; $i <= 3; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 3)->count() }}</p>
+                <p>@for ($i = 1; $i <= 4; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 4)->count() }}</p>
+                <p>@for ($i = 1; $i <= 5; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 5)->count() }}</p>
+                @if($sucursal->comment->count() > 0)
                 <p>Promedio de Valoraciones: {{ $sucursal->comment->avg('rating') }}</p>
+                @else
+                <p>No hay valoraciones</p>
+                @endif
                 <form action="{{ route('favoritosSucursal') }}" method="POST">
                     @csrf
                     <input type="text" name="user_id" value="{{ Auth::user()->id }}" hidden>
@@ -372,12 +376,16 @@
                 <h2>Calificaciones de la Página</h2>
 
                 <p>Valoraciones totales: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
-                <p>Valoraciones de una estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 1)->count() }}</p>
-                <p>Valoraciones de dos estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 2)->count() }}</p>
-                <p>Valoraciones de tres estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 3)->count() }}</p>
-                <p>Valoraciones de cuatro estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 4)->count() }}</p>
-                <p>Valoraciones de cinco estrella: <i class="fa fa-star" style="color: yellow;"></i> {{ $sucursal->comment->where('rating', 5)->count() }}</p>
+                <p>@for ($i = 1; $i <= 1; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 1)->count() }}</p>
+                <p>@for ($i = 1; $i <= 2; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 2)->count() }}</p>
+                <p>@for ($i = 1; $i <= 3; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 3)->count() }}</p>
+                <p>@for ($i = 1; $i <= 4; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 4)->count() }}</p>
+                <p>@for ($i = 1; $i <= 5; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 5)->count() }}</p>
+                @if($sucursal->comment->count() > 0)
                 <p>Promedio de Valoraciones: {{ $sucursal->comment->avg('rating') }}</p>
+                @else
+                <p>No hay valoraciones</p>
+                @endif
             </div>
         </div>
         <div class="comments">
@@ -513,4 +521,5 @@
         });
     });
 </script>
+
 </html>
