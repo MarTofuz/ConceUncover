@@ -161,9 +161,8 @@
                 <p>Descripción: {{ $sucursal->description }}</p>
                 <p>Asistente: {{ $sucursal->assistant }}</p>
                 <p>Horario: {{ $sucursal->schedule }}</p>
-                <p>Visitas: {{ $totalVisits }}</p>
+                <p>&nbsp;</p>
                 <h2>Calificaciones de la Página</h2>
-
                 <p>Valoraciones totales: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
                 <p>@for ($i = 1; $i <= 1; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 1)->count() }}</p>
                 <p>@for ($i = 1; $i <= 2; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 2)->count() }}</p>
@@ -372,9 +371,8 @@
                 <p>Descripción: {{ $sucursal->description }}</p>
                 <p>Asistente: {{ $sucursal->assistant }}</p>
                 <p>Horario: {{ $sucursal->schedule }}</p>
-                <p>Visitas: {{ $totalVisits }}</p>
+                <p>&nbsp;</p>
                 <h2>Calificaciones de la Página</h2>
-
                 <p>Valoraciones totales: {{ $sucursal->comment->where('rating', '!=', null)->count() }}</p>
                 <p>@for ($i = 1; $i <= 1; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 1)->count() }}</p>
                 <p>@for ($i = 1; $i <= 2; $i++) <i class="fa fa-star" style="color: yellow;"></i> @endfor: {{ $sucursal->comment->where('rating', 2)->count() }}</p>
